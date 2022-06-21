@@ -1,7 +1,9 @@
 import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
 import 'package:bts_plus/components/forms/layout/primary_textfield.dart';
+import 'package:bts_plus/screens/main_page.dart';
 import 'package:flutter/material.dart';
 
+import '../../domains/user.dart';
 import '../buttons/layout/primary_button.dart';
 import '../utils.dart';
 import 'layout/primary_textformfield.dart';
@@ -18,7 +20,7 @@ class RegisterationForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime? dateOfBirth;
+    DateTime? birthDate;
     return Form(
       key: _formKey,
       child: Column(
@@ -30,11 +32,6 @@ class RegisterationForm extends StatelessWidget {
               validator: basicValidator()),
           PrimaryTextFormField(
               title: 'Password',
-              controller: _passwordController,
-              obscureText: true,
-              validator: basicValidator()),
-          PrimaryTextFormField(
-              title: 'Confirm Password',
               controller: _passwordController,
               obscureText: true,
               validator: basicValidator()),
@@ -54,7 +51,7 @@ class RegisterationForm extends StatelessWidget {
           SecondaryButton(
               text: 'Date of Birth',
               onPressed: () async {
-                dateOfBirth = await showDatePicker(
+                birthDate = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
                   firstDate: DateTime(1900),
@@ -64,7 +61,19 @@ class RegisterationForm extends StatelessWidget {
           PrimaryButton(
             text: 'Register',
             onPressed: () {
-              if (_formKey.currentState!.validate()) {}
+              if (_formKey.currentState!.validate()) {
+                User newUser = User(
+                    firstName: _firstNameController.text,
+                    lastName: _lastNameController.text,
+                    userName: _usernameController.text,
+                    password: _passwordController.text,
+                    birthDate: birthDate ?? DateTime.now());
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MainPage(),
+                    ));
+              }
             },
           )
         ],
