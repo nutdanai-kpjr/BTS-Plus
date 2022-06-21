@@ -1,22 +1,22 @@
+import 'package:bts_plus/components/buttons/layout/back_navigator_button.dart';
 import 'package:bts_plus/components/cards/balance_card.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:flutter/material.dart';
 
-class PrimaryHeader extends StatelessWidget {
-  const PrimaryHeader(
-      {Key? key, required this.title, required this.height, required this.card})
-      : super(key: key);
+class SecondaryHeader extends StatelessWidget {
+  const SecondaryHeader({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
   final String title;
-  final double height;
-  final Widget card;
   @override
   Widget build(BuildContext context) {
     return Container(
       color: kThemeColor,
-      height: height,
+      height: kHeight(context) * 0.15,
       child: Column(
         children: <Widget>[
-          Expanded(flex: 1, child: Container()),
+          Expanded(flex: 1, child: BackNavigatorButton()),
           Expanded(
             flex: 2,
             child: Text(
@@ -24,7 +24,6 @@ class PrimaryHeader extends StatelessWidget {
               style: TextStyle(color: kThemeFontColor),
             ),
           ),
-          Expanded(flex: 3, child: card),
         ],
       ),
     );
