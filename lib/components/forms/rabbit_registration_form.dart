@@ -1,8 +1,8 @@
 import 'package:bts_plus/components/forms/layout/primary_textfield.dart';
 import 'package:flutter/material.dart';
 
-class RabbitRegisterationForm extends StatelessWidget {
-  const RabbitRegisterationForm({Key? key}) : super(key: key);
+class RabbitRegistrationForm extends StatelessWidget {
+  const RabbitRegistrationForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

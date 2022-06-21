@@ -1,5 +1,4 @@
 import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
-import 'package:bts_plus/components/forms/layout/primary_textfield.dart';
 import 'package:bts_plus/screens/main_page.dart';
 import 'package:flutter/material.dart';
 
@@ -8,8 +7,8 @@ import '../buttons/layout/primary_button.dart';
 import '../utils.dart';
 import 'layout/primary_textformfield.dart';
 
-class RegisterationForm extends StatelessWidget {
-  RegisterationForm({Key? key}) : super(key: key);
+class RegistrationForm extends StatelessWidget {
+  RegistrationForm({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
@@ -67,7 +66,7 @@ class RegisterationForm extends StatelessWidget {
                     lastName: _lastNameController.text,
                     userName: _usernameController.text,
                     password: _passwordController.text,
-                    birthDate: birthDate ?? DateTime.now());
+                    birthDate: birthDate!);
                 Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
-        'purchase_ticket': (context) => const BTSTicketPurchasePage(),
+        // 'purchase_ticket': (context) => const BTSTicketPurchasePage(),
       },
       title: 'BTS Plus',
     );

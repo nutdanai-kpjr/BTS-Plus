@@ -1,5 +1,5 @@
 import 'package:bts_plus/components/forms/login_form.dart';
-import 'package:bts_plus/components/forms/registeration_form.dart';
+import 'package:bts_plus/components/forms/registration_form.dart';
 import 'package:bts_plus/screens/layout/authentication_page.dart';
 import 'package:bts_plus/screens/register_page.dart';
 import 'package:flutter/material.dart';

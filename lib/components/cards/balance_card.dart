@@ -11,7 +11,7 @@ class BalanceCard extends StatelessWidget {
         child: Row(
       children: [
         Column(children: [
-          Text('Balance'),
+          Text('Card Balance'),
           Text('$balance'),
         ]),
         SecondaryButton(text: 'Topup +')

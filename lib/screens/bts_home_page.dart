@@ -1,4 +1,5 @@
 import 'package:bts_plus/components/buttons/layout/primary_button.dart';
+import 'package:bts_plus/components/cards/ticket_card.dart';
 import 'package:bts_plus/components/forms/station_selector.dart';
 import 'package:bts_plus/components/headers/primary_header.dart';
 import 'package:bts_plus/components/primary_scaffold.dart';
@@ -9,20 +10,44 @@ import 'package:flutter/material.dart';
 import '../components/buttons/layout/buttom_navigator_buttons.dart';
 import '../components/cards/balance_card.dart';
 
-class BTSHomeNavPage extends StatelessWidget {
+class BTSHomeNavPage extends StatefulWidget {
   const BTSHomeNavPage({Key? key}) : super(key: key);
+
+  @override
+  State<BTSHomeNavPage> createState() => _BTSHomeNavPageState();
+}
+
+class _BTSHomeNavPageState extends State<BTSHomeNavPage> {
+  late String from = 'Item 1';
+  late String to = 'Item 2';
+  onFromChanged(String value) {
+    setState(() {
+      from = value;
+    });
+  }
+
+  onToChanged(String value) {
+    setState(() {
+      to = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Column(children: <Widget>[
       BTSHomeHeader(),
-      StationSelector(),
+      StationSelector(onFromChanged: onFromChanged, onToChanged: onToChanged),
       PrimaryButton(
         text: 'Continue',
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => BTSTicketPurchasePage()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BTSTicketPurchasePage(
+                        from: from,
+                        to: to,
+                      )));
         },
       ),
       AvailiableTicketSection()
@@ -49,7 +74,10 @@ class AvailiableTicketSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        children: <Widget>[Text('Availiable Tickets'), Text('Ticket card')],
+        children: <Widget>[
+          Text('Availiable Tickets'),
+          TicketCard(from: 'Asok', to: 'Siam')
+        ],
       ),
     );
   }

@@ -2,7 +2,7 @@ import 'package:bts_plus/components/buttons/layout/buttom_navigator_buttons.dart
 import 'package:bts_plus/components/buttons/layout/primary_button.dart';
 import 'package:bts_plus/components/cards/customer_card.dart';
 import 'package:bts_plus/components/cards/layout/primary_card.dart';
-import 'package:bts_plus/components/forms/rabbit_registeration_form.dart';
+import 'package:bts_plus/components/forms/rabbit_registration_form.dart';
 import 'package:bts_plus/components/primary_scaffold.dart';
 import 'package:flutter/material.dart';
 
@@ -70,7 +70,7 @@ class RabbitRegisterSection extends StatelessWidget {
       children: [
         Image.asset('assets/images/rabbit_logo.png'),
         Text('New Rabbit Card'),
-        RabbitRegisterationForm(),
+        RabbitRegistrationForm(),
         PrimaryButton(text: 'Register'),
       ],
     );

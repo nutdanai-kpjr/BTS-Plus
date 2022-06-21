@@ -10,8 +10,39 @@ import '../components/buttons/layout/primary_button.dart';
 import '../components/cards/balance_card.dart';
 import '../components/forms/station_selector.dart';
 
-class BTSTicketPurchasePage extends StatelessWidget {
-  const BTSTicketPurchasePage({Key? key}) : super(key: key);
+class BTSTicketPurchasePage extends StatefulWidget {
+  const BTSTicketPurchasePage(
+      {Key? key, required this.from, required this.to, this.quantity = 1})
+      : super(key: key);
+  final String from;
+  final String to;
+  final int quantity;
+
+  @override
+  State<BTSTicketPurchasePage> createState() => _BTSTicketPurchasePageState();
+}
+
+class _BTSTicketPurchasePageState extends State<BTSTicketPurchasePage> {
+  late String from = widget.from;
+  late String to = widget.to;
+  late int quantity = widget.quantity;
+  onFromChanged(String value) {
+    setState(() {
+      from = value;
+    });
+  }
+
+  onToChanged(String value) {
+    setState(() {
+      to = value;
+    });
+  }
+
+  onQuantityChange(int value) {
+    setState(() {
+      quantity = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,25 +55,61 @@ class BTSTicketPurchasePage extends StatelessWidget {
           SecondaryHeader(
             title: 'Purchasing Ticket',
           ),
-          TicketOptionSection(),
+          TicketOptionSection(
+            onFromChanged: onFromChanged,
+            onToChanged: onToChanged,
+            onQuantityChanged: onQuantityChange,
+            quantity: quantity,
+            from: from,
+            to: to,
+          ),
           PaymentSection()
         ])));
   }
 }
 
-class TicketOptionSection extends StatelessWidget {
-  const TicketOptionSection({Key? key}) : super(key: key);
+class TicketOptionSection extends StatefulWidget {
+  const TicketOptionSection(
+      {Key? key,
+      required this.onFromChanged,
+      required this.onToChanged,
+      required this.onQuantityChanged,
+      required this.quantity,
+      required this.from,
+      required this.to})
+      : super(key: key);
+  final Function(String) onFromChanged;
+  final Function(String) onToChanged;
+  final Function(int) onQuantityChanged;
+  final int quantity;
+  final String from;
+  final String to;
+  @override
+  State<TicketOptionSection> createState() => _TicketOptionSectionState();
+}
+
+class _TicketOptionSectionState extends State<TicketOptionSection> {
+  late final Function(String) onFromchanged = widget.onFromChanged;
+  late final Function(String) onToChanged = widget.onToChanged;
+  late final Function(int) onquantityChanged = widget.onQuantityChanged;
+  late final int quantity = widget.quantity;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: <Widget>[
-          StationSelector(),
+          StationSelector(
+            onFromChanged: onFromchanged,
+            onToChanged: onToChanged,
+          ),
           Row(
             children: [
               Text('Number of Ticket'),
-              QuantitySelector(),
+              QuantitySelector(
+                quantity: quantity,
+                onChanged: onquantityChanged,
+              ),
             ],
           ),
           PrimaryDivider()

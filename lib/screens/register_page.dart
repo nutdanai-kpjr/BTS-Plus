@@ -1,4 +1,4 @@
-import 'package:bts_plus/components/forms/registeration_form.dart';
+import 'package:bts_plus/components/forms/registration_form.dart';
 import 'package:bts_plus/screens/layout/authentication_page.dart';
 import 'package:bts_plus/screens/login_page.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ class RegisterPage extends StatelessWidget {
     return AuthenticationLayoutPage(
         title: 'Register',
         imageName: 'bts_logo.png',
-        formChild: RegisterationForm(),
+        formChild: RegistrationForm(),
         alternativeTitle: 'Already have account?',
         alternativeLinkName: 'Login',
         alternativeLinkOnPressed: () {
