@@ -2,12 +2,10 @@ import 'package:bts_plus/components/buttons/layout/primary_button.dart';
 import 'package:bts_plus/components/cards/ticket_card.dart';
 import 'package:bts_plus/components/forms/station_selector.dart';
 import 'package:bts_plus/components/headers/primary_header.dart';
-import 'package:bts_plus/components/primary_scaffold.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/screens/bts_ticket_purchase_page.dart';
 import 'package:flutter/material.dart';
 
-import '../components/buttons/layout/buttom_navigator_buttons.dart';
 import '../components/cards/balance_card.dart';
 
 class BTSHomeNavPage extends StatefulWidget {
