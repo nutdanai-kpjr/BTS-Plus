@@ -28,9 +28,6 @@ class AuthenticationLayoutPage extends StatelessWidget {
             child: Column(children: <Widget>[
       ImageWithText(image: imageName, text: title),
       formChild,
-      PrimaryButton(
-        text: title,
-      ),
       AlternateLinkButton(
           title: alternativeTitle,
           linkName: alternativeLinkName,

@@ -1,17 +1,72 @@
+import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
 import 'package:bts_plus/components/forms/layout/primary_textfield.dart';
 import 'package:flutter/material.dart';
 
+import '../buttons/layout/primary_button.dart';
+import '../utils.dart';
+import 'layout/primary_textformfield.dart';
+
 class RegisterationForm extends StatelessWidget {
-  const RegisterationForm({Key? key}) : super(key: key);
+  RegisterationForm({Key? key}) : super(key: key);
+
+  final _formKey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    DateTime? dateOfBirth;
+    return Form(
+      key: _formKey,
       child: Column(
         children: <Widget>[
-          Text('Registeration Form'),
-          PrimaryTextfield(title: 'ID'),
-          PrimaryTextfield(title: 'Password'),
+          Text('Register Form'),
+          PrimaryTextFormField(
+              title: 'Username',
+              controller: _usernameController,
+              validator: basicValidator()),
+          PrimaryTextFormField(
+              title: 'Password',
+              controller: _passwordController,
+              obscureText: true,
+              validator: basicValidator()),
+          PrimaryTextFormField(
+              title: 'Confirm Password',
+              controller: _passwordController,
+              obscureText: true,
+              validator: basicValidator()),
+          PrimaryTextFormField(
+              title: 'Confirm Password',
+              controller: _confirmPasswordController,
+              obscureText: true,
+              validator: basicValidator()),
+          PrimaryTextFormField(
+              title: 'First Name',
+              controller: _firstNameController,
+              validator: basicValidator()),
+          PrimaryTextFormField(
+              title: 'Last Name',
+              controller: _lastNameController,
+              validator: basicValidator()),
+          SecondaryButton(
+              text: 'Date of Birth',
+              onPressed: () async {
+                dateOfBirth = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime(2050),
+                );
+              }),
+          PrimaryButton(
+            text: 'Register',
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {}
+            },
+          )
         ],
       ),
     );

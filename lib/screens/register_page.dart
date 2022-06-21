@@ -11,7 +11,7 @@ class RegisterPage extends StatelessWidget {
     return AuthenticationLayoutPage(
         title: 'Register',
         imageName: 'bts_logo.png',
-        formChild: const RegisterationForm(),
+        formChild: RegisterationForm(),
         alternativeTitle: 'Already have account?',
         alternativeLinkName: 'Login',
         alternativeLinkOnPressed: () {
