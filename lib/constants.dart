@@ -41,6 +41,18 @@ const TextStyle kHeader3TextStyle = TextStyle(
   fontWeight: FontWeight.bold,
   color: kHeaderFontColor,
 );
+
+const TextStyle kHeader4TextStyle = TextStyle(
+  fontSize: kHeader4FontSize,
+  fontWeight: FontWeight.bold,
+  color: kHeaderFontColor,
+);
+
+const TextStyle kHeader5TextStyle = TextStyle(
+  fontSize: kHeader5FontSize,
+  fontWeight: FontWeight.bold,
+  color: kHeaderFontColor,
+);
 const TextStyle kBodyTextStyle = TextStyle(
   fontSize: kBodyFontSize,
   fontWeight: FontWeight.w500,
@@ -50,7 +62,10 @@ const TextStyle kBody2TextStyle = TextStyle(
   fontSize: kBody2FontSize,
   color: kSecondaryFontColor,
 );
-
+const TextStyle kBody3TextStyle = TextStyle(
+  fontSize: kBody3FontSize,
+  color: kSecondaryFontColor,
+);
 InputDecoration kTextFieldDecorationWithHintText(String hintText) =>
     InputDecoration(
         focusedBorder: OutlineInputBorder(

@@ -20,7 +20,7 @@ class StationSelector extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(
           horizontal: kWidth(context) * 0.09,
-          vertical: kHeight(context) * 0.035),
+          vertical: kHeight(context) * 0.025),
       child: Column(
         children: <Widget>[
           Row(
@@ -40,7 +40,7 @@ class StationSelector extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: kHeight(context) * 0.03),
+          SizedBox(height: kHeight(context) * 0.025),
           Row(
             children: <Widget>[
               const Expanded(

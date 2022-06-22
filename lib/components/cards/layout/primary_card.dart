@@ -26,6 +26,7 @@ class PrimaryCard extends StatelessWidget {
           border: Border.all(color: kBorderColor, width: 2.0),
           borderRadius: BorderRadius.circular(15.0),
         ),
-        child: child);
+        child: Container(
+            margin: EdgeInsets.all(kHeight(context) * 0.012), child: child));
   }
 }

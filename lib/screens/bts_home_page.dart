@@ -48,21 +48,24 @@ class _BTSHomeNavPageState extends State<BTSHomeNavPage> {
             children: [
               StationSelector(
                   onFromChanged: onFromChanged, onToChanged: onToChanged),
-              PrimaryButton(
-                text: 'Continue',
-                onPressed: () {
-                  log('from: $from, to: $to');
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => BTSTicketPurchasePage(
-                                from: from,
-                                to: to,
-                              )));
-                },
+              SizedBox(
+                width: kWidth(context) * 0.5,
+                child: PrimaryButton(
+                  text: 'Continue',
+                  onPressed: () {
+                    log('from: $from, to: $to');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BTSTicketPurchasePage(
+                                  from: from,
+                                  to: to,
+                                )));
+                  },
+                ),
               ),
               SizedBox(
-                height: kHeight(context) * 0.035,
+                height: kHeight(context) * 0.025,
               )
             ],
           )),
@@ -96,7 +99,6 @@ class _AvailiableTicketSection extends StatelessWidget {
           horizontal: kWidth(context) * 0.05,
           vertical: kHeight(context) * 0.02),
       color: kThemeSecondaryBackgroundColor,
-      height: kHeight(context) * .3,
       child: Column(
         children: <Widget>[
           Container(
@@ -108,7 +110,8 @@ class _AvailiableTicketSection extends StatelessWidget {
               style: kHeader3TextStyle,
             ),
           ),
-          TicketCard(from: 'Asok', to: 'Siam')
+          for (var i in List.generate(10, (i) => i))
+            TicketCard(from: 'Asok', to: 'Siam')
         ],
       ),
     );
