@@ -20,6 +20,7 @@ class RegistrationForm extends ConsumerWidget {
   final _confirmPasswordController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
+  final _dateOfBirthController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,9 +51,43 @@ class RegistrationForm extends ConsumerWidget {
               title: 'Last Name',
               controller: _lastNameController,
               validator: basicValidator()),
-          DateSelector(onChanged: (value) {
-            birthDate = value;
-          }),
+          PrimaryTextFormField(
+              title: 'Date of Birth',
+              controller: _dateOfBirthController,
+              readOnly: true,
+              onTap: () {
+                showDatePicker(
+                  builder: (context, child) {
+                    return Theme(
+                      data: Theme.of(context).copyWith(
+                        colorScheme: const ColorScheme.light(
+                          primary: kThemeColor, // header background color
+                          onPrimary: kThemeFontColor, // header text color
+                          onSurface: kPrimaryFontColor, // body text color
+                        ),
+                        textButtonTheme: TextButtonThemeData(
+                          style: TextButton.styleFrom(
+                            primary: kThemeColor, // button text color
+                          ),
+                        ),
+                      ),
+                      child: child!,
+                    );
+                  },
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime(2050),
+                ).then((value) => {
+                      if (value != null)
+                        {
+                          birthDate = value,
+                          _dateOfBirthController.text =
+                              '${value.day}/${value.month}/${value.year}',
+                        }
+                    });
+              },
+              validator: basicValidator()),
           SizedBox(height: kHeight(context) * 0.02),
           PrimaryButton(
             text: 'Register',
@@ -76,52 +111,6 @@ class RegistrationForm extends ConsumerWidget {
               }
             },
           )
-        ],
-      ),
-    );
-  }
-}
-
-class DateSelector extends StatefulWidget {
-  const DateSelector({
-    Key? key,
-    this.birthDate,
-    required this.onChanged,
-  }) : super(key: key);
-  final DateTime? birthDate;
-  final Function onChanged;
-  @override
-  State<DateSelector> createState() => _DateSelectorState();
-}
-
-class _DateSelectorState extends State<DateSelector> {
-  late DateTime? _selectedDate = widget.birthDate;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          SecondaryButton(
-              text: '${_selectedDate?.toIso8601String() ?? 'Select Birthdate'}',
-              onPressed: () async {
-                var newDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(1900),
-                  lastDate: DateTime(2050),
-                );
-                setState(() {
-                  _selectedDate = newDate;
-                  widget.onChanged(newDate);
-                });
-              }),
-          _selectedDate == null
-              ? Text(
-                  'Please select your birth date',
-                  style: TextStyle(color: Colors.red),
-                )
-              : Container()
         ],
       ),
     );

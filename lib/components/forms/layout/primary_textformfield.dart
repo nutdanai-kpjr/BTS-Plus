@@ -13,6 +13,7 @@ class PrimaryTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.readOnly = false,
     this.inputFormatters,
+    this.onTap,
     this.validator,
   }) : super(key: key);
   final String title;
@@ -24,11 +25,13 @@ class PrimaryTextFormField extends StatelessWidget {
   final bool obscureText;
   final String? Function(String?)? validator;
   final bool readOnly;
+  final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: padding,
         child: TextFormField(
+          onTap: onTap,
           readOnly: readOnly,
           validator: validator,
           obscureText: obscureText,

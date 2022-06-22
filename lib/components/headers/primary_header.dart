@@ -26,19 +26,20 @@ class PrimaryHeader extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                    child: SecondaryButton(
-                      text: 'Logout',
-                      onPressed: () {
-                        ref.read(authProvider.notifier).clearUser();
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(),
-                            ));
-                      },
+                  IconButton(
+                    icon: Icon(
+                      Icons.logout_rounded,
+                      color: kThemeFontColor,
                     ),
-                  ),
+                    onPressed: () {
+                      ref.read(authProvider.notifier).clearUser();
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginPage(),
+                          ));
+                    },
+                  )
                 ],
               )),
           Expanded(

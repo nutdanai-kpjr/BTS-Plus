@@ -1,9 +1,6 @@
 import 'package:bts_plus/components/buttons/layout/alternate_link_button.dart';
-import 'package:bts_plus/components/buttons/layout/primary_button.dart';
 import 'package:bts_plus/components/primary_scaffold.dart';
 import 'package:bts_plus/constants.dart';
-import 'package:bts_plus/screens/bts_home_page.dart';
-import 'package:bts_plus/screens/main_page.dart';
 import 'package:flutter/material.dart';
 
 class AuthenticationLayoutPage extends StatelessWidget {
@@ -11,6 +8,7 @@ class AuthenticationLayoutPage extends StatelessWidget {
       {Key? key,
       required this.title,
       required this.imageName,
+      this.isShowImage = true,
       required this.formChild,
       required this.alternativeTitle,
       required this.alternativeLinkName,
@@ -18,6 +16,7 @@ class AuthenticationLayoutPage extends StatelessWidget {
       : super(key: key);
   final String title;
   final String imageName;
+  final bool isShowImage;
   final Widget formChild;
   final String alternativeTitle;
   final String alternativeLinkName;
@@ -28,7 +27,12 @@ class AuthenticationLayoutPage extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
             child: Column(children: <Widget>[
-          ImageWithText(image: imageName, text: title),
+          isShowImage
+              ? ImageWithText(image: imageName, text: title)
+              : Text(
+                  title,
+                  style: kBigHeaderTextStyle,
+                ),
           Container(
               margin: EdgeInsets.all(kWidth(context) * 0.05), child: formChild),
           Center(

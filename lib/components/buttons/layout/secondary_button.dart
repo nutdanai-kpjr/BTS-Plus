@@ -5,7 +5,7 @@ import '../../../constants.dart';
 
 class SecondaryButton extends StatelessWidget {
   const SecondaryButton(
-      {Key? key, required this.text, this.onPressed, this.color = kBorderColor})
+      {Key? key, required this.text, this.onPressed, this.color = kThemeColor})
       : super(key: key);
   final String text;
   final Function()? onPressed;
@@ -19,9 +19,9 @@ class SecondaryButton extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           primary: kPrimaryFontColor,
           // backgroundColor: w,
-          textStyle: kBody2TextStyle,
+          textStyle: kBody2TextStyle.copyWith(color: color),
         ),
         onPressed: onPressed,
-        child: Text(text));
+        child: Text(text, style: kBody2TextStyle.copyWith(color: color)));
   }
 }
