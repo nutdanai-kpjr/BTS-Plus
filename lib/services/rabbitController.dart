@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'baseController.dart';
 
 const String kRabbitControllerUrl = "$kRabbitBasedURL/api/v1/rabbitCard";
-
+//TODO Fix Bool to RabbitCard?
 Future<bool> addRabbitCard(
   RabbitCard newRabbitCard, {
   required context,
