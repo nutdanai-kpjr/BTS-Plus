@@ -71,7 +71,6 @@ class RabbitRegisterSection extends StatelessWidget {
         Image.asset('assets/images/rabbit_logo.png'),
         Text('New Rabbit Card'),
         RabbitRegistrationForm(),
-        PrimaryButton(text: 'Register'),
       ],
     );
   }

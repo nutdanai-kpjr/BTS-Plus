@@ -1,6 +1,7 @@
 import 'package:bts_plus/domains/user.dart';
 import 'package:bts_plus/screens/login_page.dart';
 import 'package:bts_plus/screens/main_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bts_plus/screens/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
@@ -8,7 +9,7 @@ import 'package:riverpod/riverpod.dart';
 import 'providers/auth_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       //   '/register': (context) => const RegisterPage(),
       //   // 'purchase_ticket': (context) => const BTSTicketPurchasePage(),
       // },
-      home: LoginPage(),
+      home: MainPage(),
       title: 'BTS Plus',
     );
   }

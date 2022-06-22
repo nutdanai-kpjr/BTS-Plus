@@ -11,6 +11,7 @@ class PrimaryTextFormField extends StatelessWidget {
     this.onChanged,
     this.keyboardType,
     this.obscureText = false,
+    this.readOnly = false,
     this.inputFormatters,
     this.validator,
   }) : super(key: key);
@@ -22,11 +23,13 @@ class PrimaryTextFormField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final bool obscureText;
   final String? Function(String?)? validator;
+  final bool readOnly;
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: padding,
         child: TextFormField(
+          readOnly: readOnly,
           validator: validator,
           obscureText: obscureText,
           onChanged: onChanged,

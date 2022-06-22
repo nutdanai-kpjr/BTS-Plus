@@ -18,8 +18,6 @@ const double kBodyFontSize = 16.0;
 const double kBody2FontSize = 14.0;
 const double kBody3FontSize = 12.0;
 
-
-
 const TextStyle kHeader1TextStyle = TextStyle(
   fontSize: kHeader1FontSize,
   fontWeight: FontWeight.bold,
@@ -34,8 +32,6 @@ const TextStyle kBody2TextStyle = TextStyle(
   fontSize: kBody2FontSize,
   color: kSecondaryFontColor,
 );
-
-
 
 InputDecoration kTextFieldDecorationWithHintText(String hintText) =>
     InputDecoration(

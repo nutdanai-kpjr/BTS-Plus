@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bts_plus/components/buttons/layout/primary_button.dart';
 import 'package:bts_plus/components/cards/ticket_card.dart';
 import 'package:bts_plus/components/forms/station_selector.dart';
@@ -16,18 +18,20 @@ class BTSHomeNavPage extends StatefulWidget {
 }
 
 class _BTSHomeNavPageState extends State<BTSHomeNavPage> {
-  late String from = 'Item 1';
-  late String to = 'Item 2';
+  String from = 'Item 1';
+  String to = 'Item 2';
   onFromChanged(String value) {
     setState(() {
       from = value;
     });
+    log('onFromChanged: $value');
   }
 
   onToChanged(String value) {
     setState(() {
       to = value;
     });
+    log('onToChanged: $to');
   }
 
   @override
@@ -39,6 +43,7 @@ class _BTSHomeNavPageState extends State<BTSHomeNavPage> {
       PrimaryButton(
         text: 'Continue',
         onPressed: () {
+          log('from: $from, to: $to');
           Navigator.push(
               context,
               MaterialPageRoute(

@@ -2,10 +2,9 @@ import 'package:bts_plus/components/buttons/layout/quantity_selector_button.dart
 import 'package:bts_plus/components/headers/secondary_header.dart';
 import 'package:bts_plus/components/primary_divider.dart';
 import 'package:bts_plus/components/primary_scaffold.dart';
-import 'package:bts_plus/screens/bts_home_page.dart';
+import 'package:bts_plus/domains/ticket_transcation.dart';
 import 'package:flutter/material.dart';
 
-import '../components/buttons/layout/buttom_navigator_buttons.dart';
 import '../components/buttons/layout/primary_button.dart';
 import '../components/cards/balance_card.dart';
 import '../components/forms/station_selector.dart';
@@ -23,36 +22,36 @@ class BTSTicketPurchasePage extends StatefulWidget {
 }
 
 class _BTSTicketPurchasePageState extends State<BTSTicketPurchasePage> {
-  late String from = widget.from;
-  late String to = widget.to;
+  late TicketTransaction ticketTransaction = TicketTransaction(
+      from: widget.from, to: widget.to, quantity: widget.quantity);
   late int quantity = widget.quantity;
   onFromChanged(String value) {
     setState(() {
-      from = value;
+      ticketTransaction.from = value;
     });
   }
 
   onToChanged(String value) {
     setState(() {
-      to = value;
+      ticketTransaction.to = value;
     });
   }
 
   onQuantityChange(int value) {
     setState(() {
-      quantity = value;
+      ticketTransaction.quantity = value;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return PrimaryScaffold(
-        bottomNavigationBar: PrimaryButton(
+        bottomNavigationBar: const PrimaryButton(
           text: 'Confirm',
         ),
         body: SingleChildScrollView(
             child: Column(children: <Widget>[
-          SecondaryHeader(
+          const SecondaryHeader(
             title: 'Purchasing Ticket',
           ),
           TicketOptionSection(
@@ -60,10 +59,10 @@ class _BTSTicketPurchasePageState extends State<BTSTicketPurchasePage> {
             onToChanged: onToChanged,
             onQuantityChanged: onQuantityChange,
             quantity: quantity,
-            from: from,
-            to: to,
+            from: ticketTransaction.from,
+            to: ticketTransaction.to,
           ),
-          PaymentSection()
+          const PaymentSection()
         ])));
   }
 }
@@ -93,6 +92,8 @@ class _TicketOptionSectionState extends State<TicketOptionSection> {
   late final Function(String) onToChanged = widget.onToChanged;
   late final Function(int) onquantityChanged = widget.onQuantityChanged;
   late final int quantity = widget.quantity;
+  late final String from = widget.from;
+  late final String to = widget.to;
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +103,8 @@ class _TicketOptionSectionState extends State<TicketOptionSection> {
           StationSelector(
             onFromChanged: onFromchanged,
             onToChanged: onToChanged,
+            from: from,
+            to: to,
           ),
           Row(
             children: [
