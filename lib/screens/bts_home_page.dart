@@ -41,22 +41,32 @@ class _BTSHomeNavPageState extends State<BTSHomeNavPage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Column(children: <Widget>[
-      BTSHomeHeader(),
-      StationSelector(onFromChanged: onFromChanged, onToChanged: onToChanged),
-      PrimaryButton(
-        text: 'Continue',
-        onPressed: () {
-          log('from: $from, to: $to');
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => BTSTicketPurchasePage(
-                        from: from,
-                        to: to,
-                      )));
-        },
-      ),
-      AvailiableTicketSection()
+      const BTSHomeHeader(),
+      Container(
+          color: kThemeFontColor,
+          child: Column(
+            children: [
+              StationSelector(
+                  onFromChanged: onFromChanged, onToChanged: onToChanged),
+              PrimaryButton(
+                text: 'Continue',
+                onPressed: () {
+                  log('from: $from, to: $to');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => BTSTicketPurchasePage(
+                                from: from,
+                                to: to,
+                              )));
+                },
+              ),
+              SizedBox(
+                height: kHeight(context) * 0.035,
+              )
+            ],
+          )),
+      _AvailiableTicketSection()
     ]));
   }
 }
@@ -69,22 +79,35 @@ class BTSHomeHeader extends ConsumerWidget {
     final rabbitCard = ref.watch(authProvider)?.rabbitCard;
     return PrimaryHeader(
         title: 'Home',
-        height: kHeight(context) * .25,
+        height: kHeight(context) * .225,
         card: rabbitCard == null
             ? const NoRabbitCard()
             : const BalanceCard(balance: 0.0));
   }
 }
 
-class AvailiableTicketSection extends StatelessWidget {
-  const AvailiableTicketSection({Key? key}) : super(key: key);
+class _AvailiableTicketSection extends StatelessWidget {
+  const _AvailiableTicketSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(
+          horizontal: kWidth(context) * 0.05,
+          vertical: kHeight(context) * 0.02),
+      color: kThemeSecondaryBackgroundColor,
+      height: kHeight(context) * .3,
       child: Column(
         children: <Widget>[
-          Text('Availiable Tickets'),
+          Container(
+            margin: EdgeInsets.all(kHeight(context) * .01),
+            width: double.infinity,
+            child: const Text(
+              'Available Tickets',
+              textAlign: TextAlign.start,
+              style: kHeader3TextStyle,
+            ),
+          ),
           TicketCard(from: 'Asok', to: 'Siam')
         ],
       ),

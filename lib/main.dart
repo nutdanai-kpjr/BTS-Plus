@@ -1,3 +1,4 @@
+import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/domains/user.dart';
 import 'package:bts_plus/screens/login_page.dart';
 import 'package:bts_plus/screens/main_page.dart';
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(scaffoldBackgroundColor: kThemeFontColor),
       // initialRoute: '/login',
       // routes: {
       //   // When navigating to the "/" route, build the FirstScreen widget.

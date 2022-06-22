@@ -1,3 +1,4 @@
+import 'package:bts_plus/constants.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryDropDown extends StatefulWidget {
@@ -37,28 +38,39 @@ class _PrimaryDropDownState extends State<PrimaryDropDown> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton(
-      // Initial Value
-      value: dropdownvalue,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+        border: Border.all(color: kBorderColor, width: 1),
+      ),
+      child: DropdownButton(
+        underline: Container(),
 
-      // Down Arrow Icon
-      icon: const Icon(Icons.keyboard_arrow_down),
+        style: kBodyTextStyle,
+        isExpanded: true,
+        // Initial Value
+        value: dropdownvalue,
 
-      // Array list of items
-      items: items.map((String items) {
-        return DropdownMenuItem(
-          value: items,
-          child: Text(items),
-        );
-      }).toList(),
-      // After selecting the desired option,it will
-      // change button value to selected value
-      onChanged: (String? newValue) {
-        setState(() {
-          dropdownvalue = newValue!;
-        });
-        onChanged?.call(newValue!);
-      },
+        // Down Arrow Icon
+        icon: const Icon(Icons.keyboard_arrow_down),
+
+        // Array list of items
+        items: items.map((String items) {
+          return DropdownMenuItem(
+            value: items,
+            child: Text(items),
+          );
+        }).toList(),
+        // After selecting the desired option,it will
+        // change button value to selected value
+        onChanged: (String? newValue) {
+          setState(() {
+            dropdownvalue = newValue!;
+          });
+          onChanged?.call(newValue!);
+        },
+      ),
     );
   }
 }

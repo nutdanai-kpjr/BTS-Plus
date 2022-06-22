@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const Color kThemeColor = Color(0xFF0060A6);
 const Color kThemeFontColor = Color(0xFFFFFFFF);
-
+const Color kThemeSecondaryBackgroundColor = Color(0xFFFCFDFE);
 const Color kHeaderFontColor = Color(0XFF393939);
 const Color kPrimaryFontColor = Color(0XFF737373);
 const Color kSecondaryFontColor = Color(0XFFA8A8A8);
@@ -32,6 +32,12 @@ const TextStyle kHeader1TextStyle = TextStyle(
 );
 const TextStyle kHeader2TextStyle = TextStyle(
   fontSize: kHeader2FontSize,
+  fontWeight: FontWeight.bold,
+  color: kHeaderFontColor,
+);
+
+const TextStyle kHeader3TextStyle = TextStyle(
+  fontSize: kHeader3FontSize,
   fontWeight: FontWeight.bold,
   color: kHeaderFontColor,
 );

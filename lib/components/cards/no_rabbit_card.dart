@@ -13,20 +13,25 @@ class NoRabbitCard extends StatelessWidget {
         child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        const Text(
+        Text(
           'No Rabbit Card',
-          style: kHeader2TextStyle,
+          style: kHeader2TextStyle.copyWith(
+              color: kSecondaryFontColor, fontSize: kBodyFontSize),
         ),
-        SecondaryButton(
-            text: 'Register',
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const MainPage(
-                            pageIndex: 1,
-                          )));
-            }),
+        SizedBox(
+          height: kHeight(context) * 0.05,
+          width: kWidth(context) * 0.4,
+          child: SecondaryButton(
+              text: 'Register',
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MainPage(
+                              pageIndex: 1,
+                            )));
+              }),
+        ),
       ],
     ));
   }

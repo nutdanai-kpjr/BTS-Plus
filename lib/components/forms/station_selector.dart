@@ -1,3 +1,4 @@
+import 'package:bts_plus/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'layout/primary_dropdown.dart';
@@ -17,24 +18,43 @@ class StationSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.symmetric(
+          horizontal: kWidth(context) * 0.09,
+          vertical: kHeight(context) * 0.035),
       child: Column(
         children: <Widget>[
-          const Text('Station Selector'),
           Row(
             children: <Widget>[
-              Text('From'),
-              PrimaryDropDown(
-                defaultValue: from,
-                onChanged: onFromChanged,
+              const Expanded(
+                child: Text(
+                  'From',
+                  style: kHeader3TextStyle,
+                ),
+              ),
+              Expanded(
+                flex: 5,
+                child: PrimaryDropDown(
+                  defaultValue: from,
+                  onChanged: onFromChanged,
+                ),
               ),
             ],
           ),
+          SizedBox(height: kHeight(context) * 0.03),
           Row(
             children: <Widget>[
-              Text('To'),
-              PrimaryDropDown(
-                defaultValue: to,
-                onChanged: onToChanged,
+              const Expanded(
+                child: Text(
+                  'To',
+                  style: kHeader3TextStyle,
+                ),
+              ),
+              Expanded(
+                flex: 5,
+                child: PrimaryDropDown(
+                  defaultValue: to,
+                  onChanged: onToChanged,
+                ),
               ),
             ],
           ),
