@@ -21,33 +21,32 @@ class PrimaryHeader extends ConsumerWidget {
       height: height,
       child: Column(
         children: <Widget>[
-          Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.logout_rounded,
-                      color: kThemeFontColor,
-                    ),
-                    onPressed: () {
-                      ref.read(authProvider.notifier).clearUser();
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginPage(),
-                          ));
-                    },
-                  )
-                ],
-              )),
-          Expanded(
-            flex: 2,
-            child: Text(
-              title,
-              style: TextStyle(color: kThemeFontColor),
-            ),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Text(
+                title,
+                style: kHeader2TextStyle.copyWith(
+                    color: kThemeFontColor, fontWeight: FontWeight.normal),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.logout_rounded,
+                    color: kThemeFontColor,
+                  ),
+                  onPressed: () {
+                    ref.read(authProvider.notifier).clearUser();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ));
+                  },
+                ),
+              )
+            ],
           ),
           Expanded(
               flex: 3,
@@ -56,6 +55,7 @@ class PrimaryHeader extends ConsumerWidget {
                       vertical: kWidth(context) * 0.02,
                       horizontal: kWidth(context) * 0.04),
                   child: card)),
+          SizedBox(height: kHeight(context) * 0.02)
         ],
       ),
     );

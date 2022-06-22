@@ -69,8 +69,10 @@ class BTSHomeHeader extends ConsumerWidget {
     final rabbitCard = ref.watch(authProvider)?.rabbitCard;
     return PrimaryHeader(
         title: 'Home',
-        height: kHeight(context) * .2,
-        card: rabbitCard == null ? NoRabbitCard() : BalanceCard(balance: 0.0));
+        height: kHeight(context) * .25,
+        card: rabbitCard == null
+            ? const NoRabbitCard()
+            : const BalanceCard(balance: 0.0));
   }
 }
 

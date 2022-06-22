@@ -30,6 +30,11 @@ const TextStyle kHeader1TextStyle = TextStyle(
   fontWeight: FontWeight.bold,
   color: kHeaderFontColor,
 );
+const TextStyle kHeader2TextStyle = TextStyle(
+  fontSize: kHeader2FontSize,
+  fontWeight: FontWeight.bold,
+  color: kHeaderFontColor,
+);
 const TextStyle kBodyTextStyle = TextStyle(
   fontSize: kBodyFontSize,
   fontWeight: FontWeight.w500,
