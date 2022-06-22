@@ -1,20 +1,19 @@
-import 'package:bts_plus/components/buttons/layout/buttom_navigator_buttons.dart';
-import 'package:bts_plus/components/buttons/layout/primary_button.dart';
 import 'package:bts_plus/components/cards/customer_card.dart';
 import 'package:bts_plus/components/cards/layout/primary_card.dart';
 import 'package:bts_plus/components/forms/rabbit_registration_form.dart';
-import 'package:bts_plus/components/primary_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../components/headers/primary_header.dart';
 import '../constants.dart';
+import '../providers/auth_provider.dart';
 
-class RabbitHomeNavPage extends StatelessWidget {
-  const RabbitHomeNavPage({Key? key, required this.haveRabbitCard})
-      : super(key: key);
-  final bool haveRabbitCard;
+class RabbitHomeNavPage extends ConsumerWidget {
+  const RabbitHomeNavPage({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final rabbitCard = ref.watch(authProvider)?.rabbitCard;
+    final bool haveRabbitCard = rabbitCard != null;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -69,7 +68,7 @@ class RabbitRegisterSection extends StatelessWidget {
     return Column(
       children: [
         Image.asset('assets/images/rabbit_logo.png'),
-        Text('New Rabbit Card'),
+        const Text('New Rabbit Card'),
         RabbitRegistrationForm(),
       ],
     );

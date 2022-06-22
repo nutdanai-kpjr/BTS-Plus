@@ -1,33 +1,48 @@
 import 'package:bts_plus/domains/rabbit_card.dart';
+import 'package:bts_plus/main.dart';
 
 class User {
+  final String? id;
   final String userName;
   final String password;
   final String firstName;
   final String lastName;
   final DateTime birthDate;
-  final RabbitCard? rabbitCard;
+  RabbitCard? rabbitCard;
 
   User(
-      {required this.userName,
+      {this.id,
+      required this.userName,
       required this.password,
       required this.firstName,
       required this.lastName,
       required this.birthDate,
       this.rabbitCard});
 
-  User.fromJson(Map<String, dynamic> json)
-      : userName = json['userName'],
-        password = json['password'],
-        firstName = json['firstName'],
-        lastName = json['lastName'],
-        birthDate = DateTime.parse(json['birthDate']),
-        rabbitCard = json['rabbitCard'] != null
-            ? RabbitCard.fromJson(json['rabbitCard'])
-            : null;
+  User.fromJson(Map<String, dynamic> json,
+      {required userName, required password})
+      : userName = json['customerUser'] ?? userName,
+        password = json['customerPassword'] ?? password,
+        firstName = json['customerFirstName'],
+        lastName = json['customerLastName'],
+        birthDate = DateTime.parse(json['birthOfDate']),
+        id = json['customerID'],
+        rabbitCard = null;
+
+  Map<String, dynamic> toJson() => {
+        'customerID': id,
+        'customerUser': userName,
+        'customerPassword': password,
+        'customerFirstName': firstName,
+        'customerLastName': lastName,
+        'birthOfDate': birthDate.toIso8601String(),
+        'rabbitCard': rabbitCard?.toJson(),
+      };
+
   User.mockUp()
       : userName = 'userName',
         password = 'password',
+        id = null,
         firstName = 'firstName',
         lastName = 'lastName',
         birthDate = DateTime.now(),

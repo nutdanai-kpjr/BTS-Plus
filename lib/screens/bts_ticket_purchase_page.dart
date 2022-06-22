@@ -62,7 +62,7 @@ class _BTSTicketPurchasePageState extends State<BTSTicketPurchasePage> {
             from: ticketTransaction.from,
             to: ticketTransaction.to,
           ),
-          const PaymentSection()
+          const BTSPaymentSection()
         ])));
   }
 }
@@ -122,8 +122,8 @@ class _TicketOptionSectionState extends State<TicketOptionSection> {
   }
 }
 
-class PaymentSection extends StatelessWidget {
-  const PaymentSection({Key? key}) : super(key: key);
+class BTSPaymentSection extends StatelessWidget {
+  const BTSPaymentSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

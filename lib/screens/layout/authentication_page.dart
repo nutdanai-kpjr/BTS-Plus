@@ -1,6 +1,7 @@
 import 'package:bts_plus/components/buttons/layout/alternate_link_button.dart';
 import 'package:bts_plus/components/buttons/layout/primary_button.dart';
 import 'package:bts_plus/components/primary_scaffold.dart';
+import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/screens/bts_home_page.dart';
 import 'package:bts_plus/screens/main_page.dart';
 import 'package:flutter/material.dart';
@@ -24,21 +25,19 @@ class AuthenticationLayoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PrimaryScaffold(
+        resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
             child: Column(children: <Widget>[
-      ImageWithText(image: imageName, text: title),
-      formChild,
-      AlternateLinkButton(
-          title: alternativeTitle,
-          linkName: alternativeLinkName,
-          onPressed: alternativeLinkOnPressed),
-      PrimaryButton(
-          text: 'Home Page',
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MainPage()));
-          }),
-    ])));
+          ImageWithText(image: imageName, text: title),
+          Container(
+              margin: EdgeInsets.all(kWidth(context) * 0.05), child: formChild),
+          Center(
+            child: AlternateLinkButton(
+                title: alternativeTitle,
+                linkName: alternativeLinkName,
+                onPressed: alternativeLinkOnPressed),
+          ),
+        ])));
   }
 }
 
@@ -51,10 +50,18 @@ class ImageWithText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.all(kWidth(context) * 0.05),
       child: Column(
         children: <Widget>[
-          Image.asset('assets/images/$image'),
-          Text(text),
+          Image.asset(
+            'assets/images/$image',
+            width: kWidth(context) * 0.3,
+            height: kHeight(context) * 0.3,
+          ),
+          Text(
+            text,
+            style: kBigHeaderTextStyle,
+          ),
         ],
       ),
     );

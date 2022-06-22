@@ -20,22 +20,10 @@ class ButtomNavigatorButtons extends StatelessWidget {
             icon: Icon(Icons.home)),
         IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          RabbitHomeNavPage(haveRabbitCard: true)));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => RabbitHomeNavPage()));
             },
             icon: Icon(Icons.credit_card)),
-        IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          RabbitHomeNavPage(haveRabbitCard: false)));
-            },
-            icon: Icon(Icons.add_card))
       ],
     );
   }

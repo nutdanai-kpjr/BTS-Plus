@@ -18,8 +18,8 @@ class LoginPage extends StatelessWidget {
         alternativeTitle: 'Don\'t have account yet?',
         alternativeLinkName: 'Register',
         alternativeLinkOnPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => RegisterPage()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const RegisterPage()));
         });
   }
 }

@@ -3,19 +3,14 @@ import 'package:bts_plus/components/buttons/topup_button.dart';
 import 'package:bts_plus/components/cards/layout/primary_card.dart';
 import 'package:flutter/material.dart';
 
-class BalanceCard extends StatelessWidget {
-  const BalanceCard({Key? key, required this.balance}) : super(key: key);
-  final double balance;
+class NoRabbitCard extends StatelessWidget {
+  const NoRabbitCard({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return PrimaryCard(
         child: Row(
       children: [
-        Column(children: [
-          Text('Card Balance'),
-          Text('$balance'),
-        ]),
-        TopUpButton()
+        Text('No Rabbit Card'),
       ],
     ));
   }

@@ -1,14 +1,17 @@
 import 'dart:developer';
 
 import 'package:bts_plus/components/buttons/layout/primary_button.dart';
+import 'package:bts_plus/components/cards/no_rabbit_card.dart';
 import 'package:bts_plus/components/cards/ticket_card.dart';
 import 'package:bts_plus/components/forms/station_selector.dart';
 import 'package:bts_plus/components/headers/primary_header.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/screens/bts_ticket_purchase_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../components/cards/balance_card.dart';
+import '../providers/auth_provider.dart';
 
 class BTSHomeNavPage extends StatefulWidget {
   const BTSHomeNavPage({Key? key}) : super(key: key);
@@ -58,15 +61,16 @@ class _BTSHomeNavPageState extends State<BTSHomeNavPage> {
   }
 }
 
-class BTSHomeHeader extends StatelessWidget {
+class BTSHomeHeader extends ConsumerWidget {
   const BTSHomeHeader({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final rabbitCard = ref.watch(authProvider)?.rabbitCard;
     return PrimaryHeader(
         title: 'Home',
         height: kHeight(context) * .2,
-        card: BalanceCard(balance: 0.0));
+        card: rabbitCard == null ? NoRabbitCard() : BalanceCard(balance: 0.0));
   }
 }
 

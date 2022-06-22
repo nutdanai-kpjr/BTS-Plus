@@ -14,11 +14,11 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
         style: OutlinedButton.styleFrom(
-          side: BorderSide(color: color, width: 2.0),
+          // side: BorderSide(color: color, width: 2.0),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          primary: kPrimaryFontColor,
-          // backgroundColor: w,
+          primary: kThemeFontColor,
+          backgroundColor: kThemeColor,
           textStyle: kBodyTextStyle,
         ),
         onPressed: onPressed,

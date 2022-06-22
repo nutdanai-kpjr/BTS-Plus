@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bts_plus/components/forms/layout/primary_dropdown.dart';
 import 'package:bts_plus/domains/rabbit_card.dart';
 import 'package:bts_plus/providers/auth_provider.dart';
@@ -28,7 +30,8 @@ class RabbitRegistrationForm extends ConsumerWidget {
         TextEditingController(text: user.lastName); //TOFIX
     final usernameController =
         TextEditingController(text: user.userName); //TOFIX
-    final DateTime birthDate = user.birthDate; //TOFIX
+    final DateTime birthDate = user.birthDate;
+    final String? btsUserId = user.id;
     String type = 'Adult';
 
     return Form(
@@ -90,8 +93,11 @@ class RabbitRegistrationForm extends ConsumerWidget {
                     firstName: firstNameController.text,
                     lastName: lastNameController.text,
                     userName: usernameController.text,
+                    btsUserId: btsUserId,
                     birthDate: birthDate);
+                log(btsUserId ?? 'id not found');
                 await addRabbitCard(newRabbitCard, context: context);
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(

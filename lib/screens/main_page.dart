@@ -10,18 +10,18 @@ import '../domains/user.dart';
 import 'login_page.dart';
 
 class MainPage extends ConsumerStatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  const MainPage({Key? key, this.pageIndex = 0}) : super(key: key);
+  final int pageIndex;
 
   @override
   MainPageState createState() => MainPageState();
 }
 
 class MainPageState extends ConsumerState<MainPage> {
-  int _pageIndex = 0;
+  late int _pageIndex = widget.pageIndex;
   final List _children = [
     const BTSHomeNavPage(),
-    const RabbitHomeNavPage(haveRabbitCard: true),
-    const RabbitHomeNavPage(haveRabbitCard: false),
+    const RabbitHomeNavPage(),
   ];
   void onTabTapped(int index) {
     setState(() {
@@ -51,10 +51,6 @@ class MainPageState extends ConsumerState<MainPage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.mail),
-              label: 'Rabbit',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.mail),
