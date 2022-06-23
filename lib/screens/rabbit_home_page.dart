@@ -23,7 +23,7 @@ class RabbitHomeNavPage extends ConsumerWidget {
           RabbitHomeHeader(
             haveRabbitCard: haveRabbitCard,
           ),
-          !haveRabbitCard ? TransactionSection() : RabbitRegisterSection()
+          haveRabbitCard ? TransactionSection() : RabbitRegisterSection()
         ],
       ),
     );
@@ -90,9 +90,12 @@ class RabbitRegisterSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Image.asset('assets/images/rabbit_logo.png'),
-        const Text('New Rabbit Card'),
-        RabbitRegistrationForm(),
+        Container(
+            margin: EdgeInsets.all(kWidth(context) * 0.05),
+            child: Image.asset('assets/images/rabbit_logo.png')),
+        Container(
+            margin: EdgeInsets.all(kWidth(context) * 0.05),
+            child: RabbitRegistrationForm()),
       ],
     );
   }

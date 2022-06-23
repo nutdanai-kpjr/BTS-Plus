@@ -83,7 +83,7 @@ class RegistrationForm extends ConsumerWidget {
                         {
                           birthDate = value,
                           _dateOfBirthController.text =
-                              '${value.day}/${value.month}/${value.year}',
+                              getFormatDate(birthDate!),
                         }
                     });
               },

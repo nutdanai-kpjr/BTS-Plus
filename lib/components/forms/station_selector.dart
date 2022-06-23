@@ -61,6 +61,7 @@ class _StationSelectorState extends State<StationSelector> {
                       Expanded(
                         flex: 5,
                         child: PrimaryDropDown(
+                          title: 'From',
                           defaultValue: from,
                           onChanged: onFromChanged,
                           items: stationNames,
@@ -80,6 +81,7 @@ class _StationSelectorState extends State<StationSelector> {
                       Expanded(
                         flex: 5,
                         child: PrimaryDropDown(
+                          title: 'To',
                           defaultValue: to,
                           onChanged: onToChanged,
                           items: stationNames,

@@ -1,21 +1,24 @@
 import 'package:bts_plus/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 
 class PrimaryTextFormField extends StatelessWidget {
-  const PrimaryTextFormField({
-    Key? key,
-    required this.title,
-    this.controller,
-    this.padding = const EdgeInsets.all(8.0),
-    this.onChanged,
-    this.keyboardType,
-    this.obscureText = false,
-    this.readOnly = false,
-    this.inputFormatters,
-    this.onTap,
-    this.validator,
-  }) : super(key: key);
+  const PrimaryTextFormField(
+      {Key? key,
+      required this.title,
+      this.decoration,
+      this.controller,
+      this.padding = const EdgeInsets.all(8.0),
+      this.onChanged,
+      this.keyboardType,
+      this.obscureText = false,
+      this.readOnly = false,
+      this.inputFormatters,
+      this.onTap,
+      this.validator,
+      this.focusBorderColor = kBTSThemeColor})
+      : super(key: key);
   final String title;
   final Function(String)? onChanged;
   final TextEditingController? controller;
@@ -26,6 +29,8 @@ class PrimaryTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool readOnly;
   final Function()? onTap;
+  final InputDecoration? decoration;
+  final Color focusBorderColor;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,7 +45,8 @@ class PrimaryTextFormField extends StatelessWidget {
           style: kBodyTextStyle,
           keyboardType: keyboardType,
           inputFormatters: inputFormatters,
-          decoration: kTextFieldDecorationWithHintText(title),
+          decoration: decoration ??
+              kTextFieldDecorationWithLabelText(title, color: focusBorderColor),
         ));
   }
 }

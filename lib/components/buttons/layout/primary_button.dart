@@ -5,7 +5,10 @@ import '../../../constants.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton(
-      {Key? key, required this.text, this.onPressed, this.color = kBorderColor})
+      {Key? key,
+      required this.text,
+      this.onPressed,
+      this.color = kBTSThemeColor})
       : super(key: key);
   final String text;
   final Function()? onPressed;
@@ -18,7 +21,7 @@ class PrimaryButton extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           primary: kThemeFontColor,
-          backgroundColor: kBTSThemeColor,
+          backgroundColor: color,
           textStyle: kBodyTextStyle,
         ),
         onPressed: onPressed,

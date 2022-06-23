@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bts_plus/components/forms/layout/primary_dropdown.dart';
+import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/domains/rabbit_card.dart';
 import 'package:bts_plus/providers/auth_provider.dart';
 import 'package:bts_plus/screens/main_page.dart';
@@ -30,6 +31,8 @@ class RabbitRegistrationForm extends ConsumerWidget {
         TextEditingController(text: user.lastName); //TOFIX
     final usernameController =
         TextEditingController(text: user.userName); //TOFIX
+    final dateOfBirthController =
+        TextEditingController(text: getFormatDate(user.birthDate));
     final DateTime birthDate = user.birthDate;
     final String? btsUserId = user.id;
     String type = 'Adult';
@@ -38,15 +41,22 @@ class RabbitRegistrationForm extends ConsumerWidget {
       key: _formKey,
       child: Column(
         children: <Widget>[
-          const Text('Register Form'),
+          Container(
+            margin: EdgeInsets.only(bottom: kHeight(context) * 0.025),
+            child: Text(
+              'Register your rabbit card',
+              style: kHeader2TextStyle,
+            ),
+          ),
           PrimaryTextFormField(
-              title: 'Enter 6 PIN',
+              title: 'PIN (6 Numbers)',
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                 LengthLimitingTextInputFormatter(6)
               ],
               keyboardType: TextInputType.number,
               controller: _rabbitPinController,
+              focusBorderColor: kRabbitThemeColor,
               obscureText: true,
               validator: basicValidator()),
           PrimaryTextFormField(
@@ -57,32 +67,47 @@ class RabbitRegistrationForm extends ConsumerWidget {
               ],
               keyboardType: TextInputType.number,
               controller: _confirmRabbitPinController,
+              focusBorderColor: kRabbitThemeColor,
               obscureText: true,
               validator: basicValidator()),
           PrimaryTextFormField(
               title: 'Username',
               controller: usernameController,
+              focusBorderColor: kRabbitThemeColor,
               readOnly: true,
               validator: basicValidator()),
           PrimaryTextFormField(
               title: 'First Name',
               controller: firstNameController,
+              focusBorderColor: kRabbitThemeColor,
               readOnly: true,
               validator: basicValidator()),
           PrimaryTextFormField(
               title: 'Last Name',
               readOnly: true,
               controller: lastNameController,
+              focusBorderColor: kRabbitThemeColor,
               validator: basicValidator()),
-          Text('Date of Birth ${birthDate.toIso8601String()}'),
-          PrimaryDropDown(
-            items: const ['Student', 'Adult', 'Senior'],
-            defaultValue: 'Adult',
-            onChanged: (value) {
-              type = value;
-            },
+          PrimaryTextFormField(
+            readOnly: true,
+            title: 'Date of Birth',
+            controller: dateOfBirthController,
+            focusBorderColor: kRabbitThemeColor,
+          ),
+          Container(
+            margin: EdgeInsets.all(kWidth(context) * 0.05),
+            child: PrimaryDropDown(
+              title: 'Type',
+              focusBorderColor: kRabbitThemeColor,
+              items: const ['Student', 'Adult', 'Senior'],
+              defaultValue: 'Adult',
+              onChanged: (value) {
+                type = value;
+              },
+            ),
           ),
           PrimaryButton(
+            color: kRabbitThemeColor,
             text: 'Register',
             onPressed: () async {
               if (_formKey.currentState!.validate()) {

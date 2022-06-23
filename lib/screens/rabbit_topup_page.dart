@@ -4,6 +4,7 @@ import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
 import 'package:bts_plus/components/forms/layout/primary_dropdown.dart';
 import 'package:bts_plus/components/headers/secondary_header.dart';
 import 'package:bts_plus/components/primary_scaffold.dart';
+import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/screens/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -138,6 +139,8 @@ class RabbitPaymentSection extends StatelessWidget {
         child: Column(children: <Widget>[
       const Text('Payment Section'),
       PrimaryDropDown(
+        title: 'Payment Method',
+        focusBorderColor: kRabbitThemeColor,
         items: paymentMethods,
         defaultValue: paymentMethod,
         onChanged: onPaymentChanged,

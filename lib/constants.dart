@@ -85,5 +85,24 @@ InputDecoration kTextFieldDecorationWithHintText(String hintText) =>
           color: kSecondaryFontColor,
         ));
 
+InputDecoration kTextFieldDecorationWithLabelText(String label,
+        {Color color = kBTSThemeColor}) =>
+    InputDecoration(
+      label: Text(label),
+      labelStyle: const TextStyle(
+        fontWeight: FontWeight.normal,
+        // fontSize: kListItemSubTitleFontSize,
+        color: kSecondaryFontColor,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: color.withOpacity(0.5), width: 1.0),
+        borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        borderSide: BorderSide(color: kBorderColor, width: 1.0),
+      ),
+    );
+
 double kWidth(context) => MediaQuery.of(context).size.width;
 double kHeight(context) => MediaQuery.of(context).size.height;

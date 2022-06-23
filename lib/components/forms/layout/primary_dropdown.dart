@@ -12,11 +12,17 @@ class PrimaryDropDown extends StatefulWidget {
         'Item 5',
       ],
       this.defaultValue = 'Item 1',
-      this.onChanged})
+      this.focusBorderColor = kBTSThemeColor,
+      this.onChanged,
+      required this.title,
+      this.decoration})
       : super(key: key);
   final List<String> items;
+  final String title;
+  final InputDecoration? decoration;
   final String defaultValue;
   final Function(String)? onChanged;
+  final Color focusBorderColor;
 
   @override
   State<PrimaryDropDown> createState() => _PrimaryDropDownState();
@@ -28,49 +34,50 @@ class _PrimaryDropDownState extends State<PrimaryDropDown> {
   // List of items in our dropdown menu
   late List<String> items;
   late Function(String)? onChanged;
+  late InputDecoration? decoration;
+  late String title;
+  late Color focusBorderColor;
   @override
   void initState() {
     dropdownvalue = widget.defaultValue;
     items = widget.items;
     onChanged = widget.onChanged;
+    decoration = widget.decoration;
+    title = widget.title;
+    focusBorderColor = widget.focusBorderColor;
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.0),
-        border: Border.all(color: kBorderColor, width: 1),
-      ),
-      child: DropdownButton(
-        underline: Container(),
+    return DropdownButtonFormField(
+      decoration: decoration ??
+          kTextFieldDecorationWithLabelText(title, color: focusBorderColor),
 
-        style: kBodyTextStyle,
-        isExpanded: true,
-        // Initial Value
-        value: dropdownvalue,
+      style: kBodyTextStyle,
+      isExpanded: true,
+      // Initial Value
+      value: dropdownvalue,
 
-        // Down Arrow Icon
-        icon: const Icon(Icons.keyboard_arrow_down),
+      // Down Arrow Icon
+      icon: const Icon(Icons.keyboard_arrow_down),
 
-        // Array list of items
-        items: items.map((String items) {
-          return DropdownMenuItem(
-            value: items,
-            child: Text(items),
-          );
-        }).toList(),
-        // After selecting the desired option,it will
-        // change button value to selected value
-        onChanged: (String? newValue) {
-          setState(() {
-            dropdownvalue = newValue!;
-          });
-          onChanged?.call(newValue!);
-        },
-      ),
+      // Array list of items
+      items: items.map((String items) {
+        return DropdownMenuItem(
+          value: items,
+          child: Text(items),
+        );
+      }).toList(),
+      // After selecting the desired option,it will
+      // change button value to selected value
+      onChanged: (String? newValue) {
+        setState(() {
+          dropdownvalue = newValue!;
+        });
+        onChanged?.call(newValue!);
+      },
     );
   }
 }
