@@ -13,14 +13,17 @@ class BackNavigatorButton extends StatelessWidget {
     return Row(
       children: [
         BackButton(
-          color: kPrimaryFontColor,
+          color: kThemeFontColor,
           onPressed: onPressed,
         ),
         InkWell(
-          onTap: onPressed,
-          child: const Text(
+          onTap: () {
+            onPressed?.call();
+            Navigator.maybePop(context);
+          },
+          child: Text(
             'Back',
-            style: kBodyTextStyle,
+            style: kBody2TextStyle.copyWith(color: kThemeFontColor),
           ),
         )
       ],

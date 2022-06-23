@@ -1,15 +1,21 @@
 import 'package:bts_plus/components/buttons/layout/quantity_selector_button.dart';
 import 'package:bts_plus/components/headers/secondary_header.dart';
+import 'package:bts_plus/components/primary_circular_progress_indicator.dart';
 import 'package:bts_plus/components/primary_divider.dart';
 import 'package:bts_plus/components/primary_scaffold.dart';
+import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/domains/ticket_transcation.dart';
+import 'package:bts_plus/domains/user.dart';
+import 'package:bts_plus/services/btsController.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../components/buttons/layout/primary_button.dart';
 import '../components/cards/balance_card.dart';
 import '../components/forms/station_selector.dart';
+import '../providers/auth_provider.dart';
 
-class BTSTicketPurchasePage extends StatefulWidget {
+class BTSTicketPurchasePage extends ConsumerStatefulWidget {
   const BTSTicketPurchasePage(
       {Key? key, required this.from, required this.to, this.quantity = 1})
       : super(key: key);
@@ -18,13 +24,19 @@ class BTSTicketPurchasePage extends StatefulWidget {
   final int quantity;
 
   @override
-  State<BTSTicketPurchasePage> createState() => _BTSTicketPurchasePageState();
+  BTSTicketPurchasePageState createState() => BTSTicketPurchasePageState();
 }
 
-class _BTSTicketPurchasePageState extends State<BTSTicketPurchasePage> {
-  late TicketTransaction ticketTransaction = TicketTransaction(
-      from: widget.from, to: widget.to, quantity: widget.quantity);
+class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
+  late TicketTransaction ticketTransaction;
   late int quantity = widget.quantity;
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(authProvider);
+  }
+
   onFromChanged(String value) {
     setState(() {
       ticketTransaction.from = value;
@@ -45,9 +57,18 @@ class _BTSTicketPurchasePageState extends State<BTSTicketPurchasePage> {
 
   @override
   Widget build(BuildContext context) {
+    ticketTransaction = TicketTransaction(
+        userId: ref.watch(authProvider)!.id!,
+        from: widget.from,
+        to: widget.to,
+        quantity: widget.quantity);
     return PrimaryScaffold(
-        bottomNavigationBar: const PrimaryButton(
+        bottomNavigationBar: PrimaryButton(
           text: 'Confirm',
+          onPressed: () async {
+            await getTicketTransaction(ticketTransaction,
+                context: context, mockUp: true);
+          },
         ),
         body: SingleChildScrollView(
             child: Column(children: <Widget>[
@@ -62,7 +83,9 @@ class _BTSTicketPurchasePageState extends State<BTSTicketPurchasePage> {
             from: ticketTransaction.from,
             to: ticketTransaction.to,
           ),
-          const BTSPaymentSection()
+          BTSPaymentSection(
+            ticketTransaction: ticketTransaction,
+          )
         ])));
   }
 }
@@ -107,8 +130,12 @@ class _TicketOptionSectionState extends State<TicketOptionSection> {
             to: to,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Number of Ticket'),
+              const Text(
+                'Number of Ticket',
+                style: kHeader3TextStyle,
+              ),
               QuantitySelector(
                 quantity: quantity,
                 onChanged: onquantityChanged,
@@ -122,39 +149,65 @@ class _TicketOptionSectionState extends State<TicketOptionSection> {
   }
 }
 
-class BTSPaymentSection extends StatelessWidget {
-  const BTSPaymentSection({Key? key}) : super(key: key);
+class BTSPaymentSection extends StatefulWidget {
+  const BTSPaymentSection({Key? key, required this.ticketTransaction})
+      : super(key: key);
+  final TicketTransaction ticketTransaction;
+  @override
+  State<BTSPaymentSection> createState() => _BTSPaymentSectionState();
+}
+
+class _BTSPaymentSectionState extends State<BTSPaymentSection> {
+  late TicketTransaction ticketTransaction = widget.ticketTransaction;
+  late Future<TicketTransaction> _getTicketTransactionWithPrice;
+  @override
+  void initState() {
+    _getTicketTransactionWithPrice =
+        getTicketTransaction(ticketTransaction, context: context, mockUp: true);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Text('Pricing'),
-          Row(
-            children: [
-              Text('Sub-Total'),
-              Text('0.0'),
-            ],
-          ),
-          Row(
-            children: [
-              Text('Discount'),
-              Text('0.0'),
-            ],
-          ),
-          PrimaryDivider(),
-          Row(
-            children: [
-              Text('Total'),
-              Text('0.0'),
-            ],
-          ),
-          BalanceCard(
-            balance: 0.0,
-          )
-        ],
-      ),
-    );
+    return FutureBuilder(
+        future: _getTicketTransactionWithPrice,
+        builder: (context, AsyncSnapshot<TicketTransaction> snapshot) {
+          if (snapshot.hasData) {
+            var ticketTransactionWithPrice = snapshot.data;
+
+            return Container(
+              child: Column(
+                children: <Widget>[
+                  Text('Pricing'),
+                  Row(
+                    children: [
+                      Text('Sub-Total'),
+                      Text('${ticketTransactionWithPrice?.totalPrice ?? '0'}'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text('Discount'),
+                      Text('${ticketTransactionWithPrice?.discount ?? '0'}'),
+                    ],
+                  ),
+                  PrimaryDivider(),
+                  Row(
+                    children: [
+                      Text('Total'),
+                      Text('Discount'),
+                      Text('${ticketTransactionWithPrice?.finalPrice ?? '0'}'),
+                    ],
+                  ),
+                  BalanceCard(
+                    balance: 0.0,
+                  )
+                ],
+              ),
+            );
+          } else {
+            return PrimaryCircularProgressIndicator();
+          }
+        });
   }
 }

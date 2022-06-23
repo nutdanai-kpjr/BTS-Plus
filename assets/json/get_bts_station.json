@@ -1,0 +1,14 @@
+[
+  {
+    "stationID": "S001",
+    "stationName": "Phaya Thai",
+    "stationIndex": 1,
+    "stationLocate": "S"
+  },
+  {
+    "stationID": "S002",
+    "stationName": "Ratchathewi",
+    "stationIndex": 2,
+    "stationLocate": "S"
+  }
+]

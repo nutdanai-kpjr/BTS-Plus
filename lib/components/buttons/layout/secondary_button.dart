@@ -19,7 +19,9 @@ class SecondaryButton extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           primary: kPrimaryFontColor,
           // backgroundColor: w,
-          textStyle: kBody2TextStyle.copyWith(color: color),
+          textStyle: kBody2TextStyle.copyWith(
+            color: color,
+          ),
         ),
         onPressed: onPressed,
         child: Text(text, style: kBody2TextStyle.copyWith(color: color)));

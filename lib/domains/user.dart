@@ -42,7 +42,7 @@ class User {
   User.mockUp()
       : userName = 'userName',
         password = 'password',
-        id = null,
+        id = 'a',
         firstName = 'firstName',
         lastName = 'lastName',
         birthDate = DateTime.now(),
