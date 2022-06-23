@@ -12,20 +12,18 @@ class BackNavigatorButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        BackButton(
-          color: kThemeFontColor,
-          onPressed: onPressed,
-        ),
-        InkWell(
-          onTap: () {
-            onPressed?.call();
-            Navigator.maybePop(context);
-          },
-          child: Text(
-            'Back',
-            style: kBody2TextStyle.copyWith(color: kThemeFontColor),
-          ),
-        )
+        TextButton.icon(
+            onPressed: () {
+              onPressed?.call();
+              Navigator.maybePop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: kThemeFontColor,
+              size: kBodyFontSize,
+            ),
+            label: Text('Back',
+                style: kBody2TextStyle.copyWith(color: kThemeFontColor))),
       ],
     );
   }

@@ -5,7 +5,10 @@ import '../../../constants.dart';
 
 class SecondaryButton extends StatelessWidget {
   const SecondaryButton(
-      {Key? key, required this.text, this.onPressed, this.color = kThemeColor})
+      {Key? key,
+      required this.text,
+      this.onPressed,
+      this.color = kBTSThemeColor})
       : super(key: key);
   final String text;
   final Function()? onPressed;

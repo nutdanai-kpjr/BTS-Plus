@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-const Color kThemeColor = Color(0xFF0060A6);
+const Color kBTSThemeColor = Color(0xFF0060A6);
 const Color kThemeFontColor = Color(0xFFFFFFFF);
 const Color kThemeSecondaryBackgroundColor = Color(0xFFFCFDFE);
 const Color kHeaderFontColor = Color(0XFF393939);
 const Color kPrimaryFontColor = Color(0XFF737373);
 const Color kSecondaryFontColor = Color(0XFFA8A8A8);
 const Color kBorderColor = Color(0XFFECECEC);
-
+const Color kGreen = Color(0XFF009245);
 const double kBigHeaderFontSize = 36.0;
 const double kHeader1FontSize = 24.0;
 const double kHeader2FontSize = 20.0;
@@ -70,7 +70,7 @@ InputDecoration kTextFieldDecorationWithHintText(String hintText) =>
     InputDecoration(
         focusedBorder: OutlineInputBorder(
           borderSide:
-              BorderSide(color: kThemeColor.withOpacity(0.5), width: 1.0),
+              BorderSide(color: kBTSThemeColor.withOpacity(0.5), width: 1.0),
           borderRadius: const BorderRadius.all(Radius.circular(15.0)),
         ),
         enabledBorder: const OutlineInputBorder(

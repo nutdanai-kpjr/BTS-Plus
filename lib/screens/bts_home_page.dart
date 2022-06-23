@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../components/cards/balance_card.dart';
+import '../domains/ticket.dart';
 import '../providers/auth_provider.dart';
 
 class BTSHomeNavPage extends StatefulWidget {
@@ -43,12 +44,18 @@ class _BTSHomeNavPageState extends State<BTSHomeNavPage> {
         child: Column(children: <Widget>[
       const BTSHomeHeader(),
       Container(
+          margin: EdgeInsets.symmetric(
+              horizontal: kWidth(context) * 0.09,
+              vertical: kHeight(context) * 0.025),
           color: kThemeFontColor,
           child: Column(
             children: [
               StationSelector(
                   onFromChanged: onFromChanged, onToChanged: onToChanged),
-              SizedBox(
+              Container(
+                margin: EdgeInsets.only(
+                  top: kHeight(context) * 0.025,
+                ),
                 width: kWidth(context) * 0.5,
                 child: PrimaryButton(
                   text: 'Continue',
@@ -64,9 +71,6 @@ class _BTSHomeNavPageState extends State<BTSHomeNavPage> {
                   },
                 ),
               ),
-              SizedBox(
-                height: kHeight(context) * 0.025,
-              )
             ],
           )),
       _AvailiableTicketSection()
@@ -111,7 +115,7 @@ class _AvailiableTicketSection extends StatelessWidget {
             ),
           ),
           for (var i in List.generate(10, (i) => i))
-            TicketCard(from: 'Asok', to: 'Siam')
+            TicketCard(ticket: Ticket.mockUp())
         ],
       ),
     );

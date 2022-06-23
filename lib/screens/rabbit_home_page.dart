@@ -1,9 +1,12 @@
 import 'package:bts_plus/components/cards/customer_card.dart';
 import 'package:bts_plus/components/cards/layout/primary_card.dart';
+import 'package:bts_plus/components/cards/no_rabbit_card.dart';
 import 'package:bts_plus/components/forms/rabbit_registration_form.dart';
+import 'package:bts_plus/domains/rabbit_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../components/cards/transaction_card.dart';
 import '../components/headers/primary_header.dart';
 import '../constants.dart';
 import '../providers/auth_provider.dart';
@@ -20,7 +23,7 @@ class RabbitHomeNavPage extends ConsumerWidget {
           RabbitHomeHeader(
             haveRabbitCard: haveRabbitCard,
           ),
-          haveRabbitCard ? TransactionSection() : RabbitRegisterSection()
+          !haveRabbitCard ? TransactionSection() : RabbitRegisterSection()
         ],
       ),
     );
@@ -42,7 +45,7 @@ class RabbitHomeHeader extends StatelessWidget {
                 name: 'John Doe',
                 type: 'Adult',
               )
-            : PrimaryCard(child: Text('No Rabbit Card')));
+            : NoRabbitCard());
   }
 }
 
@@ -51,11 +54,28 @@ class TransactionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('My Transactions'),
-        Text('Listview Builder'),
-      ],
+    return Container(
+      padding: EdgeInsets.symmetric(
+          horizontal: kWidth(context) * 0.05,
+          vertical: kHeight(context) * 0.02),
+      color: kThemeSecondaryBackgroundColor,
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.all(kHeight(context) * .01),
+            width: double.infinity,
+            child: const Text(
+              'My Transactions',
+              textAlign: TextAlign.start,
+              style: kHeader3TextStyle,
+            ),
+          ),
+          for (var i in List.generate(10, (i) => i))
+            TransactionCard(
+              rabbitTransaction: RabbitTransaction.mockUp(),
+            )
+        ],
+      ),
     );
   }
 }

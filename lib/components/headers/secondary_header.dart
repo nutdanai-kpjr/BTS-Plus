@@ -12,17 +12,19 @@ class SecondaryHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: kThemeColor,
-      height: kHeight(context) * 0.15,
-      child: Column(
+      color: kBTSThemeColor,
+      height: kHeight(context) * 0.1,
+      child: Stack(
+        alignment: Alignment.center,
         children: <Widget>[
-          Expanded(flex: 1, child: BackNavigatorButton()),
-          Expanded(
-            flex: 2,
-            child: Text(
-              title,
-              style: TextStyle(color: kThemeFontColor),
-            ),
+          const Align(
+            alignment: Alignment.topLeft,
+            child: BackNavigatorButton(),
+          ),
+          Text(
+            title,
+            style: kHeader2TextStyle.copyWith(
+                color: kThemeFontColor, fontWeight: FontWeight.normal),
           ),
         ],
       ),

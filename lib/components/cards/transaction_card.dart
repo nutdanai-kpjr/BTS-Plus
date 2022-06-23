@@ -1,12 +1,18 @@
 import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
 import 'package:bts_plus/components/cards/layout/primary_card.dart';
+import 'package:bts_plus/components/utils.dart';
+import 'package:bts_plus/domains/rabbit_transaction.dart';
 import 'package:flutter/material.dart';
 
-class TicketCard extends StatelessWidget {
-  const TicketCard({Key? key, required this.from, required this.to})
-      : super(key: key);
-  final String from;
-  final String to;
+import '../../constants.dart';
+import '../buttons/layout/primary_button.dart';
+
+class TransactionCard extends StatelessWidget {
+  const TransactionCard({
+    Key? key,
+    required this.rabbitTransaction,
+  }) : super(key: key);
+  final RabbitTransaction rabbitTransaction;
   // final Datetime date;
   // final String buyer;
   // final int stationDistance;
@@ -15,26 +21,27 @@ class TicketCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PrimaryCard(
-        child: Column(
-      children: [
-        Expanded(flex: 1, child: Text('TicketID')),
-        Expanded(
-            flex: 4,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Row(
-                    children: [Text('From'), Text(from)],
+        height: kHeight(context) * 0.12,
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      '${rabbitTransaction.title}',
+                      style: kHeader5TextStyle,
+                    ),
                   ),
-                ),
-                Expanded(
-                    child: Row(
-                  children: [Text('To'), Text(to)],
-                )),
-                Expanded(child: SecondaryButton(text: 'Use'))
-              ],
-            ))
-      ],
-    ));
+                  SizedBox(width: kWidth(context) * 0.02),
+                  Text('${getFormatDate(rabbitTransaction.date)}',
+                      style: kBodyTextStyle)
+                ],
+              ),
+            ),
+            Expanded(child: Text('${rabbitTransaction.amount}'))
+          ],
+        ));
   }
 }

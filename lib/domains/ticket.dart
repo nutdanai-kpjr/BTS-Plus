@@ -12,5 +12,8 @@ class Ticket {
   //buydate
   //status
   //
-
+  Ticket.mockUp()
+      : from = 'Asok',
+        to = 'Siam',
+        price = 100;
 }

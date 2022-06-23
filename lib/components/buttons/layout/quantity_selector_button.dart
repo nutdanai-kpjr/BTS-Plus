@@ -1,3 +1,4 @@
+import 'package:bts_plus/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../forms/layout/primary_dropdown.dart';
@@ -21,13 +22,21 @@ class _QuantitySelectorState extends State<QuantitySelector> {
         children: <Widget>[
           IconButton(
               onPressed: () {
-                setState(() {
-                  _quantity--;
-                });
-                onChanged(_quantity);
+                if (_quantity > 1) {
+                  setState(() {
+                    _quantity--;
+                  });
+                  onChanged(_quantity);
+                }
               },
-              icon: Icon(Icons.remove)),
-          Text('$_quantity'),
+              icon: Icon(
+                Icons.remove,
+                color: kPrimaryFontColor,
+              )),
+          Text(
+            '$_quantity',
+            style: kBodyTextStyle,
+          ),
           IconButton(
               onPressed: () {
                 setState(() {
@@ -35,7 +44,10 @@ class _QuantitySelectorState extends State<QuantitySelector> {
                 });
                 onChanged(_quantity);
               },
-              icon: Icon(Icons.add))
+              icon: Icon(
+                Icons.add,
+                color: kPrimaryFontColor,
+              )),
         ],
       ),
     );

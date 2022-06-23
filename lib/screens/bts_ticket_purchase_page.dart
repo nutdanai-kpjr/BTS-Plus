@@ -6,6 +6,7 @@ import 'package:bts_plus/components/primary_scaffold.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/domains/ticket_transcation.dart';
 import 'package:bts_plus/domains/user.dart';
+import 'package:bts_plus/screens/main_page.dart';
 import 'package:bts_plus/services/btsController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,6 +56,14 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
     });
   }
 
+  onConfrim() async {
+    await getTicketTransaction(ticketTransaction,
+        context: context, mockUp: true);
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MainPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     ticketTransaction = TicketTransaction(
@@ -63,29 +72,37 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
         to: widget.to,
         quantity: widget.quantity);
     return PrimaryScaffold(
-        bottomNavigationBar: PrimaryButton(
-          text: 'Confirm',
-          onPressed: () async {
-            await getTicketTransaction(ticketTransaction,
-                context: context, mockUp: true);
-          },
+        bottomNavigationBar: Container(
+          margin: EdgeInsets.all(kWidth(context) * 0.05),
+          child: PrimaryButton(
+            text: 'Confirm',
+            onPressed: onConfrim,
+          ),
         ),
         body: SingleChildScrollView(
             child: Column(children: <Widget>[
           const SecondaryHeader(
             title: 'Purchasing Ticket',
           ),
-          TicketOptionSection(
-            onFromChanged: onFromChanged,
-            onToChanged: onToChanged,
-            onQuantityChanged: onQuantityChange,
-            quantity: quantity,
-            from: ticketTransaction.from,
-            to: ticketTransaction.to,
-          ),
-          BTSPaymentSection(
-            ticketTransaction: ticketTransaction,
-          )
+          Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: kWidth(context) * 0.09,
+                  vertical: kHeight(context) * 0.025),
+              child: Column(
+                children: [
+                  TicketOptionSection(
+                    onFromChanged: onFromChanged,
+                    onToChanged: onToChanged,
+                    onQuantityChanged: onQuantityChange,
+                    quantity: quantity,
+                    from: ticketTransaction.from,
+                    to: ticketTransaction.to,
+                  ),
+                  BTSPaymentSection(
+                    ticketTransaction: ticketTransaction,
+                  )
+                ],
+              ))
         ])));
   }
 }
@@ -129,8 +146,9 @@ class _TicketOptionSectionState extends State<TicketOptionSection> {
             from: from,
             to: to,
           ),
+          SizedBox(height: kHeight(context) * 0.02),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
                 'Number of Ticket',
@@ -142,7 +160,7 @@ class _TicketOptionSectionState extends State<TicketOptionSection> {
               ),
             ],
           ),
-          PrimaryDivider()
+          const PrimaryDivider()
         ],
       ),
     );
@@ -174,39 +192,53 @@ class _BTSPaymentSectionState extends State<BTSPaymentSection> {
         builder: (context, AsyncSnapshot<TicketTransaction> snapshot) {
           if (snapshot.hasData) {
             var ticketTransactionWithPrice = snapshot.data;
-
-            return Container(
-              child: Column(
-                children: <Widget>[
-                  Text('Pricing'),
-                  Row(
-                    children: [
-                      Text('Sub-Total'),
-                      Text('${ticketTransactionWithPrice?.totalPrice ?? '0'}'),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text('Discount'),
-                      Text('${ticketTransactionWithPrice?.discount ?? '0'}'),
-                    ],
-                  ),
-                  PrimaryDivider(),
-                  Row(
-                    children: [
-                      Text('Total'),
-                      Text('Discount'),
-                      Text('${ticketTransactionWithPrice?.finalPrice ?? '0'}'),
-                    ],
-                  ),
-                  BalanceCard(
-                    balance: 0.0,
-                  )
-                ],
-              ),
+//REFRACT
+            return Column(
+              children: <Widget>[
+                Container(
+                    width: double.infinity,
+                    margin:
+                        EdgeInsets.symmetric(vertical: kHeight(context) * 0.02),
+                    child: const Text('Pricing', style: kHeader3TextStyle)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('Sub-Total', style: kBodyTextStyle),
+                    Text('฿ ${ticketTransactionWithPrice?.totalPrice ?? '0'}',
+                        style: kBodyTextStyle),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Discount',
+                      style: kBodyTextStyle.copyWith(color: kGreen),
+                    ),
+                    Text('-฿ ${ticketTransactionWithPrice?.discount ?? '0'}',
+                        style: kBodyTextStyle.copyWith(color: kGreen)),
+                  ],
+                ),
+                const PrimaryDivider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('Total', style: kHeader3TextStyle),
+                    Text('฿ ${ticketTransactionWithPrice?.finalPrice ?? '0'}',
+                        style: kHeader3TextStyle),
+                  ],
+                ),
+                SizedBox(
+                  height: kHeight(context) * 0.02,
+                ),
+                BalanceCard(
+                  balance: 0.0,
+                  height: kHeight(context) * 0.125,
+                )
+              ],
             );
           } else {
-            return PrimaryCircularProgressIndicator();
+            return const PrimaryCircularProgressIndicator();
           }
         });
   }

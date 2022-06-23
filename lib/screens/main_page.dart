@@ -44,7 +44,7 @@ class MainPageState extends ConsumerState<MainPage> {
   Widget _buildMainPage(context) {
     return PrimaryScaffold(
         bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: kThemeColor,
+          selectedItemColor: kBTSThemeColor,
           onTap: onTabTapped,
           currentIndex: _pageIndex, // this will be set when a new tab is tapped
           items: const [

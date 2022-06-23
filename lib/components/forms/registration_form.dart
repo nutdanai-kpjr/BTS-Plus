@@ -61,13 +61,13 @@ class RegistrationForm extends ConsumerWidget {
                     return Theme(
                       data: Theme.of(context).copyWith(
                         colorScheme: const ColorScheme.light(
-                          primary: kThemeColor, // header background color
+                          primary: kBTSThemeColor, // header background color
                           onPrimary: kThemeFontColor, // header text color
                           onSurface: kPrimaryFontColor, // body text color
                         ),
                         textButtonTheme: TextButtonThemeData(
                           style: TextButton.styleFrom(
-                            primary: kThemeColor, // button text color
+                            primary: kBTSThemeColor, // button text color
                           ),
                         ),
                       ),

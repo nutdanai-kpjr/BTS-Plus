@@ -17,7 +17,7 @@ class PrimaryHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      color: kThemeColor,
+      color: kBTSThemeColor,
       height: height,
       child: Column(
         children: <Widget>[

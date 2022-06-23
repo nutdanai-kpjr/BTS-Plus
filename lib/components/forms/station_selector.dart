@@ -48,9 +48,6 @@ class _StationSelectorState extends State<StationSelector> {
             var to =
                 stationNames.length > 1 ? stationNames[1] : stationNames[0];
             return Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: kWidth(context) * 0.09,
-                  vertical: kHeight(context) * 0.025),
               child: Column(
                 children: <Widget>[
                   Row(

@@ -39,3 +39,7 @@ extension StringCasingExtension on String {
       .map((str) => str.toCapitalized())
       .join(' ');
 }
+
+String getFormatDate(DateTime date) {
+  return "${date.day}/${date.month}/${date.year}";
+}

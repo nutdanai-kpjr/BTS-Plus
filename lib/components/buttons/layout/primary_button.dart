@@ -18,7 +18,7 @@ class PrimaryButton extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           primary: kThemeFontColor,
-          backgroundColor: kThemeColor,
+          backgroundColor: kBTSThemeColor,
           textStyle: kBodyTextStyle,
         ),
         onPressed: onPressed,
