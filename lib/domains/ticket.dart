@@ -1,9 +1,14 @@
 class Ticket {
+  final String id;
   final String from;
   final String to;
   final double price;
 
-  Ticket({required this.from, required this.to, required this.price});
+  Ticket(
+      {required this.id,
+      required this.from,
+      required this.to,
+      required this.price});
   // final Datetime date;
   // final String buyer;
   // final int stationDistance;
@@ -13,7 +18,8 @@ class Ticket {
   //status
   //
   Ticket.mockUp()
-      : from = 'Asok',
+      : id = '0',
+        from = 'Asok',
         to = 'Siam',
         price = 100;
 }
