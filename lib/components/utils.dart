@@ -43,3 +43,7 @@ extension StringCasingExtension on String {
 String getFormatDate(DateTime date) {
   return "${date.day}/${date.month}/${date.year}";
 }
+
+String getFormatDateWithTime(DateTime date) {
+  return "${date.day}/${date.month}/${date.year} | ${date.hour}:${date.minute}";
+}

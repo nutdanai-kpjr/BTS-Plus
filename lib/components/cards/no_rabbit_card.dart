@@ -6,7 +6,8 @@ import 'package:bts_plus/screens/main_page.dart';
 import 'package:flutter/material.dart';
 
 class NoRabbitCard extends StatelessWidget {
-  const NoRabbitCard({Key? key}) : super(key: key);
+  const NoRabbitCard({Key? key, this.color = kBTSThemeColor}) : super(key: key);
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return PrimaryCard(
@@ -22,6 +23,7 @@ class NoRabbitCard extends StatelessWidget {
           height: kHeight(context) * 0.05,
           width: kWidth(context) * 0.4,
           child: SecondaryButton(
+              color: color,
               text: 'Register',
               onPressed: () {
                 Navigator.push(

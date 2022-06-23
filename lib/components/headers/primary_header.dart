@@ -9,15 +9,20 @@ import '../../providers/auth_provider.dart';
 
 class PrimaryHeader extends ConsumerWidget {
   const PrimaryHeader(
-      {Key? key, required this.title, required this.height, required this.card})
+      {Key? key,
+      required this.title,
+      required this.height,
+      required this.card,
+      this.color = kBTSThemeColor})
       : super(key: key);
   final String title;
   final double height;
   final Widget card;
+  final Color color;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      color: kBTSThemeColor,
+      color: color,
       height: height,
       child: Column(
         children: <Widget>[

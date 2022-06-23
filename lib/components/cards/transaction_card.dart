@@ -21,26 +21,35 @@ class TransactionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PrimaryCard(
-        height: kHeight(context) * 0.12,
+        height: kHeight(context) * 0.08,
         child: Row(
           children: [
             Expanded(
+              // flex: 4,
               child: Column(
                 children: [
                   SizedBox(
                     width: double.infinity,
                     child: Text(
                       '${rabbitTransaction.title}',
-                      style: kHeader5TextStyle,
+                      style: kHeader3TextStyle,
                     ),
                   ),
-                  SizedBox(width: kWidth(context) * 0.02),
-                  Text('${getFormatDate(rabbitTransaction.date)}',
-                      style: kBodyTextStyle)
+                  Container(
+                      margin: EdgeInsets.only(top: kHeight(context) * 0.0025),
+                      width: double.infinity,
+                      child: Text(
+                          '${getFormatDateWithTime(rabbitTransaction.date)}',
+                          style: kBody3TextStyle)),
                 ],
               ),
             ),
-            Expanded(child: Text('${rabbitTransaction.amount}'))
+            if (rabbitTransaction.amount < 0)
+              Text('-฿ ${rabbitTransaction.amount}',
+                  style: kHeader3TextStyle.copyWith(color: kRed))
+            else
+              Text('+฿ ${rabbitTransaction.amount}',
+                  style: kHeader3TextStyle.copyWith(color: kGreen)),
           ],
         ));
   }

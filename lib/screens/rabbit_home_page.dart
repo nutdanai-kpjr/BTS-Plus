@@ -37,6 +37,7 @@ class RabbitHomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PrimaryHeader(
+        color: kRabbitThemeColor,
         title: 'Rabbit Card',
         height: kHeight(context) * (haveRabbitCard ? 0.3 : 0.2),
         card: haveRabbitCard
@@ -45,7 +46,9 @@ class RabbitHomeHeader extends StatelessWidget {
                 name: 'John Doe',
                 type: 'Adult',
               )
-            : NoRabbitCard());
+            : NoRabbitCard(
+                color: kRabbitThemeColor,
+              ));
   }
 }
 
@@ -58,7 +61,7 @@ class TransactionSection extends StatelessWidget {
       padding: EdgeInsets.symmetric(
           horizontal: kWidth(context) * 0.05,
           vertical: kHeight(context) * 0.02),
-      color: kThemeSecondaryBackgroundColor,
+      // color: kThemeSecondaryBackgroundColor,
       child: Column(
         children: <Widget>[
           Container(

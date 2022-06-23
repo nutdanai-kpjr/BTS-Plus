@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color kBTSThemeColor = Color(0xFF0060A6);
+const Color kRabbitThemeColor = Color(0xFFf5901a);
 const Color kThemeFontColor = Color(0xFFFFFFFF);
 const Color kThemeSecondaryBackgroundColor = Color(0xFFFCFDFE);
 const Color kHeaderFontColor = Color(0XFF393939);
@@ -8,6 +9,7 @@ const Color kPrimaryFontColor = Color(0XFF737373);
 const Color kSecondaryFontColor = Color(0XFFA8A8A8);
 const Color kBorderColor = Color(0XFFECECEC);
 const Color kGreen = Color(0XFF009245);
+const Color kRed = Color(0XFFFF4D4D);
 const double kBigHeaderFontSize = 36.0;
 const double kHeader1FontSize = 24.0;
 const double kHeader2FontSize = 20.0;
