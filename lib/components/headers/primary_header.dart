@@ -25,7 +25,7 @@ class PrimaryHeader extends ConsumerWidget {
       decoration: BoxDecoration(
         color: color,
         // border: Border.all(color: kBorderColor, width: 2.0),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(12.5),
             bottomRight: Radius.circular(12.5)),
       ),

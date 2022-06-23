@@ -44,12 +44,12 @@ class RabbitHomeHeader extends StatelessWidget {
         title: 'Rabbit Card',
         height: kHeight(context) * (haveRabbitCard ? 0.3 : 0.2),
         card: haveRabbitCard
-            ? CustomerCard(
+            ? const CustomerCard(
                 balance: 0.0,
                 name: 'John Doe',
                 type: 'Adult',
               )
-            : NoRabbitCard(
+            : const NoRabbitCard(
                 color: kRabbitThemeColor,
               ));
   }
