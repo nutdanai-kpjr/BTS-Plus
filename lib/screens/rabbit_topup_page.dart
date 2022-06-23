@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
 import 'package:bts_plus/components/forms/layout/primary_dropdown.dart';
+import 'package:bts_plus/components/forms/layout/primary_textformfield.dart';
 import 'package:bts_plus/components/headers/secondary_header.dart';
 import 'package:bts_plus/components/primary_scaffold.dart';
 import 'package:bts_plus/constants.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/services.dart';
 
 import '../components/buttons/layout/primary_button.dart';
 import '../components/forms/layout/primary_textfield.dart';
+import '../components/primary_divider.dart';
 
 class RabbitTopUpPage extends StatefulWidget {
   const RabbitTopUpPage({Key? key}) : super(key: key);
@@ -29,26 +31,34 @@ class _RabbitTopUpPageState extends State<RabbitTopUpPage> {
   }
 
   onPaymentChanged(String value) {
-    paymentMethod = value;
+    setState(() {
+      paymentMethod = value;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return PrimaryScaffold(
-        bottomNavigationBar: PrimaryButton(
-          text: 'Confirm',
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const MainPage(
-                          pageIndex: 1,
-                        )));
-          },
+        resizeToAvoidBottomInset: true,
+        bottomNavigationBar: Container(
+          margin: EdgeInsets.all(kWidth(context) * 0.05),
+          child: PrimaryButton(
+            color: kRabbitThemeColor,
+            text: 'Confirm',
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const MainPage(
+                            pageIndex: 1,
+                          )));
+            },
+          ),
         ),
         body: SingleChildScrollView(
             child: Column(children: <Widget>[
           const SecondaryHeader(
+            color: kRabbitThemeColor,
             title: 'Top Up',
           ),
           TopUpAmountSection(
@@ -60,18 +70,6 @@ class _RabbitTopUpPageState extends State<RabbitTopUpPage> {
             atmCardController: atmCardController,
             atmPinController: atmPinController,
           ),
-          PrimaryButton(
-            text: 'Confirm',
-            onPressed: () {
-              log('test');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MainPage(
-                            pageIndex: 1,
-                          )));
-            },
-          )
         ])));
   }
 }
@@ -92,7 +90,10 @@ class _TopUpAmountSectionState extends State<TopUpAmountSection> {
   List<double> quickTopUp = [100, 200, 500, 1000];
   double amount = 100;
   setAmount(newAmount) {
-    amount = newAmount;
+    setState(() {
+      amount = newAmount;
+    });
+
     _amountController.text = amount.toStringAsFixed(0);
 
     onAmountChanged(newAmount);
@@ -100,22 +101,49 @@ class _TopUpAmountSectionState extends State<TopUpAmountSection> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        PrimaryTextfield(
-          controller: _amountController,
-          title: 'Enter amount',
-          keyboardType: TextInputType.number,
-        ),
-        Wrap(
-          children: [
-            for (double topUp in quickTopUp)
-              SecondaryButton(
-                  text: '${topUp.toStringAsFixed(0)}',
-                  onPressed: () => setAmount(topUp)),
-          ],
-        )
-      ],
+    return Container(
+      margin: EdgeInsets.all(kWidth(context) * 0.0475),
+      child: Column(
+        children: [
+          Container(
+              child: const Text('Enter Amount (฿)', style: kHeader3TextStyle)),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: kHeight(context) * 0.01),
+            width: kWidth(context) * 0.4,
+            child: PrimaryTextFormField(
+              controller: _amountController,
+              title: 'Enter amount',
+              keyboardType: TextInputType.number,
+              style: kBigHeaderTextStyle,
+              decoration: kTopUpTextFieldDecorationWithHintText('Enter amount',
+                  color: kRabbitThemeColor),
+            ),
+          ),
+          Wrap(
+            children: [
+              for (double topUp in quickTopUp)
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: SecondaryButton(
+                      color: kRabbitThemeColor,
+                      text: '฿ ${topUp.toStringAsFixed(0)}',
+                      onPressed: () => setAmount(topUp)),
+                ),
+            ],
+          ),
+          const PrimaryDivider(),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: kWidth(context) * 0.1),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Total', style: kHeader3TextStyle),
+                Text('฿ ${amount}', style: kHeader3TextStyle),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -136,39 +164,50 @@ class RabbitPaymentSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        margin: EdgeInsets.symmetric(
+            vertical: kHeight(context) * 0.01,
+            horizontal: kWidth(context) * 0.05),
         child: Column(children: <Widget>[
-      const Text('Payment Section'),
-      PrimaryDropDown(
-        title: 'Payment Method',
-        focusBorderColor: kRabbitThemeColor,
-        items: paymentMethods,
-        defaultValue: paymentMethod,
-        onChanged: onPaymentChanged,
-      ),
-      if (paymentMethod == 'ATM')
-        Column(
-          children: [
-            PrimaryTextfield(
-              title: 'Enter ATM Number',
-              controller: atmCardController,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                LengthLimitingTextInputFormatter(16)
+          Container(
+              margin: EdgeInsets.only(bottom: kHeight(context) * 0.025),
+              width: double.infinity,
+              child: Text('Payment Options', style: kHeader3TextStyle)),
+          PrimaryDropDown(
+            title: 'Payment Method',
+            focusBorderColor: kRabbitThemeColor,
+            items: paymentMethods,
+            defaultValue: paymentMethod,
+            onChanged: onPaymentChanged,
+          ),
+          if (paymentMethod == 'ATM')
+            Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: kHeight(context) * 0.02),
+                  child: PrimaryTextFormField(
+                    focusBorderColor: kRabbitThemeColor,
+                    title: 'Enter ATM Number',
+                    controller: atmCardController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      LengthLimitingTextInputFormatter(16)
+                    ],
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                PrimaryTextFormField(
+                  focusBorderColor: kRabbitThemeColor,
+                  title: 'Enter ATM Pin',
+                  controller: atmPinController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    LengthLimitingTextInputFormatter(6)
+                  ],
+                  keyboardType: TextInputType.number,
+                  obscureText: true,
+                ),
               ],
-              keyboardType: TextInputType.number,
-            ),
-            PrimaryTextfield(
-              title: 'Enter ATM Pin',
-              controller: atmPinController,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                LengthLimitingTextInputFormatter(6)
-              ],
-              keyboardType: TextInputType.number,
-              obscureText: true,
-            ),
-          ],
-        )
-    ]));
+            )
+        ]));
   }
 }

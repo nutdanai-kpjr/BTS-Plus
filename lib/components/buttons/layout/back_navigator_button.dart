@@ -5,9 +5,11 @@ import '../../../constants.dart';
 class BackNavigatorButton extends StatelessWidget {
   const BackNavigatorButton({
     Key? key,
+    this.color = kThemeFontColor,
     this.onPressed,
   }) : super(key: key);
   final Function()? onPressed;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -17,13 +19,12 @@ class BackNavigatorButton extends StatelessWidget {
               onPressed?.call();
               Navigator.maybePop(context);
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back,
-              color: kThemeFontColor,
+              color: color,
               size: kBodyFontSize,
             ),
-            label: Text('Back',
-                style: kBody2TextStyle.copyWith(color: kThemeFontColor))),
+            label: Text('Back', style: kBody2TextStyle.copyWith(color: color))),
       ],
     );
   }

@@ -111,6 +111,28 @@ InputDecoration kTextFieldDecorationWithLabelText(String label,
         borderSide: BorderSide(color: kRed, width: 1.0),
       ),
     );
+InputDecoration kTopUpTextFieldDecorationWithHintText(String hintText,
+        {Color color = kBTSThemeColor}) =>
+    InputDecoration(
+      hintText: hintText,
+      hintStyle: kBigHeaderTextStyle,
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: color.withOpacity(0.5), width: 1.0),
+        borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        borderSide: BorderSide(color: kBorderColor, width: 1.0),
+      ),
+      errorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        borderSide: BorderSide(color: kRed, width: 1.0),
+      ),
+      focusedErrorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        borderSide: BorderSide(color: kRed, width: 1.0),
+      ),
+    );
 
 double kWidth(context) => MediaQuery.of(context).size.width;
 double kHeight(context) => MediaQuery.of(context).size.height;

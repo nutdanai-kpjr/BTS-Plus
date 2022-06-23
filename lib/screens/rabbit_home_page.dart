@@ -2,6 +2,7 @@ import 'package:bts_plus/components/cards/customer_card.dart';
 import 'package:bts_plus/components/cards/layout/primary_card.dart';
 import 'package:bts_plus/components/cards/no_rabbit_card.dart';
 import 'package:bts_plus/components/forms/rabbit_registration_form.dart';
+import 'package:bts_plus/components/require_rabbit_registration_message.dart';
 import 'package:bts_plus/domains/rabbit_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +24,9 @@ class RabbitHomeNavPage extends ConsumerWidget {
           RabbitHomeHeader(
             haveRabbitCard: haveRabbitCard,
           ),
-          haveRabbitCard ? TransactionSection() : RabbitRegisterSection()
+          haveRabbitCard
+              ? const TransactionSection()
+              : const RequireRabbitRegistrationMessage()
         ],
       ),
     );
@@ -79,24 +82,6 @@ class TransactionSection extends StatelessWidget {
             )
         ],
       ),
-    );
-  }
-}
-
-class RabbitRegisterSection extends StatelessWidget {
-  const RabbitRegisterSection({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-            margin: EdgeInsets.all(kWidth(context) * 0.05),
-            child: Image.asset('assets/images/rabbit_logo.png')),
-        Container(
-            margin: EdgeInsets.all(kWidth(context) * 0.05),
-            child: RabbitRegistrationForm()),
-      ],
     );
   }
 }

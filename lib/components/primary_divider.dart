@@ -1,3 +1,4 @@
+import 'package:bts_plus/constants.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryDivider extends StatelessWidget {
@@ -5,6 +6,10 @@ class PrimaryDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Divider();
+    return Divider(
+      color: kBorderColor,
+      thickness: 1,
+      height: kHeight(context) * 0.05,
+    );
   }
 }

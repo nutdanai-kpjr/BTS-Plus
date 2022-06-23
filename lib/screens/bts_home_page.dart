@@ -5,6 +5,7 @@ import 'package:bts_plus/components/cards/no_rabbit_card.dart';
 import 'package:bts_plus/components/cards/ticket_card.dart';
 import 'package:bts_plus/components/forms/station_selector.dart';
 import 'package:bts_plus/components/headers/primary_header.dart';
+import 'package:bts_plus/components/require_rabbit_registration_message.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/screens/bts_ticket_purchase_page.dart';
 import 'package:flutter/material.dart';
@@ -14,16 +15,23 @@ import '../components/cards/balance_card.dart';
 import '../domains/ticket.dart';
 import '../providers/auth_provider.dart';
 
-class BTSHomeNavPage extends StatefulWidget {
+class BTSHomeNavPage extends ConsumerStatefulWidget {
   const BTSHomeNavPage({Key? key}) : super(key: key);
 
   @override
-  State<BTSHomeNavPage> createState() => _BTSHomeNavPageState();
+  BTSHomeNavPageState createState() => BTSHomeNavPageState();
 }
 
-class _BTSHomeNavPageState extends State<BTSHomeNavPage> {
+class BTSHomeNavPageState extends ConsumerState<BTSHomeNavPage> {
   String from = 'Item 1';
   String to = 'Item 2';
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(authProvider);
+  }
+
   onFromChanged(String value) {
     setState(() {
       from = value;
@@ -43,36 +51,44 @@ class _BTSHomeNavPageState extends State<BTSHomeNavPage> {
     return SingleChildScrollView(
         child: Column(children: <Widget>[
       const BTSHomeHeader(),
-      Container(
-          margin: EdgeInsets.symmetric(
-              horizontal: kWidth(context) * 0.09,
-              vertical: kHeight(context) * 0.025),
-          color: kThemeFontColor,
-          child: Column(
-            children: [
-              StationSelector(
-                  onFromChanged: onFromChanged, onToChanged: onToChanged),
-              Container(
-                margin: EdgeInsets.only(
-                  top: kHeight(context) * 0.025,
-                ),
-                width: kWidth(context) * 0.5,
-                child: PrimaryButton(
-                  text: 'Continue',
-                  onPressed: () async {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => BTSTicketPurchasePage(
-                                  from: from,
-                                  to: to,
-                                )));
-                  },
-                ),
-              ),
-            ],
-          )),
-      _AvailiableTicketSection()
+      ref.watch(authProvider)!.rabbitCard != null
+          ? Column(
+              children: [
+                Container(
+                    margin: EdgeInsets.symmetric(
+                        horizontal: kWidth(context) * 0.09,
+                        vertical: kHeight(context) * 0.025),
+                    color: kThemeFontColor,
+                    child: Column(
+                      children: [
+                        StationSelector(
+                            onFromChanged: onFromChanged,
+                            onToChanged: onToChanged),
+                        Container(
+                          margin: EdgeInsets.only(
+                            top: kHeight(context) * 0.025,
+                          ),
+                          width: kWidth(context) * 0.5,
+                          child: PrimaryButton(
+                            text: 'Continue',
+                            onPressed: () async {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          BTSTicketPurchasePage(
+                                            from: from,
+                                            to: to,
+                                          )));
+                            },
+                          ),
+                        ),
+                      ],
+                    )),
+                const _AvailiableTicketSection(),
+              ],
+            )
+          : RequireRabbitRegistrationMessage()
     ]));
   }
 }

@@ -7,12 +7,20 @@ class SecondaryHeader extends StatelessWidget {
   const SecondaryHeader({
     Key? key,
     required this.title,
+    this.color = kBTSThemeColor,
   }) : super(key: key);
   final String title;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: kBTSThemeColor,
+      decoration: BoxDecoration(
+        color: color,
+        // border: Border.all(color: kBorderColor, width: 2.0),
+        borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(12.5),
+            bottomRight: Radius.circular(12.5)),
+      ),
       height: kHeight(context) * 0.1,
       child: Stack(
         alignment: Alignment.center,

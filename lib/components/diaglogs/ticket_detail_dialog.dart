@@ -1,8 +1,6 @@
 import 'dart:developer';
-import 'dart:typed_data';
 
 import 'package:bts_plus/components/buttons/layout/primary_button.dart';
-import 'package:bts_plus/components/headers/secondary_header.dart';
 import 'package:bts_plus/components/primary_divider.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:flutter/material.dart';
@@ -24,21 +22,23 @@ showTicketDetailDialog(context, {required Ticket ticket}) {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0)), //this right here
             child: _buildDialogScrollable(children: [
-              Container(
-                height: kHeight(context) * 0.075,
-                margin: EdgeInsets.only(bottom: kHeight(context) * 0.02),
-                decoration: const BoxDecoration(
-                  color: kBTSThemeColor,
-                  // border: Border.all(color: kBorderColor, width: 2.0),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15.0),
-                      topRight: Radius.circular(15.0)),
-                ),
-                width: double.infinity,
-                child: Center(
-                  child: Text('Ticket: ${ticket.id}',
-                      style:
-                          kHeader3TextStyle.copyWith(color: kThemeFontColor)),
+              Center(
+                child: Container(
+                  height: kHeight(context) * 0.075,
+                  margin: EdgeInsets.only(bottom: kHeight(context) * 0.02),
+                  decoration: const BoxDecoration(
+                    color: kBTSThemeColor,
+                    // border: Border.all(color: kBorderColor, width: 2.0),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15.0),
+                        topRight: Radius.circular(15.0)),
+                  ),
+                  width: double.infinity,
+                  child: Center(
+                    child: Text('Ticket: ${ticket.id}',
+                        style:
+                            kHeader3TextStyle.copyWith(color: kThemeFontColor)),
+                  ),
                 ),
               ),
 

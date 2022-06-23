@@ -17,6 +17,7 @@ class PrimaryTextFormField extends StatelessWidget {
       this.inputFormatters,
       this.onTap,
       this.validator,
+      this.style,
       this.focusBorderColor = kBTSThemeColor})
       : super(key: key);
   final String title;
@@ -31,6 +32,7 @@ class PrimaryTextFormField extends StatelessWidget {
   final Function()? onTap;
   final InputDecoration? decoration;
   final Color focusBorderColor;
+  final TextStyle? style;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,7 +44,7 @@ class PrimaryTextFormField extends StatelessWidget {
           obscureText: obscureText,
           onChanged: onChanged,
           controller: controller,
-          style: kBodyTextStyle,
+          style: style ?? kBodyTextStyle,
           keyboardType: keyboardType,
           inputFormatters: inputFormatters,
           decoration: decoration ??
