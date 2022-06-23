@@ -4,6 +4,7 @@ import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/screens/main_page.dart';
 import 'package:bts_plus/services/btsController.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domains/user.dart';
@@ -26,7 +27,8 @@ class RegistrationForm extends ConsumerWidget {
   final _rabbitPinController = TextEditingController();
   final _confirmRabbitPinController = TextEditingController();
 
-  _buildBTSForm(context, {required birthDate}) {
+  _buildBTSForm(context, {required setBirthDate}) {
+    DateTime? birthDate;
     return Column(
       children: [
         Container(
@@ -36,7 +38,7 @@ class RegistrationForm extends ConsumerWidget {
               'BTS Section',
               textAlign: TextAlign.start,
               style: kHeader3TextStyle,
-            )),
+            )), //REFRACT
         PrimaryTextFormField(
             title: 'Username',
             controller: _usernameController,
@@ -89,6 +91,7 @@ class RegistrationForm extends ConsumerWidget {
               ).then((value) => {
                     if (value != null)
                       {
+                        setBirthDate(value),
                         birthDate = value,
                         _dateOfBirthController.text = getFormatDate(birthDate!),
                       }
@@ -103,32 +106,78 @@ class RegistrationForm extends ConsumerWidget {
     );
   }
 
+  _buildRabbitPinForm(context) {
+    return Column(
+      children: [
+        Container(
+            margin: EdgeInsets.all(kHeight(context) * .01),
+            width: double.infinity,
+            child: const Text(
+              'Rabbit Card Section',
+              textAlign: TextAlign.start,
+              style: kHeader3TextStyle,
+            )),
+        PrimaryTextFormField(
+            title: 'PIN (6 Numbers)',
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+              LengthLimitingTextInputFormatter(6)
+            ],
+            keyboardType: TextInputType.number,
+            controller: _rabbitPinController,
+            focusBorderColor: kRabbitThemeColor,
+            obscureText: true,
+            validator: basicValidator()),
+        PrimaryTextFormField(
+            title: 'Confirm PIN',
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+              LengthLimitingTextInputFormatter(6)
+            ],
+            keyboardType: TextInputType.number,
+            controller: _confirmRabbitPinController,
+            focusBorderColor: kRabbitThemeColor,
+            obscureText: true,
+            validator: basicValidator()),
+        PrimaryDivider(
+          indent: kWidth(context) * 0.02,
+          endIndent: kWidth(context) * 0.02,
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     DateTime? birthDate;
+    setBirthDate(DateTime? selectedbirthdate) {
+      birthDate = selectedbirthdate;
+    }
+
     return Form(
       key: _formKey,
       child: Column(
         children: <Widget>[
           SizedBox(height: kHeight(context) * 0.02),
-          _buildBTSForm(context, birthDate: birthDate),
+          _buildBTSForm(context, setBirthDate: setBirthDate),
+          _buildRabbitPinForm(context),
           PrimaryButton(
             text: 'Register',
             onPressed: () async {
-              if (birthDate != null && _formKey.currentState!.validate()) {
+              if (_formKey.currentState!.validate()) {
+                final navigator = Navigator.of(context);
                 User newUser = User(
                     firstName: _firstNameController.text,
                     lastName: _lastNameController.text,
                     userName: _usernameController.text,
                     password: _passwordController.text,
-                    birthDate: birthDate);
+                    birthDate: birthDate!);
                 User? user = await addUser(newUser, context: context);
 
                 ref.read(authProvider.notifier).setCurrentUser(user);
-                Navigator.pushReplacement(
-                  context,
+                navigator.pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => MainPage(),
+                    builder: (context) => const MainPage(),
                   ),
                 );
               }

@@ -5,6 +5,7 @@ import 'package:bts_plus/screens/bts_home_page.dart';
 import 'package:bts_plus/screens/rabbit_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../domains/user.dart';
 import 'login_page.dart';
@@ -44,17 +45,21 @@ class MainPageState extends ConsumerState<MainPage> {
   Widget _buildMainPage(context) {
     return PrimaryScaffold(
         bottomNavigationBar: BottomNavigationBar(
+          iconSize: 24,
+          backgroundColor: kThemeFontColor,
+          unselectedFontSize: kBody4FontSize,
+          selectedLabelStyle: kBody3TextStyle,
           selectedItemColor: kHeaderFontColor,
           onTap: onTabTapped,
           currentIndex: _pageIndex, // this will be set when a new tab is tapped
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
+              icon: FaIcon(FontAwesomeIcons.train),
+              label: 'My Ticket',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.mail),
-              label: 'Rabbit',
+              icon: FaIcon(FontAwesomeIcons.idCard),
+              label: 'My Rabbit Card',
             ),
           ],
         ),

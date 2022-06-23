@@ -60,7 +60,7 @@ class RabbitRegistrationForm extends ConsumerWidget {
               obscureText: true,
               validator: basicValidator()),
           PrimaryTextFormField(
-              title: 'Confirm 6 PIN',
+              title: 'Confirm PIN',
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                 LengthLimitingTextInputFormatter(6)

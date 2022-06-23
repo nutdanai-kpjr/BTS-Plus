@@ -20,6 +20,7 @@ const double kHeader5FontSize = 12.0;
 const double kBodyFontSize = 16.0;
 const double kBody2FontSize = 14.0;
 const double kBody3FontSize = 12.0;
+const double kBody4FontSize = 10.0;
 
 const TextStyle kBigHeaderTextStyle = TextStyle(
   fontSize: kBigHeaderFontSize,

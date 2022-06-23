@@ -29,9 +29,12 @@ class AuthenticationLayoutPage extends StatelessWidget {
             child: Column(children: <Widget>[
           isShowImage
               ? ImageWithText(image: imageName, text: title)
-              : Text(
-                  title,
-                  style: kBigHeaderTextStyle,
+              : Container(
+                  margin: EdgeInsets.only(top: kHeight(context) * 0.025),
+                  child: Text(
+                    title,
+                    style: kBigHeaderTextStyle,
+                  ),
                 ),
           Container(
               margin: EdgeInsets.all(kWidth(context) * 0.05), child: formChild),
