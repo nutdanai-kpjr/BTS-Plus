@@ -111,6 +111,7 @@ class RabbitRegistrationForm extends ConsumerWidget {
             text: 'Register',
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
+                final navigator = Navigator.of(context);
                 final RabbitCard newRabbitCard = RabbitCard(
                     balance: 0.0,
                     type: type,
@@ -122,12 +123,9 @@ class RabbitRegistrationForm extends ConsumerWidget {
                     birthDate: birthDate);
                 log(btsUserId ?? 'id not found');
                 await addRabbitCard(newRabbitCard, context: context);
-
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MainPage(),
-                    ));
+                navigator.push(MaterialPageRoute(
+                  builder: (context) => const MainPage(),
+                ));
               }
             },
           )

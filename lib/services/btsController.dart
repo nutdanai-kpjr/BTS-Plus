@@ -29,7 +29,7 @@ Future<User?> addUser(User user, {required context}) async {
 }
 
 Future<User?> loginUser(String userName, String password,
-    {required context, bool kIsMockUp = false}) async {
+    {required context}) async {
   if (kIsMockup) {
     final mockUpRespond =
         await rootBundle.loadString('$kRabbitMockupURL/get_user.json');

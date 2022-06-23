@@ -1,12 +1,15 @@
 import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
+import 'package:bts_plus/components/forms/layout/primary_dropdown.dart';
 import 'package:bts_plus/components/primary_divider.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/screens/main_page.dart';
 import 'package:bts_plus/services/btsController.dart';
+import 'package:bts_plus/services/rabbitController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domains/rabbit_card.dart';
 import '../../domains/user.dart';
 import '../../providers/auth_provider.dart';
 import '../buttons/layout/primary_button.dart';
@@ -17,18 +20,18 @@ class RegistrationForm extends ConsumerWidget {
   RegistrationForm({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
-  final _dateOfBirthController = TextEditingController();
+  final _usernameController = TextEditingController(text: 'test');
+  final _passwordController = TextEditingController(text: '123456');
+  final _confirmPasswordController = TextEditingController(text: '123456');
+  final _firstNameController = TextEditingController(text: 'John');
+  final _lastNameController = TextEditingController(text: 'Doe');
+  final _dateOfBirthController = TextEditingController(text: '1/1/1990');
 
-  final _rabbitPinController = TextEditingController();
-  final _confirmRabbitPinController = TextEditingController();
+  final _rabbitPinController = TextEditingController(text: '123456');
+  final _confirmRabbitPinController = TextEditingController(text: '123456');
 
   _buildBTSForm(context, {required setBirthDate}) {
-    DateTime? birthDate;
+    DateTime? birthDate = DateTime.now();
     return Column(
       children: [
         Container(
@@ -88,14 +91,13 @@ class RegistrationForm extends ConsumerWidget {
                 initialDate: DateTime.now(),
                 firstDate: DateTime(1900),
                 lastDate: DateTime(2050),
-              ).then((value) => {
-                    if (value != null)
-                      {
-                        setBirthDate(value),
-                        birthDate = value,
-                        _dateOfBirthController.text = getFormatDate(birthDate!),
-                      }
-                  });
+              ).then((value) {
+                if (value != null) {
+                  birthDate = value;
+                  setBirthDate(value);
+                  _dateOfBirthController.text = getFormatDate(birthDate!);
+                }
+              });
             },
             validator: basicValidator()),
         PrimaryDivider(
@@ -106,7 +108,7 @@ class RegistrationForm extends ConsumerWidget {
     );
   }
 
-  _buildRabbitPinForm(context) {
+  _buildRabbitPinForm(context, {required setRabbitCardType}) {
     return Column(
       children: [
         Container(
@@ -117,6 +119,18 @@ class RegistrationForm extends ConsumerWidget {
               textAlign: TextAlign.start,
               style: kHeader3TextStyle,
             )),
+        Container(
+          margin: EdgeInsets.all(kWidth(context) * 0.02),
+          child: PrimaryDropDown(
+            title: 'Type',
+            focusBorderColor: kRabbitThemeColor,
+            items: const ['Student', 'Adult', 'Senior'],
+            defaultValue: 'Adult',
+            onChanged: (value) {
+              setRabbitCardType(value);
+            },
+          ),
+        ),
         PrimaryTextFormField(
             title: 'PIN (6 Numbers)',
             inputFormatters: [
@@ -149,9 +163,15 @@ class RegistrationForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    DateTime? birthDate;
+    DateTime? birthDate = DateTime.now();
+
+    String? rabbitCardType;
     setBirthDate(DateTime? selectedbirthdate) {
       birthDate = selectedbirthdate;
+    }
+
+    setRabbitCardType(String? selectedRabbitCardType) {
+      rabbitCardType = selectedRabbitCardType;
     }
 
     return Form(
@@ -160,7 +180,7 @@ class RegistrationForm extends ConsumerWidget {
         children: <Widget>[
           SizedBox(height: kHeight(context) * 0.02),
           _buildBTSForm(context, setBirthDate: setBirthDate),
-          _buildRabbitPinForm(context),
+          _buildRabbitPinForm(context, setRabbitCardType: setRabbitCardType),
           PrimaryButton(
             text: 'Register',
             onPressed: () async {
@@ -173,8 +193,28 @@ class RegistrationForm extends ConsumerWidget {
                     password: _passwordController.text,
                     birthDate: birthDate!);
                 User? user = await addUser(newUser, context: context);
+                if (user != null) {
+                  final RabbitCard newRabbitCard = RabbitCard(
+                      balance: 0.0,
+                      type: rabbitCardType?.toUpperCase() ?? 'ADULT',
+                      pin: _rabbitPinController.text,
+                      firstName: user.firstName,
+                      lastName: user.lastName,
+                      userName: user.userName,
+                      btsUserId: user.id,
+                      birthDate: user.birthDate);
 
-                ref.read(authProvider.notifier).setCurrentUser(user);
+                  await addRabbitCard(newRabbitCard, context: context);
+                  User? userAfterAddRabbit = await loginUser(
+                      user.userName, user.password,
+                      context: context);
+                  ref
+                      .read(authProvider.notifier)
+                      .setCurrentUser(userAfterAddRabbit);
+                } else {
+                  ref.read(authProvider.notifier).setCurrentUser(user);
+                }
+
                 navigator.pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => const MainPage(),
