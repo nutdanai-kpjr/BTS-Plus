@@ -40,6 +40,7 @@ class LoginForm extends ConsumerWidget {
                   _usernameController.text,
                   _passwordController.text,
                   context: context,
+                  kIsMockUp: true,
                 );
                 ref.read(authProvider.notifier).setCurrentUser(user);
                 Navigator.pushReplacement(

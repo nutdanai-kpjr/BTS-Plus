@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:bts_plus/domains/rabbit_card.dart';
 import 'package:bts_plus/domains/ticket_transcation.dart';
 import 'package:bts_plus/services/rabbitController.dart';
 import 'package:flutter/services.dart';
@@ -30,8 +29,8 @@ Future<User?> addUser(User user, {required context}) async {
 }
 
 Future<User?> loginUser(String userName, String password,
-    {required context, bool mockUp = false}) async {
-  if (mockUp) {
+    {required context, bool kIsMockUp = false}) async {
+  if (kIsMockup) {
     final mockUpRespond =
         await rootBundle.loadString('$kRabbitMockupURL/get_user.json');
     var parsedJson = jsonDecode(mockUpRespond);
@@ -71,9 +70,10 @@ Future<User?> loginUser(String userName, String password,
   }
 }
 
-Future<List<Station>> getStations(
-    {required context, bool mockUp = false}) async {
-  if (mockUp) {
+Future<List<Station>> getStations({required context}) async {
+  log('Hi get station');
+
+  if (kIsMockup) {
     final mockUpRespond =
         await rootBundle.loadString('$kRabbitMockupURL/get_bts_station.json');
     var parsedJson = jsonDecode(mockUpRespond);
@@ -101,10 +101,10 @@ Future<List<Station>> getStations(
 }
 
 Future<TicketTransaction> getTicketTransaction(
-    TicketTransaction ticketTransaction,
-    {required context,
-    bool mockUp = false}) async {
-  if (mockUp) {
+  TicketTransaction ticketTransaction, {
+  required context,
+}) async {
+  if (kIsMockup) {
     final mockUpRespond =
         await rootBundle.loadString('$kRabbitMockupURL/get_bts_price.json');
     var parsedJson = jsonDecode(mockUpRespond);

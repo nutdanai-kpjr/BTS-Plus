@@ -59,8 +59,7 @@ class _BTSHomeNavPageState extends State<BTSHomeNavPage> {
                 width: kWidth(context) * 0.5,
                 child: PrimaryButton(
                   text: 'Continue',
-                  onPressed: () {
-                    log('from: $from, to: $to');
+                  onPressed: () async {
                     Navigator.push(
                         context,
                         MaterialPageRoute(

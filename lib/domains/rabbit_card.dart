@@ -31,7 +31,7 @@ class RabbitCard {
         birthDate = DateTime.parse(json['dateOfBirth']),
         balance = json['rabbitBalance'],
         btsUserId = json['customerID'],
-        type = json['status'].toCapitalized();
+        type = getCapitalized(json['rabbitType']);
 
   Map<String, dynamic> toJson() => {
         'rabbitNumber': cardNumber,
@@ -41,7 +41,7 @@ class RabbitCard {
         'lastName': lastName,
         'dateOfBirth': birthDate.toIso8601String(),
         'rabbitBalance': balance,
-        'status': type.toUpperCase(),
+        'rabbitType': type.toUpperCase(),
         'customerID': btsUserId,
       };
 }

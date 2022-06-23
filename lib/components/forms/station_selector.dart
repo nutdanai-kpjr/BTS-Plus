@@ -32,7 +32,9 @@ class _StationSelectorState extends State<StationSelector> {
   @override
   void initState() {
     // TODO: implement initState
-    _getStations = getStations(context: context, mockUp: true);
+    _getStations = getStations(
+      context: context,
+    );
     super.initState();
   }
 

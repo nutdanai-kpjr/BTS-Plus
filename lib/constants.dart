@@ -102,6 +102,14 @@ InputDecoration kTextFieldDecorationWithLabelText(String label,
         borderRadius: BorderRadius.all(Radius.circular(15.0)),
         borderSide: BorderSide(color: kBorderColor, width: 1.0),
       ),
+      errorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        borderSide: BorderSide(color: kRed, width: 1.0),
+      ),
+      focusedErrorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        borderSide: BorderSide(color: kRed, width: 1.0),
+      ),
     );
 
 double kWidth(context) => MediaQuery.of(context).size.width;

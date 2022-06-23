@@ -31,13 +31,10 @@ String? Function(String?)? passwordValidatior() {
   };
 }
 
-extension StringCasingExtension on String {
-  String toCapitalized() =>
-      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
-  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
-      .split(' ')
-      .map((str) => str.toCapitalized())
-      .join(' ');
+String getCapitalized(String str) {
+  return str.isNotEmpty
+      ? str.substring(0, 1).toUpperCase() + str.substring(1)
+      : str;
 }
 
 String getFormatDate(DateTime date) {

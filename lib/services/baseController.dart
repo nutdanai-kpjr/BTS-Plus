@@ -3,8 +3,8 @@ import 'package:bts_plus/constants.dart';
 import 'package:flutter/material.dart';
 
 const String kRabbitBasedURL = "http://192.168.86.71:50001/rabbit";
-const String kRabbitMockupURL = "assets/json/";
-
+const String kRabbitMockupURL = "assets/json";
+const bool kIsMockup = true;
 Future<void> showErrorDialog(context, body) async {
   await showDialog(
       context: context,

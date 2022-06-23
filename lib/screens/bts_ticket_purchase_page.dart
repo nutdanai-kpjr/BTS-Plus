@@ -56,12 +56,14 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
     });
   }
 
-  onConfrim() async {
-    await getTicketTransaction(ticketTransaction,
-        context: context, mockUp: true);
+  onConfirm() async {
+    await getTicketTransaction(
+      ticketTransaction,
+      context: context,
+    );
 
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => MainPage()));
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => MainPage()));
   }
 
   @override
@@ -76,7 +78,7 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
           margin: EdgeInsets.all(kWidth(context) * 0.05),
           child: PrimaryButton(
             text: 'Confirm',
-            onPressed: onConfrim,
+            onPressed: onConfirm,
           ),
         ),
         body: SingleChildScrollView(
@@ -180,8 +182,10 @@ class _BTSPaymentSectionState extends State<BTSPaymentSection> {
   late Future<TicketTransaction> _getTicketTransactionWithPrice;
   @override
   void initState() {
-    _getTicketTransactionWithPrice =
-        getTicketTransaction(ticketTransaction, context: context, mockUp: true);
+    _getTicketTransactionWithPrice = getTicketTransaction(
+      ticketTransaction,
+      context: context,
+    );
     super.initState();
   }
 
