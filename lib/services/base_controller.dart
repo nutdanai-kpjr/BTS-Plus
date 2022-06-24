@@ -22,6 +22,7 @@ Future<void> showErrorDialog(context, body) async {
           ),
           actions: <Widget>[
             PrimaryButton(
+              color: kHeaderFontColor,
               text: "Close",
               onPressed: () {
                 Navigator.of(context).pop();

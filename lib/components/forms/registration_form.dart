@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
 import 'package:bts_plus/components/forms/layout/primary_dropdown.dart';
 import 'package:bts_plus/components/primary_divider.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/screens/main_page.dart';
-import 'package:bts_plus/services/btsController.dart';
-import 'package:bts_plus/services/rabbitController.dart';
+import 'package:bts_plus/services/bts_controller.dart';
+import 'package:bts_plus/services/rabbit_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -203,7 +205,7 @@ class RegistrationForm extends ConsumerWidget {
                       userName: user.userName,
                       btsUserId: user.id,
                       birthDate: user.birthDate);
-
+                  log('Rabbit Card Type: ${newRabbitCard.type}');
                   await addRabbitCard(newRabbitCard, context: context);
                   User? userAfterAddRabbit = await loginUser(
                       user.userName, user.password,

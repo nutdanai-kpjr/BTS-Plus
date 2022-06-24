@@ -39,7 +39,7 @@ class TransactionCard extends StatelessWidget {
                       margin: EdgeInsets.only(top: kHeight(context) * 0.0025),
                       width: double.infinity,
                       child: Text(
-                          '${getFormatDateWithTime(rabbitTransaction.date)}',
+                          '${getFormatDateWithTime(rabbitTransaction.timeStamp)}',
                           style: kBody3TextStyle)),
                 ],
               ),

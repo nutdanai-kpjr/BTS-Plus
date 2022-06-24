@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../services/rabbitController.dart';
+import '../../services/rabbit_controller.dart';
 import '../buttons/layout/primary_button.dart';
 import '../utils.dart';
 import 'layout/primary_textformfield.dart';
@@ -26,15 +26,15 @@ class RabbitRegistrationForm extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authProvider);
     final firstNameController =
-        TextEditingController(text: user!.firstName); //TOFIX
+        TextEditingController(text: user?.firstName ?? ''); //TOFIX
     final lastNameController =
-        TextEditingController(text: user.lastName); //TOFIX
+        TextEditingController(text: user?.lastName ?? ''); //TOFIX
     final usernameController =
-        TextEditingController(text: user.userName); //TOFIX
-    final dateOfBirthController =
-        TextEditingController(text: getFormatDate(user.birthDate));
-    final DateTime birthDate = user.birthDate;
-    final String? btsUserId = user.id;
+        TextEditingController(text: user?.userName ?? ''); //TOFIX
+    final dateOfBirthController = TextEditingController(
+        text: getFormatDate(user?.birthDate ?? DateTime.now()));
+    final DateTime birthDate = user?.birthDate ?? DateTime.now();
+    final String? btsUserId = user?.id;
     String type = 'Adult';
 
     return Form(

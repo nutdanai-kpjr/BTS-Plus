@@ -8,12 +8,14 @@ import 'package:bts_plus/components/headers/primary_header.dart';
 import 'package:bts_plus/components/require_rabbit_registration_message.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/screens/bts_ticket_purchase_page.dart';
+import 'package:bts_plus/services/bts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../components/cards/balance_card.dart';
 import '../domains/ticket.dart';
 import '../providers/auth_provider.dart';
+import '../services/rabbit_controller.dart';
 
 class BTSHomeNavPage extends ConsumerStatefulWidget {
   const BTSHomeNavPage({Key? key}) : super(key: key);
@@ -23,8 +25,8 @@ class BTSHomeNavPage extends ConsumerStatefulWidget {
 }
 
 class BTSHomeNavPageState extends ConsumerState<BTSHomeNavPage> {
-  String from = 'Item 1';
-  String to = 'Item 2';
+  String fromStationId = 'S001';
+  String toStationId = 'S002';
 
   @override
   void initState() {
@@ -34,16 +36,16 @@ class BTSHomeNavPageState extends ConsumerState<BTSHomeNavPage> {
 
   onFromChanged(String value) {
     setState(() {
-      from = value;
+      fromStationId = value;
     });
     log('onFromChanged: $value');
   }
 
   onToChanged(String value) {
     setState(() {
-      to = value;
+      toStationId = value;
     });
-    log('onToChanged: $to');
+    log('onToChanged: $toStationId');
   }
 
   @override
@@ -77,8 +79,8 @@ class BTSHomeNavPageState extends ConsumerState<BTSHomeNavPage> {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           BTSTicketPurchasePage(
-                                            from: from,
-                                            to: to,
+                                            fromStationId: fromStationId,
+                                            toStationId: toStationId,
                                           )));
                             },
                           ),
@@ -88,7 +90,7 @@ class BTSHomeNavPageState extends ConsumerState<BTSHomeNavPage> {
                 const _AvailiableTicketSection(),
               ],
             )
-          : RequireRabbitRegistrationMessage()
+          : const RequireRabbitRegistrationMessage()
     ]));
   }
 }
@@ -100,8 +102,8 @@ class BTSHomeHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final rabbitCard = ref.watch(authProvider)?.rabbitCard;
     return PrimaryHeader(
-        title: 'Home',
-        height: kHeight(context) * .225,
+        title: 'My Ticket',
+        height: kHeight(context) * (rabbitCard != null ? 0.225 : 0.2),
         card: rabbitCard == null
             ? const NoRabbitCard()
             : const BalanceCard(balance: 0.0));

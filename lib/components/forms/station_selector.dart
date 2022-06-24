@@ -1,9 +1,11 @@
+import 'dart:developer';
+
 import 'package:bts_plus/components/primary_circular_progress_indicator.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/domains/station.dart';
 import 'package:flutter/material.dart';
 
-import '../../services/btsController.dart';
+import '../../services/bts_controller.dart';
 import 'layout/primary_dropdown.dart';
 
 class StationSelector extends StatefulWidget {
@@ -11,13 +13,13 @@ class StationSelector extends StatefulWidget {
       {Key? key,
       required this.onFromChanged,
       required this.onToChanged,
-      this.from = 'Item 1',
-      this.to = 'Item 2'})
+      this.fromStationId,
+      this.toStationId})
       : super(key: key);
   final Function(String) onFromChanged;
   final Function(String) onToChanged;
-  final String from;
-  final String to;
+  final String? fromStationId;
+  final String? toStationId;
 
   @override
   State<StationSelector> createState() => _StationSelectorState();
@@ -25,10 +27,8 @@ class StationSelector extends StatefulWidget {
 
 class _StationSelectorState extends State<StationSelector> {
   late Future<List<Station>> _getStations;
-  late String from = widget.from;
-  late String to = widget.to;
   late Function(String) onFromChanged = widget.onFromChanged;
-  late Function(String) onToChanged = widget.onFromChanged;
+  late Function(String) onToChanged = widget.onToChanged;
   @override
   void initState() {
     // TODO: implement initState
@@ -45,10 +45,29 @@ class _StationSelectorState extends State<StationSelector> {
         builder: (context, AsyncSnapshot<List<Station>> snapshot) {
           if (snapshot.hasData) {
             var stations = snapshot.data ?? [];
-            var stationNames = stations.map((station) => station.name).toList();
-            var from = stationNames[0];
-            var to =
-                stationNames.length > 1 ? stationNames[1] : stationNames[0];
+            var stationNames = stations
+                .map((station) => '${station.id} ${station.name}')
+                .toList();
+            //id to String
+            String stationIdToDisplayName(String stationId) {
+              Station station = stations.firstWhere(
+                (station) => station.id == stationId,
+                // orElse: () => null,
+              );
+              return '${station.id} ${station.name}';
+            }
+
+            //String to id
+            String displayNameToStationId(String stationDisplayName) {
+              var stationId = stationDisplayName.split(' ')[0];
+              return stationId;
+            }
+
+            var fromStationId = widget.fromStationId ?? stations[0].id;
+            var toStationId = widget.toStationId ??
+                (stations.length > 1 ? stations[1].id : stations[0].id);
+            log('fromStationId: $fromStationId');
+            log('toStationId: $toStationId');
             return Container(
               child: Column(
                 children: <Widget>[
@@ -64,8 +83,10 @@ class _StationSelectorState extends State<StationSelector> {
                         flex: 5,
                         child: PrimaryDropDown(
                           title: 'From',
-                          defaultValue: from,
-                          onChanged: onFromChanged,
+                          defaultValue: stationIdToDisplayName(fromStationId),
+                          onChanged: (String value) {
+                            onFromChanged(displayNameToStationId(value));
+                          },
                           items: stationNames,
                         ),
                       ),
@@ -84,8 +105,10 @@ class _StationSelectorState extends State<StationSelector> {
                         flex: 5,
                         child: PrimaryDropDown(
                           title: 'To',
-                          defaultValue: to,
-                          onChanged: onToChanged,
+                          defaultValue: stationIdToDisplayName(toStationId),
+                          onChanged: (String value) {
+                            onToChanged(displayNameToStationId(value));
+                          },
                           items: stationNames,
                         ),
                       ),

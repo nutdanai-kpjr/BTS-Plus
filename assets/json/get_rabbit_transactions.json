@@ -1,0 +1,35 @@
+[
+  {
+    "rabbitID": "string",
+    "rabbitNumber": "string",
+    "rabbitShopName": "string",
+    "rabbitShopNumber": "string",
+    "timeStamp": "2022-06-24T08:33:05.527Z",
+    "amount": 0.0,
+    "transactionType": "BUY",
+    "shopType": "LAZADA",
+    "transactionRabbitCardID": "string"
+  },
+  {
+    "rabbitID": "string",
+    "rabbitNumber": "string",
+    "rabbitShopName": "string",
+    "rabbitShopNumber": "string",
+    "timeStamp": "2022-06-24T08:33:05.527Z",
+    "amount": 0.0,
+    "transactionType": "BUY",
+    "shopType": "LAZADA",
+    "transactionRabbitCardID": "string"
+  },
+  {
+    "rabbitID": "string",
+    "rabbitNumber": "string",
+    "rabbitShopName": "string",
+    "rabbitShopNumber": "string",
+    "timeStamp": "2022-06-24T08:33:05.527Z",
+    "amount": 0.0,
+    "transactionType": "BUY",
+    "shopType": "LAZADA",
+    "transactionRabbitCardID": "string"
+  }
+]

@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domains/user.dart';
-import '../../services/btsController.dart';
+import '../../services/bts_controller.dart';
 
 class LoginForm extends ConsumerWidget {
   LoginForm({
     Key? key,
   }) : super(key: key);
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _usernameController = TextEditingController(text: 'test6');
+  final _passwordController = TextEditingController(text: '123456');
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,7 +40,6 @@ class LoginForm extends ConsumerWidget {
                   _usernameController.text,
                   _passwordController.text,
                   context: context,
-                  kIsMockUp: true,
                 );
                 ref.read(authProvider.notifier).setCurrentUser(user);
                 Navigator.pushReplacement(

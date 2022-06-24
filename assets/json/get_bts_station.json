@@ -1,11 +1,13 @@
 [
   {
+    "btsID": "jeUClIEBukIohEcRd6X8",
     "stationID": "S001",
     "stationName": "Phaya Thai",
     "stationIndex": 1,
     "stationLocate": "S"
   },
   {
+    "btsID": "j-UClIEBukIohEcR9KXA",
     "stationID": "S002",
     "stationName": "Ratchathewi",
     "stationIndex": 2,

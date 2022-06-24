@@ -9,12 +9,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../utils.dart';
 
 class CustomerCard extends ConsumerWidget {
-  const CustomerCard(
-      {Key? key, required this.balance, required this.name, required this.type})
-      : super(key: key);
-  final double balance;
-  final String name;
-  final String type;
+  const CustomerCard({
+    Key? key,
+  }) : super(key: key);
+
   //REFRACT
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -69,7 +67,7 @@ class CustomerCard extends ConsumerWidget {
                   children: [
                     const Text('Card Balance', style: kBody2TextStyle),
                     Text(
-                      '฿ $balance',
+                      '฿ ${user.rabbitCard?.balance.toStringAsFixed(2) ?? '0.00'}',
                       style: kHeader2TextStyle,
                     ),
                   ]),

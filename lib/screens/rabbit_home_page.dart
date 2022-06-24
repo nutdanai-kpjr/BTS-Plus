@@ -4,11 +4,13 @@ import 'package:bts_plus/components/cards/no_rabbit_card.dart';
 import 'package:bts_plus/components/forms/rabbit_registration_form.dart';
 import 'package:bts_plus/components/require_rabbit_registration_message.dart';
 import 'package:bts_plus/domains/rabbit_transaction.dart';
+import 'package:bts_plus/services/rabbit_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../components/cards/transaction_card.dart';
 import '../components/headers/primary_header.dart';
+import '../components/primary_circular_progress_indicator.dart';
 import '../constants.dart';
 import '../providers/auth_provider.dart';
 
@@ -41,25 +43,22 @@ class RabbitHomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return PrimaryHeader(
         color: kRabbitThemeColor,
-        title: 'Rabbit Card',
+        title: 'My Rabbit Card',
         height: kHeight(context) * (haveRabbitCard ? 0.3 : 0.2),
         card: haveRabbitCard
-            ? const CustomerCard(
-                balance: 0.0,
-                name: 'John Doe',
-                type: 'Adult',
-              )
+            ? const CustomerCard()
             : const NoRabbitCard(
                 color: kRabbitThemeColor,
               ));
   }
 }
 
-class TransactionSection extends StatelessWidget {
+class TransactionSection extends ConsumerWidget {
   const TransactionSection({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final rabbitCard = ref.watch(authProvider)?.rabbitCard;
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: kWidth(context) * 0.05,
@@ -76,12 +75,52 @@ class TransactionSection extends StatelessWidget {
               style: kHeader3TextStyle,
             ),
           ),
-          for (var i in List.generate(10, (i) => i))
-            TransactionCard(
-              rabbitTransaction: RabbitTransaction.mockUp(),
-            )
+          RabbitTransactionList(
+            rabbitCardNumber: rabbitCard?.cardNumber ?? '',
+          )
         ],
       ),
     );
+  }
+}
+
+class RabbitTransactionList extends StatefulWidget {
+  const RabbitTransactionList({
+    Key? key,
+    required this.rabbitCardNumber,
+  }) : super(key: key);
+  final String rabbitCardNumber;
+  @override
+  State<RabbitTransactionList> createState() => _RabbitTransactionListState();
+}
+
+class _RabbitTransactionListState extends State<RabbitTransactionList> {
+  late Future<List<RabbitTransaction>> _getTransactions;
+  @override
+  void initState() {
+    _getTransactions =
+        getRabbitTransactions(widget.rabbitCardNumber, context: context);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: _getTransactions,
+        builder: (context, AsyncSnapshot<List<RabbitTransaction>> snapshot) {
+          if (snapshot.hasData) {
+            var transactions = snapshot.data ?? [];
+            return Column(
+              children: [
+                for (var transaction in transactions)
+                  TransactionCard(
+                    rabbitTransaction: transaction,
+                  )
+              ],
+            );
+          } else {
+            return const PrimaryCircularProgressIndicator();
+          }
+        });
   }
 }

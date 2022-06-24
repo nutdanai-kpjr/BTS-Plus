@@ -3,7 +3,9 @@ class Ticket {
   final String from;
   final String to;
   final double price;
-
+// Timeout/ ออกตั๋ว
+// Timeup/ หมดอายุ
+// status/ สถานะตั๋ว
   Ticket(
       {required this.id,
       required this.from,
@@ -17,6 +19,12 @@ class Ticket {
   //buydate
   //status
   //
+  Ticket.fromJson(Map<String, dynamic> json)
+      : id = json['ticketID'],
+        from = json['from'],
+        to = json['to'],
+        price = json['price'];
+
   Ticket.mockUp()
       : id = '0',
         from = 'Asok',

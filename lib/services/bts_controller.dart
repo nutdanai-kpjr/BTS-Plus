@@ -2,16 +2,17 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:bts_plus/domains/ticket_transcation.dart';
-import 'package:bts_plus/services/rabbitController.dart';
+import 'package:bts_plus/services/rabbit_controller.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 import '../domains/station.dart';
+import '../domains/ticket.dart';
 import '../domains/user.dart';
-import 'baseController.dart';
+import 'base_controller.dart';
 
 const String kBTSControllerUrl = "$kRabbitBasedURL/api/v1/btsCustomer";
-
+const String kInternalBTSControllerUrl = "$kRabbitBasedURL/api/v1/internal";
 Future<User?> addUser(User user, {required context}) async {
   final response = await http.post(
       Uri.parse(
@@ -82,7 +83,7 @@ Future<List<Station>> getStations({required context}) async {
     return stations;
   }
   final response = await http.get(Uri.parse(
-    '$kBTSControllerUrl/getBtsStations',
+    '$kInternalBTSControllerUrl/getAllStation',
   ));
 
   if (response.statusCode == 200) {
@@ -98,6 +99,42 @@ Future<List<Station>> getStations({required context}) async {
     // }
     // }
   }
+}
+
+Future<List<Ticket>> getAvaliableTickets({required context}) async {
+  if (kIsMockup) {
+    final mockUpRespond =
+        await rootBundle.loadString('$kRabbitMockupURL/get_bts_station.json');
+    var parsedJson = jsonDecode(mockUpRespond);
+    List<Ticket> tickets =
+        parsedJson.map<Ticket>((json) => Ticket.fromJson(json)).toList();
+    return tickets;
+  }
+  final response = await http.get(Uri.parse(
+    '$kBTSControllerUrl/getAvaliableTickets',
+  ));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    var parsedJson = jsonDecode(response.body);
+    List<Ticket> tickets =
+        parsedJson.map<Ticket>((json) => Ticket.fromJson(json)).toList();
+    return tickets;
+  } else {
+    var body = json.decode(response.body);
+    await showErrorDialog(context, body);
+    return [];
+    // }
+    // }
+  }
+}
+
+Future<bool> processTicketPayment(TicketTransaction ticketTransaction,
+    {required context}) async {
+  if (kIsMockup) {
+    return true;
+  }
+  return false;
 }
 
 Future<TicketTransaction> getTicketTransaction(
@@ -133,7 +170,5 @@ Future<TicketTransaction> getTicketTransaction(
     var body = json.decode(response.body);
     await showErrorDialog(context, body);
     return ticketTransaction;
-    // }
-    // }
   }
 }

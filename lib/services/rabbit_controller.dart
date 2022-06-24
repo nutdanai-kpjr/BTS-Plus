@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:bts_plus/domains/rabbit_card.dart';
+import 'package:bts_plus/domains/rabbit_transaction.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
-import 'baseController.dart';
+import 'base_controller.dart';
 
 const String kRabbitControllerUrl = "$kRabbitBasedURL/api/v1/rabbitCard";
 
@@ -14,6 +15,7 @@ Future<bool> addRabbitCard(
   required context,
 }) async {
   log('addRabbitCard: ${newRabbitCard.btsUserId}');
+  log('newRabbitCard:${newRabbitCard.toJson()}');
   final response = await http.post(
       Uri.parse(
         '$kRabbitControllerUrl/registerRabbitCardByBts',
@@ -49,7 +51,7 @@ Future<RabbitCard?> getRabbitCard(
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     var parsedJson = jsonDecode(response.body);
-
+    log('RabbitCard: $parsedJson');
     RabbitCard rabbitCard =
         RabbitCard.fromJson(parsedJson, cardNumber: rabbitNumber);
     return rabbitCard;
@@ -57,6 +59,44 @@ Future<RabbitCard?> getRabbitCard(
     var body = json.decode(response.body);
     await showErrorDialog(context, body);
     return null;
+  }
+}
+
+Future<bool> payByRabbitCard(
+  RabbitCard rabbitCard, {
+  required context,
+}) async {
+  log('payByRabbitCard: ${rabbitCard.cardNumber}');
+  return true;
+}
+
+Future<List<RabbitTransaction>> getRabbitTransactions(rabbitCardNumber,
+    {required context}) async {
+  log('Hi get RabbitTransaction');
+
+  if (kIsMockup) {
+    final mockUpRespond = await rootBundle
+        .loadString('$kRabbitMockupURL/get_rabbit_transactions.json');
+    var parsedJson = jsonDecode(mockUpRespond);
+    List<RabbitTransaction> rabbitTransactions = parsedJson
+        .map<RabbitTransaction>((json) => RabbitTransaction.fromJson(json))
+        .toList();
+    return rabbitTransactions;
+  }
+  final response = await http.get(Uri.parse(
+    '$kRabbitControllerUrl/transcationRabbitCard?rabbitID=$rabbitCardNumber',
+  ));
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    var parsedJson = jsonDecode(response.body);
+    List<RabbitTransaction> rabbitTransactions = parsedJson
+        .map<RabbitTransaction>((json) => RabbitTransaction.fromJson(json))
+        .toList();
+    return rabbitTransactions;
+  } else {
+    var body = json.decode(response.body);
+    await showErrorDialog(context, body);
+    return [];
     // }
     // }
   }

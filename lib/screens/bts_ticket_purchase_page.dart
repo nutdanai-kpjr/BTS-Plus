@@ -7,7 +7,7 @@ import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/domains/ticket_transcation.dart';
 import 'package:bts_plus/domains/user.dart';
 import 'package:bts_plus/screens/main_page.dart';
-import 'package:bts_plus/services/btsController.dart';
+import 'package:bts_plus/services/bts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,10 +18,13 @@ import '../providers/auth_provider.dart';
 
 class BTSTicketPurchasePage extends ConsumerStatefulWidget {
   const BTSTicketPurchasePage(
-      {Key? key, required this.from, required this.to, this.quantity = 1})
+      {Key? key,
+      required this.fromStationId,
+      required this.toStationId,
+      this.quantity = 1})
       : super(key: key);
-  final String from;
-  final String to;
+  final String fromStationId;
+  final String toStationId;
   final int quantity;
 
   @override
@@ -70,8 +73,8 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
   Widget build(BuildContext context) {
     ticketTransaction = TicketTransaction(
         userId: ref.watch(authProvider)!.id!,
-        from: widget.from,
-        to: widget.to,
+        from: widget.fromStationId,
+        to: widget.toStationId,
         quantity: widget.quantity);
     return PrimaryScaffold(
         bottomNavigationBar: Container(
@@ -145,8 +148,8 @@ class _TicketOptionSectionState extends State<TicketOptionSection> {
           StationSelector(
             onFromChanged: onFromchanged,
             onToChanged: onToChanged,
-            from: from,
-            to: to,
+            fromStationId: from,
+            toStationId: to,
           ),
           SizedBox(height: kHeight(context) * 0.02),
           Row(
