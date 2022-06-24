@@ -6,26 +6,36 @@ import 'package:bts_plus/components/forms/layout/primary_textformfield.dart';
 import 'package:bts_plus/components/headers/secondary_header.dart';
 import 'package:bts_plus/components/primary_scaffold.dart';
 import 'package:bts_plus/constants.dart';
+import 'package:bts_plus/providers/auth_provider.dart';
 import 'package:bts_plus/screens/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../components/buttons/layout/primary_button.dart';
 import '../components/forms/layout/primary_textfield.dart';
 import '../components/primary_divider.dart';
+import '../services/rabbit_controller.dart';
 
-class RabbitTopUpPage extends StatefulWidget {
+class RabbitTopUpPage extends ConsumerStatefulWidget {
   const RabbitTopUpPage({Key? key}) : super(key: key);
 
   @override
-  State<RabbitTopUpPage> createState() => _RabbitTopUpPageState();
+  RabbitTopUpPageState createState() => RabbitTopUpPageState();
 }
 
-class _RabbitTopUpPageState extends State<RabbitTopUpPage> {
+class RabbitTopUpPageState extends ConsumerState<RabbitTopUpPage> {
   String paymentMethod = 'Cash';
   double amount = 0;
   TextEditingController atmCardController = TextEditingController();
   TextEditingController atmPinController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(authProvider);
+  }
+
   onAmountChanged(double value) {
     amount = value;
   }
@@ -36,6 +46,19 @@ class _RabbitTopUpPageState extends State<RabbitTopUpPage> {
     });
   }
 
+  onConfirm() async {
+    final navigator = Navigator.of(context);
+    final user = ref.watch(authProvider);
+    final String rabbitUserName = user?.userName ?? '';
+    await topUpRabbitCard(rabbitUserName, amount, context: context);
+    if (!mounted) return;
+    await ref.read(authProvider.notifier).refreshUserRabbitCard(context);
+    navigator.push(MaterialPageRoute(
+        builder: (context) => const MainPage(
+              pageIndex: 1,
+            )));
+  }
+
   @override
   Widget build(BuildContext context) {
     return PrimaryScaffold(
@@ -43,17 +66,7 @@ class _RabbitTopUpPageState extends State<RabbitTopUpPage> {
         bottomNavigationBar: Container(
           margin: EdgeInsets.all(kWidth(context) * 0.05),
           child: PrimaryButton(
-            color: kRabbitThemeColor,
-            text: 'Confirm',
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const MainPage(
-                            pageIndex: 1,
-                          )));
-            },
-          ),
+              color: kRabbitThemeColor, text: 'Confirm', onPressed: onConfirm),
         ),
         body: SingleChildScrollView(
             child: Column(children: <Widget>[

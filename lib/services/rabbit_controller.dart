@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:bts_plus/domains/rabbit_card.dart';
 import 'package:bts_plus/domains/rabbit_transaction.dart';
+import 'package:bts_plus/services/bts_controller.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
@@ -99,5 +100,23 @@ Future<List<RabbitTransaction>> getRabbitTransactions(rabbitCardNumber,
     return [];
     // }
     // }
+  }
+}
+
+Future<bool> topUpRabbitCard(
+  String rabbitUserName,
+  double amount, {
+  required context,
+}) async {
+  log('$kInternalBTSControllerUrl/topRabbitCard?rabbitUser=$rabbitUserName&amount=${amount.toStringAsFixed(1)}');
+  final response = await http.post(Uri.parse(
+    '$kInternalBTSControllerUrl/topRabbitCard?rabbitUser=$rabbitUserName&amount=${amount.toStringAsFixed(1)}',
+  ));
+  if (response.statusCode == 200) {
+    return true;
+  } else {
+    var body = json.decode(response.body);
+    await showErrorDialog(context, body);
+    return false;
   }
 }

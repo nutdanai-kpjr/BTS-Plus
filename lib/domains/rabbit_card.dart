@@ -9,7 +9,7 @@ class RabbitCard {
   final String? btsUserId;
   final DateTime birthDate;
   final double balance;
-  final String type;
+  final String? type;
 
   RabbitCard(
       {this.cardNumber,
@@ -20,7 +20,7 @@ class RabbitCard {
       required this.userName,
       required this.birthDate,
       required this.balance,
-      required this.type});
+      this.type});
 
   RabbitCard.fromJson(Map<String, dynamic> json, {required cardNumber})
       : cardNumber = json['rabbitNumber'] ?? cardNumber,
@@ -41,7 +41,7 @@ class RabbitCard {
         'lastName': lastName,
         'dateOfBirth': birthDate.toIso8601String(),
         'rabbitBalance': balance,
-        'rabbitType': type.toUpperCase(),
+        'rabbitType': type?.toUpperCase() ?? 'ADULT',
         'customerID': btsUserId,
       };
 }

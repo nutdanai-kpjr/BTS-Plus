@@ -47,7 +47,7 @@ class CustomerCard extends ConsumerWidget {
                     Container(
                       margin: EdgeInsets.only(top: kHeight(context) * 0.005),
                       child: Text(
-                        '${getCapitalized(user.rabbitCard!.type)}',
+                        '${getCapitalized(user.rabbitCard?.type ?? 'Unknown')}',
                         style: kHeader3TextStyle,
                       ),
                     ),

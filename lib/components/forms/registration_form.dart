@@ -121,18 +121,18 @@ class RegistrationForm extends ConsumerWidget {
               textAlign: TextAlign.start,
               style: kHeader3TextStyle,
             )),
-        Container(
-          margin: EdgeInsets.all(kWidth(context) * 0.02),
-          child: PrimaryDropDown(
-            title: 'Type',
-            focusBorderColor: kRabbitThemeColor,
-            items: const ['Student', 'Adult', 'Senior'],
-            defaultValue: 'Adult',
-            onChanged: (value) {
-              setRabbitCardType(value);
-            },
-          ),
-        ),
+        // Container(
+        //   margin: EdgeInsets.all(kWidth(context) * 0.02),
+        //   child: PrimaryDropDown(
+        //     title: 'Type',
+        //     focusBorderColor: kRabbitThemeColor,
+        //     items: const ['Student', 'Adult', 'Senior'],
+        //     defaultValue: 'Adult',
+        //     onChanged: (value) {
+        //       setRabbitCardType(value);
+        //     },
+        //   ),
+        // ),
         PrimaryTextFormField(
             title: 'PIN (6 Numbers)',
             inputFormatters: [
@@ -198,7 +198,6 @@ class RegistrationForm extends ConsumerWidget {
                 if (user != null) {
                   final RabbitCard newRabbitCard = RabbitCard(
                       balance: 0.0,
-                      type: rabbitCardType?.toUpperCase() ?? 'ADULT',
                       pin: _rabbitPinController.text,
                       firstName: user.firstName,
                       lastName: user.lastName,

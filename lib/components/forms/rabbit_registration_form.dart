@@ -94,18 +94,18 @@ class RabbitRegistrationForm extends ConsumerWidget {
             controller: dateOfBirthController,
             focusBorderColor: kRabbitThemeColor,
           ),
-          Container(
-            margin: EdgeInsets.all(kWidth(context) * 0.05),
-            child: PrimaryDropDown(
-              title: 'Type',
-              focusBorderColor: kRabbitThemeColor,
-              items: const ['Student', 'Adult', 'Senior'],
-              defaultValue: 'Adult',
-              onChanged: (value) {
-                type = value;
-              },
-            ),
-          ),
+          // Container(
+          //   margin: EdgeInsets.all(kWidth(context) * 0.05),
+          //   child: PrimaryDropDown(
+          //     title: 'Type',
+          //     focusBorderColor: kRabbitThemeColor,
+          //     items: const ['Student', 'Adult', 'Senior'],
+          //     defaultValue: 'Adult',
+          //     onChanged: (value) {
+          //       type = value;
+          //     },
+          //   ),
+          // ),
           PrimaryButton(
             color: kRabbitThemeColor,
             text: 'Register',
