@@ -7,6 +7,7 @@ import 'package:bts_plus/components/forms/station_selector.dart';
 import 'package:bts_plus/components/headers/primary_header.dart';
 import 'package:bts_plus/components/require_rabbit_registration_message.dart';
 import 'package:bts_plus/constants.dart';
+import 'package:bts_plus/providers/station_provider.dart';
 import 'package:bts_plus/screens/bts_ticket_purchase_page.dart';
 import 'package:bts_plus/services/bts_controller.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,8 @@ class BTSHomeNavPageState extends ConsumerState<BTSHomeNavPage> {
   void initState() {
     super.initState();
     ref.read(authProvider);
+    ref.read(stationProvider);
+    ref.read(stationProvider.notifier).getStationLists(context);
   }
 
   onFromChanged(String value) {

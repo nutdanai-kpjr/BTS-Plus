@@ -11,7 +11,8 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../domains/ticket.dart';
 
-showTicketDetailDialog(context, {required Ticket ticket}) {
+showTicketDetailDialog(context,
+    {required Ticket ticket, required displayFrom, required displayTo}) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -46,10 +47,8 @@ showTicketDetailDialog(context, {required Ticket ticket}) {
                 margin: EdgeInsets.all(kHeight(context) * 0.012),
                 child: Column(
                   children: [
-                    TicketDetailText(
-                        title: 'From:', value: '${ticket.fromStationId}'),
-                    TicketDetailText(
-                        title: 'To:', value: '${ticket.toStationId}'),
+                    TicketDetailText(title: 'From:', value: '${displayFrom}'),
+                    TicketDetailText(title: 'To:', value: '${displayTo}'),
                     TicketDetailText(
                         title: 'Price:', value: '฿ ${ticket.price}'),
                   ],
