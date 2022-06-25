@@ -35,9 +35,30 @@ class TicketTransaction {
     required this.userId,
     required this.from,
     required this.to,
-  })  : quantity = json['numberTicket'],
-        totalPrice = json['amount'],
+  })  : quantity = json['numberOfTicket'],
+        totalPrice = json['totalPrice'],
         discount = json['discount'],
-        finalPrice = json['total'],
+        finalPrice = json['finalPrice'],
         pricePerTicket = json['pricePerTicket'];
+
+  Map<String, dynamic> toJson() => {
+        'customerID': userId,
+        'startStation': from,
+        'endStation': to,
+        'numberOfTicket': quantity,
+        'totalPrice': totalPrice,
+        'discount': discount,
+        'finalPrice': finalPrice,
+        'pricePerTicket': pricePerTicket,
+      };
+
+  //override equals method to compare two TicketTransaction objects
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TicketTransaction && from == other.from && to == other.to;
+
+  //override hashCode method to compare two TicketTransaction objects
+  @override
+  int get hashCode => from.hashCode ^ to.hashCode;
 }

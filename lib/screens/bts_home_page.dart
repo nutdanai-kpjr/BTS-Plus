@@ -79,6 +79,8 @@ class BTSHomeNavPageState extends ConsumerState<BTSHomeNavPage> {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           BTSTicketPurchasePage(
+                                            userId:
+                                                ref.watch(authProvider)!.id!,
                                             fromStationId: fromStationId,
                                             toStationId: toStationId,
                                           )));

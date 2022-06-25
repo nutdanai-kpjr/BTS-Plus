@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bts_plus/components/buttons/layout/quantity_selector_button.dart';
 import 'package:bts_plus/components/headers/secondary_header.dart';
 import 'package:bts_plus/components/primary_circular_progress_indicator.dart';
@@ -5,8 +7,6 @@ import 'package:bts_plus/components/primary_divider.dart';
 import 'package:bts_plus/components/primary_scaffold.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/domains/ticket_transcation.dart';
-import 'package:bts_plus/domains/user.dart';
-import 'package:bts_plus/screens/main_page.dart';
 import 'package:bts_plus/services/bts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +19,7 @@ import '../providers/auth_provider.dart';
 class BTSTicketPurchasePage extends ConsumerStatefulWidget {
   const BTSTicketPurchasePage(
       {Key? key,
+      required this.userId,
       required this.fromStationId,
       required this.toStationId,
       this.quantity = 1})
@@ -26,6 +27,7 @@ class BTSTicketPurchasePage extends ConsumerStatefulWidget {
   final String fromStationId;
   final String toStationId;
   final int quantity;
+  final String userId;
 
   @override
   BTSTicketPurchasePageState createState() => BTSTicketPurchasePageState();
@@ -34,28 +36,51 @@ class BTSTicketPurchasePage extends ConsumerStatefulWidget {
 class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
   late TicketTransaction ticketTransaction;
   late int quantity = widget.quantity;
-
+  late String userId = widget.userId;
+  late Future<TicketTransaction> _getTicketTransactionWithPrice;
   @override
   void initState() {
     super.initState();
     ref.read(authProvider);
+
+    ticketTransaction = TicketTransaction(
+        userId: widget.userId,
+        from: widget.fromStationId,
+        to: widget.toStationId,
+        quantity: widget.quantity);
+    _getTicketTransactionWithPrice = getTicketTransaction(
+      ticketTransaction,
+      context: context,
+    );
   }
 
-  onFromChanged(String value) {
+  onFromChanged(String value) async {
     setState(() {
       ticketTransaction.from = value;
     });
+    await refreshTicket();
   }
 
-  onToChanged(String value) {
+  onToChanged(String value) async {
     setState(() {
       ticketTransaction.to = value;
     });
+    await refreshTicket();
   }
 
-  onQuantityChange(int value) {
+  onQuantityChange(int value) async {
     setState(() {
       ticketTransaction.quantity = value;
+    });
+    await refreshTicket();
+  }
+
+  refreshTicket() async {
+    setState(() {
+      _getTicketTransactionWithPrice = getTicketTransaction(
+        ticketTransaction,
+        context: context,
+      );
     });
   }
 
@@ -69,13 +94,79 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
     //     context, MaterialPageRoute(builder: (context) => MainPage()));
   }
 
+  _buildBTSPaymentSection() {
+    return FutureBuilder(
+        future: _getTicketTransactionWithPrice,
+        builder: (context, AsyncSnapshot<TicketTransaction> snapshot) {
+          if (snapshot.hasData) {
+            var ticketTransactionWithPrice = snapshot.data;
+
+//REFRACT
+            return Column(
+              children: <Widget>[
+                Container(
+                    width: double.infinity,
+                    margin:
+                        EdgeInsets.symmetric(vertical: kHeight(context) * 0.02),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Ticket Price', style: kHeader3TextStyle),
+                        Text(
+                            '฿ ${ticketTransactionWithPrice?.pricePerTicket?.toStringAsFixed(2) ?? '0'}',
+                            style: kHeader3TextStyle),
+                      ],
+                    )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('Sub-Total', style: kBodyTextStyle),
+                    Text(
+                        '฿ ${ticketTransactionWithPrice?.totalPrice?.toStringAsFixed(2) ?? '0'}',
+                        style: kBodyTextStyle),
+                  ],
+                ),
+                ticketTransactionWithPrice?.discount != 0.0
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Discount',
+                            style: kBodyTextStyle.copyWith(color: kGreen),
+                          ),
+                          Text(
+                              '-฿ ${ticketTransactionWithPrice?.discount?.toStringAsFixed(2) ?? '0'}',
+                              style: kBodyTextStyle.copyWith(color: kGreen)),
+                        ],
+                      )
+                    : Container(),
+                const PrimaryDivider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('Total', style: kHeader3TextStyle),
+                    Text(
+                        '฿ ${ticketTransactionWithPrice?.finalPrice?.toStringAsFixed(2) ?? '0'}',
+                        style: kHeader3TextStyle),
+                  ],
+                ),
+                SizedBox(
+                  height: kHeight(context) * 0.02,
+                ),
+                BalanceCard(
+                  balance: 0.0,
+                  height: kHeight(context) * 0.125,
+                )
+              ],
+            );
+          } else {
+            return const PrimaryCircularProgressIndicator();
+          }
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
-    ticketTransaction = TicketTransaction(
-        userId: ref.watch(authProvider)!.id!,
-        from: widget.fromStationId,
-        to: widget.toStationId,
-        quantity: widget.quantity);
     return PrimaryScaffold(
         bottomNavigationBar: Container(
           margin: EdgeInsets.all(kWidth(context) * 0.05),
@@ -103,9 +194,7 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
                     from: ticketTransaction.from,
                     to: ticketTransaction.to,
                   ),
-                  BTSPaymentSection(
-                    ticketTransaction: ticketTransaction,
-                  )
+                  _buildBTSPaymentSection()
                 ],
               ))
         ])));
@@ -169,84 +258,5 @@ class _TicketOptionSectionState extends State<TicketOptionSection> {
         ],
       ),
     );
-  }
-}
-
-class BTSPaymentSection extends StatefulWidget {
-  const BTSPaymentSection({Key? key, required this.ticketTransaction})
-      : super(key: key);
-  final TicketTransaction ticketTransaction;
-  @override
-  State<BTSPaymentSection> createState() => _BTSPaymentSectionState();
-}
-
-class _BTSPaymentSectionState extends State<BTSPaymentSection> {
-  late TicketTransaction ticketTransaction = widget.ticketTransaction;
-  late Future<TicketTransaction> _getTicketTransactionWithPrice;
-  @override
-  void initState() {
-    _getTicketTransactionWithPrice = getTicketTransaction(
-      ticketTransaction,
-      context: context,
-    );
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: _getTicketTransactionWithPrice,
-        builder: (context, AsyncSnapshot<TicketTransaction> snapshot) {
-          if (snapshot.hasData) {
-            var ticketTransactionWithPrice = snapshot.data;
-//REFRACT
-            return Column(
-              children: <Widget>[
-                Container(
-                    width: double.infinity,
-                    margin:
-                        EdgeInsets.symmetric(vertical: kHeight(context) * 0.02),
-                    child: const Text('Pricing', style: kHeader3TextStyle)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('Sub-Total', style: kBodyTextStyle),
-                    Text('฿ ${ticketTransactionWithPrice?.totalPrice ?? '0'}',
-                        style: kBodyTextStyle),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Discount',
-                      style: kBodyTextStyle.copyWith(color: kGreen),
-                    ),
-                    Text('-฿ ${ticketTransactionWithPrice?.discount ?? '0'}',
-                        style: kBodyTextStyle.copyWith(color: kGreen)),
-                  ],
-                ),
-                const PrimaryDivider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('Total', style: kHeader3TextStyle),
-                    Text('฿ ${ticketTransactionWithPrice?.finalPrice ?? '0'}',
-                        style: kHeader3TextStyle),
-                  ],
-                ),
-                SizedBox(
-                  height: kHeight(context) * 0.02,
-                ),
-                BalanceCard(
-                  balance: 0.0,
-                  height: kHeight(context) * 0.125,
-                )
-              ],
-            );
-          } else {
-            return const PrimaryCircularProgressIndicator();
-          }
-        });
   }
 }

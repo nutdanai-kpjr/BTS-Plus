@@ -141,21 +141,25 @@ Future<TicketTransaction> getTicketTransaction(
   TicketTransaction ticketTransaction, {
   required context,
 }) async {
-  if (kIsMockup) {
-    final mockUpRespond =
-        await rootBundle.loadString('$kRabbitMockupURL/get_bts_price.json');
-    var parsedJson = jsonDecode(mockUpRespond);
-    TicketTransaction ticketTransactionWithPrice =
-        TicketTransaction.fromJsonByUpdatePrice(parsedJson,
-            userId: ticketTransaction.userId,
-            from: ticketTransaction.from,
-            to: ticketTransaction.to);
+  // if (kIsMockup) {
+  //   final mockUpRespond =
+  //       await rootBundle.loadString('$kRabbitMockupURL/get_bts_price.json');
+  //   var parsedJson = jsonDecode(mockUpRespond);
+  //   TicketTransaction ticketTransactionWithPrice =
+  //       TicketTransaction.fromJsonByUpdatePrice(parsedJson,
+  //           userId: ticketTransaction.userId,
+  //           from: ticketTransaction.from,
+  //           to: ticketTransaction.to);
 
-    return ticketTransactionWithPrice;
-  }
-  final response = await http.get(Uri.parse(
-    '$kBTSControllerUrl/getTickPrice',
-  ));
+  //   return ticketTransactionWithPrice;
+  // }
+
+  final response = await http.post(
+      Uri.parse(
+        '$kBTSControllerUrl/calTricket',
+      ),
+      headers: {"Content-Type": "application/json"},
+      body: json.encode(ticketTransaction.toJson()));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,

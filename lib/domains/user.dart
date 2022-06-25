@@ -48,5 +48,7 @@ class User {
         birthDate = DateTime.now(),
         rabbitCard = null;
 
+
+
   String get fullName => '$firstName $lastName';
 }

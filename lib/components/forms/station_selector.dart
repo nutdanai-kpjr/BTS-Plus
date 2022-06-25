@@ -66,8 +66,7 @@ class _StationSelectorState extends State<StationSelector> {
             var fromStationId = widget.fromStationId ?? stations[0].id;
             var toStationId = widget.toStationId ??
                 (stations.length > 1 ? stations[1].id : stations[0].id);
-            log('fromStationId: $fromStationId');
-            log('toStationId: $toStationId');
+
             return Container(
               child: Column(
                 children: <Widget>[
