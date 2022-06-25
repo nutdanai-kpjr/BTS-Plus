@@ -1,5 +1,7 @@
 import 'package:bts_plus/domains/ticket.dart';
 
+const kBTSshopNumber = '1891660952';
+
 class TicketTransaction {
   final String? userId;
   String from;
@@ -50,6 +52,7 @@ class TicketTransaction {
         'discount': discount,
         'finalPrice': finalPrice,
         'pricePerTicket': pricePerTicket,
+        'rabbitShopNumber ': kBTSshopNumber,
       };
 
   //override equals method to compare two TicketTransaction objects

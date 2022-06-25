@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bts_plus/components/buttons/layout/primary_button.dart';
 import 'package:bts_plus/components/forms/layout/primary_textformfield.dart';
 import 'package:bts_plus/components/utils.dart';
@@ -36,14 +38,15 @@ class LoginForm extends ConsumerWidget {
             text: 'Login',
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
+                final navigator = Navigator.of(context);
                 User? user = await loginUser(
                   _usernameController.text,
                   _passwordController.text,
                   context: context,
                 );
+
                 ref.read(authProvider.notifier).setCurrentUser(user);
-                Navigator.pushReplacement(
-                  context,
+                navigator.pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => MainPage(),
                   ),

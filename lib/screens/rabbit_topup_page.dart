@@ -53,10 +53,7 @@ class RabbitTopUpPageState extends ConsumerState<RabbitTopUpPage> {
     await topUpRabbitCard(rabbitUserName, amount, context: context);
     if (!mounted) return;
     await ref.read(authProvider.notifier).refreshUserRabbitCard(context);
-    navigator.push(MaterialPageRoute(
-        builder: (context) => const MainPage(
-              pageIndex: 1,
-            )));
+    navigator.maybePop();
   }
 
   @override

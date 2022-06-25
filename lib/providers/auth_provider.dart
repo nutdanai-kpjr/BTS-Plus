@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bts_plus/domains/user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,8 +28,10 @@ class AuthNotifier extends StateNotifier<User?> {
     }
     final rabbitCard =
         await getRabbitCard(user.rabbitCard!.cardNumber, context: context);
-    final updatedUser = state;
-    updatedUser!.rabbitCard = rabbitCard;
+    // state = user.copyWith(rabbitCard: rabbitCard);
+
+    final updatedUser = user.copyWith(rabbitCard: rabbitCard);
+
     setCurrentUser(updatedUser);
   }
 }

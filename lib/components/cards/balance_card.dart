@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
 import 'package:bts_plus/components/buttons/topup_button.dart';
 import 'package:bts_plus/components/cards/layout/primary_card.dart';
@@ -14,7 +16,7 @@ class BalanceCard extends ConsumerWidget {
   final double? height;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(authProvider);
+    var user = ref.watch(authProvider);
     return PrimaryCard(
         height: height,
         child: Row(

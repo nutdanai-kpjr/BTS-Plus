@@ -38,10 +38,9 @@ Future<User?> loginUser(String userName, String password,
     User user =
         User.fromJson(parsedJson, userName: userName, password: password);
     String? rabbitNumber = parsedJson['rabbitNumber'];
-    log('message: $rabbitNumber');
+    ;
     if (rabbitNumber != null) {
       user.rabbitCard = await getRabbitCard(rabbitNumber, context: context);
-      log(user.rabbitCard?.cardNumber ?? 'notfound');
     }
     return user;
   }

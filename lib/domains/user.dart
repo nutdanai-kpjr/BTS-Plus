@@ -48,7 +48,24 @@ class User {
         birthDate = DateTime.now(),
         rabbitCard = null;
 
-
+  User copyWith({
+    String? id,
+    String? userName,
+    String? password,
+    String? firstName,
+    String? lastName,
+    DateTime? birthDate,
+    RabbitCard? rabbitCard,
+  }) =>
+      User(
+        id: id ?? this.id,
+        userName: userName ?? this.userName,
+        password: password ?? this.password,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        birthDate: birthDate ?? this.birthDate,
+        rabbitCard: rabbitCard ?? this.rabbitCard,
+      );
 
   String get fullName => '$firstName $lastName';
 }
