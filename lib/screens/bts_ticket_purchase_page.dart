@@ -15,6 +15,7 @@ import '../components/buttons/layout/primary_button.dart';
 import '../components/cards/balance_card.dart';
 import '../components/forms/station_selector.dart';
 import '../providers/auth_provider.dart';
+import 'main_page.dart';
 
 class BTSTicketPurchasePage extends ConsumerStatefulWidget {
   const BTSTicketPurchasePage(
@@ -85,13 +86,16 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
   }
 
   onConfirm() async {
-    await getTicketTransaction(
+    final TicketTransaction finalTicketTransaction = await getTicketTransaction(
       ticketTransaction,
       context: context,
     );
+    log(finalTicketTransaction.toJson().toString());
+    await processTicketPayment(finalTicketTransaction, context: context);
+    if (!mounted) return;
 
-    // Navigator.push(
-    //     context, MaterialPageRoute(builder: (context) => MainPage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const MainPage()));
   }
 
   _buildBTSPaymentSection() {

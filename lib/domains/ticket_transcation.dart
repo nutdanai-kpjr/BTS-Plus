@@ -11,6 +11,7 @@ class TicketTransaction {
   double? discount;
   double? finalPrice;
   double? pricePerTicket;
+  final String shopNumber = kBTSshopNumber;
 
   TicketTransaction(
       {required this.userId,

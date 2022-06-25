@@ -50,7 +50,7 @@ class TicketCard extends StatelessWidget {
                               ),
                             ),
                             SizedBox(width: kWidth(context) * 0.02),
-                            Text(ticket.from, style: kBodyTextStyle)
+                            Text(ticket.fromStationId, style: kBodyTextStyle)
                           ],
                         ),
                       ),
@@ -65,7 +65,7 @@ class TicketCard extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: kWidth(context) * 0.02),
-                          Text(ticket.to, style: kBodyTextStyle)
+                          Text(ticket.toStationId, style: kBodyTextStyle)
                         ],
                       )),
                       Expanded(

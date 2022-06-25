@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../components/cards/balance_card.dart';
+import '../components/primary_circular_progress_indicator.dart';
 import '../domains/ticket.dart';
 import '../providers/auth_provider.dart';
 import '../services/rabbit_controller.dart';
@@ -89,7 +90,9 @@ class BTSHomeNavPageState extends ConsumerState<BTSHomeNavPage> {
                         ),
                       ],
                     )),
-                const _AvailiableTicketSection(),
+                _AvailiableTicketSection(
+                  userId: ref.watch(authProvider)?.id ?? '',
+                ),
               ],
             )
           : const RequireRabbitRegistrationMessage()
@@ -112,8 +115,22 @@ class BTSHomeHeader extends ConsumerWidget {
   }
 }
 
-class _AvailiableTicketSection extends StatelessWidget {
-  const _AvailiableTicketSection({Key? key}) : super(key: key);
+class _AvailiableTicketSection extends StatefulWidget {
+  const _AvailiableTicketSection({Key? key, required this.userId})
+      : super(key: key);
+  final String userId;
+  @override
+  State<_AvailiableTicketSection> createState() =>
+      _AvailiableTicketSectionState();
+}
+
+class _AvailiableTicketSectionState extends State<_AvailiableTicketSection> {
+  late Future<List<Ticket>> _getTickets;
+  @override
+  void initState() {
+    _getTickets = getAvaliableTickets(widget.userId, context: context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,8 +150,20 @@ class _AvailiableTicketSection extends StatelessWidget {
               style: kHeader3TextStyle,
             ),
           ),
-          for (var i in List.generate(10, (i) => i))
-            TicketCard(ticket: Ticket.mockUp())
+          FutureBuilder(
+              future: _getTickets,
+              builder: (context, AsyncSnapshot<List<Ticket>> snapshot) {
+                if (snapshot.hasData) {
+                  var tickets = snapshot.data ?? [];
+                  return Column(
+                    children: [
+                      for (var ticket in tickets) TicketCard(ticket: ticket)
+                    ],
+                  );
+                } else {
+                  return const PrimaryCircularProgressIndicator();
+                }
+              })
         ],
       ),
     );

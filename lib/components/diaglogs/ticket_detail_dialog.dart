@@ -46,8 +46,10 @@ showTicketDetailDialog(context, {required Ticket ticket}) {
                 margin: EdgeInsets.all(kHeight(context) * 0.012),
                 child: Column(
                   children: [
-                    TicketDetailText(title: 'From:', value: '${ticket.from}'),
-                    TicketDetailText(title: 'To:', value: '${ticket.to}'),
+                    TicketDetailText(
+                        title: 'From:', value: '${ticket.fromStationId}'),
+                    TicketDetailText(
+                        title: 'To:', value: '${ticket.toStationId}'),
                     TicketDetailText(
                         title: 'Price:', value: '฿ ${ticket.price}'),
                   ],

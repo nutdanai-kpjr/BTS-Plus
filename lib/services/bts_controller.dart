@@ -38,7 +38,7 @@ Future<User?> loginUser(String userName, String password,
     User user =
         User.fromJson(parsedJson, userName: userName, password: password);
     String? rabbitNumber = parsedJson['rabbitNumber'];
-    ;
+
     if (rabbitNumber != null) {
       user.rabbitCard = await getRabbitCard(rabbitNumber, context: context);
     }
@@ -100,7 +100,8 @@ Future<List<Station>> getStations({required context}) async {
   }
 }
 
-Future<List<Ticket>> getAvaliableTickets({required context}) async {
+Future<List<Ticket>> getAvaliableTickets(String userId,
+    {required context}) async {
   if (kIsMockup) {
     final mockUpRespond =
         await rootBundle.loadString('$kRabbitMockupURL/get_bts_station.json');
@@ -110,7 +111,7 @@ Future<List<Ticket>> getAvaliableTickets({required context}) async {
     return tickets;
   }
   final response = await http.get(Uri.parse(
-    '$kBTSControllerUrl/getAvaliableTickets',
+    '$kBTSControllerUrl/getTickets?customerID=$userId',
   ));
 
   if (response.statusCode == 200) {
@@ -133,7 +134,21 @@ Future<bool> processTicketPayment(TicketTransaction ticketTransaction,
   if (kIsMockup) {
     return true;
   }
-  return false;
+  final response = await http.post(
+    Uri.parse(
+      '$kBTSControllerUrl/buyBtsTricket?customerID=${ticketTransaction.userId}&startStation=${ticketTransaction.from}&endStation=${ticketTransaction.to}&totalPrice=${ticketTransaction.totalPrice}&finalPrice=${ticketTransaction.finalPrice}&rabbitShopNumber=${ticketTransaction.shopNumber}&numberOfTicket=${ticketTransaction.quantity}',
+    ),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // var parsedJson = jsonDecode(response.body);
+    return true;
+  } else {
+    var body = json.decode(response.body);
+    await showErrorDialog(context, body);
+    return false;
+  }
 }
 
 Future<TicketTransaction> getTicketTransaction(

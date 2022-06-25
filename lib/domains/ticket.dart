@@ -1,16 +1,34 @@
 class Ticket {
   final String id;
-  final String from;
-  final String to;
+  final String ticketNumber;
+  final String buyerUserId;
+  final String buyerFirstName;
+  final String buyerLastName;
+  final String fromStationId;
+  final String toStationId;
   final double price;
+  final double priceWithDiscount;
+  final DateTime purchaseDate;
+  final DateTime expireDate;
+  final String? status;
+  final int stationDistance;
 // Timeout/ ออกตั๋ว
 // Timeup/ หมดอายุ
 // status/ สถานะตั๋ว
   Ticket(
       {required this.id,
-      required this.from,
-      required this.to,
-      required this.price});
+      required this.ticketNumber,
+      required this.buyerUserId,
+      required this.buyerFirstName,
+      required this.buyerLastName,
+      required this.fromStationId,
+      required this.toStationId,
+      required this.price,
+      required this.priceWithDiscount,
+      required this.purchaseDate,
+      required this.expireDate,
+      required this.status,
+      required this.stationDistance});
   // final Datetime date;
   // final String buyer;
   // final int stationDistance;
@@ -21,13 +39,16 @@ class Ticket {
   //
   Ticket.fromJson(Map<String, dynamic> json)
       : id = json['ticketID'],
-        from = json['from'],
-        to = json['to'],
-        price = json['price'];
-
-  Ticket.mockUp()
-      : id = '0',
-        from = 'Asok',
-        to = 'Siam',
-        price = 100;
+        ticketNumber = json['ticketNumber'],
+        buyerUserId = json['customerID'],
+        buyerFirstName = json['customerFirstName'],
+        buyerLastName = json['customerLastName'],
+        fromStationId = json['startStation'],
+        toStationId = json['endStation'],
+        price = json['amount'],
+        priceWithDiscount = json['finalAmount'],
+        purchaseDate = DateTime.parse(json['dateAndTimeOut']),
+        expireDate = DateTime.parse(json['dateAndTimeUp']),
+        status = json['statusTrciket'],
+        stationDistance = json['startToEnd'];
 }
