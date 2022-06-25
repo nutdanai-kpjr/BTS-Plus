@@ -119,6 +119,7 @@ Future<List<Ticket>> getAvaliableTickets(String userId,
     var parsedJson = jsonDecode(response.body);
     List<Ticket> tickets =
         parsedJson.map<Ticket>((json) => Ticket.fromJson(json)).toList();
+    tickets = tickets.where((ticket) => ticket.status == 'ACTIVE').toList();
     return tickets;
   } else {
     var body = json.decode(response.body);

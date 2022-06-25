@@ -145,7 +145,7 @@ class _AvailiableTicketSectionState extends State<_AvailiableTicketSection> {
       child: Column(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.all(kHeight(context) * .01),
+            margin: EdgeInsets.all(kHeight(context) * .006),
             width: double.infinity,
             child: const Text(
               'Available Tickets',
@@ -158,6 +158,7 @@ class _AvailiableTicketSectionState extends State<_AvailiableTicketSection> {
               builder: (context, AsyncSnapshot<List<Ticket>> snapshot) {
                 if (snapshot.hasData) {
                   var tickets = snapshot.data ?? [];
+                  tickets = tickets.reversed.toList();
                   return Column(
                     children: [
                       for (var ticket in tickets) TicketCard(ticket: ticket)

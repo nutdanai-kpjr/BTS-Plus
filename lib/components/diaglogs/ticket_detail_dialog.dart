@@ -10,6 +10,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../domains/ticket.dart';
+import '../utils.dart';
 
 showTicketDetailDialog(context,
     {required Ticket ticket, required displayFrom, required displayTo}) {
@@ -51,6 +52,15 @@ showTicketDetailDialog(context,
                     TicketDetailText(title: 'To:', value: '${displayTo}'),
                     TicketDetailText(
                         title: 'Price:', value: '฿ ${ticket.price}'),
+                    TicketDetailText(
+                        title: 'Station Length:',
+                        value: '${ticket.stationDistance}'),
+                    TicketDetailText(
+                        title: 'Purchase Date:',
+                        value: '${getFormatDate(ticket.purchaseDate)}'),
+                    TicketDetailText(
+                        title: 'Expire Date:',
+                        value: '${getFormatDate(ticket.expireDate)}'),
                   ],
                 ),
               ),
@@ -105,21 +115,16 @@ class TicketDetailText extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: kWidth(context) * 0.03),
       margin: EdgeInsets.only(bottom: kHeight(context) * 0.02),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            flex: 1,
-            child: Text(
-              title,
-              style: kHeader3TextStyle,
-            ),
+          Text(
+            title,
+            style: kHeader3TextStyle,
           ),
-          Expanded(
-            flex: 5,
-            child: Text(
-              value,
-              textAlign: TextAlign.right,
-              style: kBodyTextStyle,
-            ),
+          Text(
+            value,
+            textAlign: TextAlign.right,
+            style: kBodyTextStyle,
           ),
         ],
       ),
