@@ -34,14 +34,14 @@ class RabbitCard {
         type = getCapitalized(json['rabbitType']);
 
   Map<String, dynamic> toJson() => {
-        'rabbitNumber': cardNumber,
+        // 'rabbitNumber': cardNumber,
         'rabbitPassword': pin,
-        'rabitUser': userName,
+        'rabbitUser': userName,
         'firstName': firstName,
         'lastName': lastName,
         'dateOfBirth': birthDate.toIso8601String(),
-        'rabbitBalance': balance,
-        'rabbitType': type?.toUpperCase() ?? 'ADULT',
+        // 'rabbitBalance': balance,
+        // 'rabbitType': type?.toUpperCase() ?? 'ADULT',
         'customerID': btsUserId,
       };
 }

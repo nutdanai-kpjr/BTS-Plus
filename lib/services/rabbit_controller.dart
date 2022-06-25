@@ -15,14 +15,14 @@ Future<bool> addRabbitCard(
   RabbitCard newRabbitCard, {
   required context,
 }) async {
-  log('addRabbitCard: ${newRabbitCard.btsUserId}');
-  log('newRabbitCard:${newRabbitCard.toJson()}');
   final response = await http.post(
       Uri.parse(
         '$kRabbitControllerUrl/registerRabbitCardByBts',
       ),
       headers: {"Content-Type": "application/json"},
       body: json.encode(newRabbitCard.toJson()));
+  log('ADDING NEW RABBIT CARD USER:');
+  log(json.encode(newRabbitCard.toJson()));
   if (response.statusCode == 200) {
     return true;
   } else {

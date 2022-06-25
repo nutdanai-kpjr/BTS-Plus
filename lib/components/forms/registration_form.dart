@@ -204,7 +204,7 @@ class RegistrationForm extends ConsumerWidget {
                       userName: user.userName,
                       btsUserId: user.id,
                       birthDate: user.birthDate);
-                  log('Rabbit Card Type: ${newRabbitCard.type}');
+                  log('Rabbit Card Type: ${newRabbitCard.toJson()}');
                   await addRabbitCard(newRabbitCard, context: context);
                   User? userAfterAddRabbit = await loginUser(
                       user.userName, user.password,
