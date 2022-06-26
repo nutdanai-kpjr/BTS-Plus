@@ -1,6 +1,7 @@
 import 'package:bts_plus/domains/ticket.dart';
+import 'package:bts_plus/services/bts_controller.dart';
 
-const kBTSshopNumber = '1891660952';
+const kBTSshopNumber = '8756244825';
 
 class TicketTransaction {
   final String? userId;

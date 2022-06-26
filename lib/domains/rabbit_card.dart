@@ -1,6 +1,7 @@
 import 'package:bts_plus/components/utils.dart';
 
 class RabbitCard {
+  final String? id;
   final String? cardNumber;
   final String? pin;
   final String? firstName;
@@ -13,6 +14,7 @@ class RabbitCard {
 
   RabbitCard(
       {this.cardNumber,
+      this.id,
       this.btsUserId,
       required this.pin,
       required this.firstName,
@@ -24,6 +26,7 @@ class RabbitCard {
 
   RabbitCard.fromJson(Map<String, dynamic> json, {required cardNumber})
       : cardNumber = json['rabbitNumber'] ?? cardNumber,
+        id = json['rabbitID'],
         pin = json['rabbitPassword'],
         firstName = json['firstName'],
         lastName = json['lastName'],
@@ -34,6 +37,7 @@ class RabbitCard {
         type = getCapitalized(json['rabbitType']);
 
   Map<String, dynamic> toJson() => {
+        'rabbitID': id,
         'rabbitNumber': cardNumber,
         'rabbitPassword': pin,
         'rabbitUser': userName,

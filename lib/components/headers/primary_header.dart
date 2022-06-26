@@ -1,5 +1,6 @@
 import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
 import 'package:bts_plus/components/cards/balance_card.dart';
+import 'package:bts_plus/components/diaglogs/user_qr_dialog.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/screens/login_page.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +55,19 @@ class PrimaryHeader extends ConsumerWidget {
                         MaterialPageRoute(
                           builder: (context) => const LoginPage(),
                         ));
+                  },
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.qr_code_2_outlined,
+                    color: kThemeFontColor,
+                  ),
+                  onPressed: () {
+                    showUserQRCodeDialog(context,
+                        user: ref.watch(authProvider)!);
                   },
                 ),
               )

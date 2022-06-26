@@ -35,7 +35,6 @@ class BTSHomeNavPageState extends ConsumerState<BTSHomeNavPage> {
     super.initState();
     ref.read(authProvider);
     ref.read(stationProvider);
-    ref.read(stationProvider.notifier).getStationLists(context);
   }
 
   onFromChanged(String value) {

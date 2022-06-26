@@ -71,7 +71,7 @@ Future<bool> payByRabbitCard(
   return true;
 }
 
-Future<List<RabbitTransaction>> getRabbitTransactions(rabbitCardNumber,
+Future<List<RabbitTransaction>> getRabbitTransactions(rabbitId,
     {required context}) async {
   log('Hi get RabbitTransaction');
 
@@ -85,7 +85,7 @@ Future<List<RabbitTransaction>> getRabbitTransactions(rabbitCardNumber,
     return rabbitTransactions;
   }
   final response = await http.get(Uri.parse(
-    '$kRabbitControllerUrl/transcationRabbitCard?rabbitID=$rabbitCardNumber',
+    '$kRabbitControllerUrl/transcationRabbitCard?rabbitID=$rabbitId',
   ));
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,

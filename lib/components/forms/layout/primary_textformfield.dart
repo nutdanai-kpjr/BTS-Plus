@@ -18,7 +18,8 @@ class PrimaryTextFormField extends StatelessWidget {
       this.onTap,
       this.validator,
       this.style,
-      this.focusBorderColor = kBTSThemeColor})
+      this.focusBorderColor = kBTSThemeColor,
+      this.onSubmit})
       : super(key: key);
   final String title;
   final Function(String)? onChanged;
@@ -30,6 +31,7 @@ class PrimaryTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool readOnly;
   final Function()? onTap;
+  final Function(String)? onSubmit;
   final InputDecoration? decoration;
   final Color focusBorderColor;
   final TextStyle? style;
@@ -47,6 +49,7 @@ class PrimaryTextFormField extends StatelessWidget {
           style: style ?? kBodyTextStyle,
           keyboardType: keyboardType,
           inputFormatters: inputFormatters,
+          onFieldSubmitted: onSubmit,
           decoration: decoration ??
               kTextFieldDecorationWithLabelText(title, color: focusBorderColor),
         ));

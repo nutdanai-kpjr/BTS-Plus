@@ -93,7 +93,8 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
     log(finalTicketTransaction.toJson().toString());
     await processTicketPayment(finalTicketTransaction, context: context);
     if (!mounted) return;
-
+    await ref.read(authProvider.notifier).refreshUserRabbitCard(context);
+    if (!mounted) return;
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const MainPage()));
   }

@@ -3,8 +3,8 @@ import '../components/utils.dart';
 class RabbitTransaction {
   final String id;
   final double amount;
-  final String shopName;
-  final String shopType;
+  final String? shopName;
+  final String? shopType;
   final String transactiontype;
   final DateTime timeStamp;
   RabbitTransaction(
@@ -30,6 +30,14 @@ class RabbitTransaction {
         transactiontype = 'BUY',
         timeStamp = DateTime.now();
 
-  String get title =>
-      '${getCapitalized(transactiontype)} at ${getCapitalized(shopType)} - $shopName';
+  String get title {
+    String newTitle = '${getCapitalized(transactiontype)}';
+    if (shopType != null) {
+      newTitle += 'at ${getCapitalized(shopType!)}';
+    }
+    if (shopName != null) {
+      newTitle += '- ${shopName}';
+    }
+    return newTitle;
+  }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bts_plus/domains/rabbit_card.dart';
 import 'package:bts_plus/main.dart';
 
@@ -28,7 +30,6 @@ class User {
         birthDate = DateTime.parse(json['birthOfDate']),
         id = json['customerID'],
         rabbitCard = null;
-
   Map<String, dynamic> toJson() => {
         'customerID': id,
         'customerUser': userName,
@@ -36,8 +37,20 @@ class User {
         'customerFirstName': firstName,
         'customerLastName': lastName,
         'birthOfDate': birthDate.toIso8601String(),
-        'rabbitCard': rabbitCard?.toJson(),
+        'rabbitCard': rabbitCard,
       };
+  Map<String, dynamic> toJsonNoPassword() => {
+        'customerID': id,
+        'customerUser': userName,
+        'customerFirstName': firstName,
+        'customerLastName': lastName,
+        'birthOfDate': birthDate.toIso8601String(),
+        'rabbitCard': rabbitCard,
+      };
+
+  String getQRurl() {
+    return json.encode(toJsonNoPassword());
+  }
 
   User.mockUp()
       : userName = 'userName',

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../services/bts_controller.dart';
 
 class Ticket {
@@ -40,7 +42,8 @@ class Ticket {
   //status
   //
   String getQRUrl() {
-    return '$kBTSControllerUrl/checkInTricket?tricketNumber=$ticketNumber&startStation=$fromStationId&endStation=$toStationId';
+    return json.encode(toJson());
+    // return '$kBTSControllerUrl/checkInTricket?tricketNumber=$ticketNumber&startStation=$fromStationId&endStation=$toStationId';
   }
 
   Ticket.fromJson(Map<String, dynamic> json)
@@ -57,4 +60,20 @@ class Ticket {
         expireDate = DateTime.parse(json['dateAndTimeUp']),
         status = json['statusTrciket'],
         stationDistance = json['startToEnd'];
+
+  Map<String, dynamic> toJson() => {
+        'ticketID': id,
+        'ticketNumber': ticketNumber,
+        'customerID': buyerUserId,
+        'customerFirstName': buyerFirstName,
+        'customerLastName': buyerLastName,
+        'startStation': fromStationId,
+        'endStation': toStationId,
+        'amount': price,
+        'finalAmount': priceWithDiscount,
+        'dateAndTimeOut': purchaseDate.toIso8601String(),
+        'dateAndTimeUp': expireDate.toIso8601String(),
+        'statusTrciket': status,
+        'startToEnd': stationDistance,
+      };
 }

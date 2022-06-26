@@ -76,7 +76,7 @@ class TransactionSection extends ConsumerWidget {
             ),
           ),
           RabbitTransactionList(
-            rabbitCardNumber: rabbitCard?.cardNumber ?? '',
+            rabbitId: rabbitCard?.id ?? '',
           )
         ],
       ),
@@ -87,9 +87,9 @@ class TransactionSection extends ConsumerWidget {
 class RabbitTransactionList extends StatefulWidget {
   const RabbitTransactionList({
     Key? key,
-    required this.rabbitCardNumber,
+    required this.rabbitId,
   }) : super(key: key);
-  final String rabbitCardNumber;
+  final String rabbitId;
   @override
   State<RabbitTransactionList> createState() => _RabbitTransactionListState();
 }
@@ -98,8 +98,7 @@ class _RabbitTransactionListState extends State<RabbitTransactionList> {
   late Future<List<RabbitTransaction>> _getTransactions;
   @override
   void initState() {
-    _getTransactions =
-        getRabbitTransactions(widget.rabbitCardNumber, context: context);
+    _getTransactions = getRabbitTransactions(widget.rabbitId, context: context);
     super.initState();
   }
 

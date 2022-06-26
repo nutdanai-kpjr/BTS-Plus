@@ -135,11 +135,18 @@ Future<bool> processTicketPayment(TicketTransaction ticketTransaction,
   if (kIsMockup) {
     return true;
   }
+  log('BUY TICKIET');
+  // log(ticketTransaction.)
   final response = await http.post(
     Uri.parse(
       '$kBTSControllerUrl/buyBtsTricket?customerID=${ticketTransaction.userId}&startStation=${ticketTransaction.from}&endStation=${ticketTransaction.to}&totalPrice=${ticketTransaction.totalPrice}&finalPrice=${ticketTransaction.finalPrice}&rabbitShopNumber=${ticketTransaction.shopNumber}&numberOfTicket=${ticketTransaction.quantity}',
     ),
   );
+  // final response = await http.post(
+  //   Uri.parse(
+  //     '$kBTSControllerUrl/buyBtsTricket?customerID=zeU9oYEBukIohEcR0L9L&startStation=S001&endStation=S006&totalPrice=33.0&finalPrice=23.1&rabbitShopNumber=8756244825&numberOfTicket=1',
+  //   ),
+  // );
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,

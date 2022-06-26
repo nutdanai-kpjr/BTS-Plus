@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../domains/user.dart';
+import '../providers/station_provider.dart';
 import 'login_page.dart';
 
 class MainPage extends ConsumerStatefulWidget {
@@ -34,6 +35,7 @@ class MainPageState extends ConsumerState<MainPage> {
   void initState() {
     super.initState();
     ref.read(authProvider);
+    ref.read(stationProvider.notifier).getStationLists(context);
   }
 
   @override

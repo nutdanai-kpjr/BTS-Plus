@@ -122,6 +122,9 @@ class _TopUpAmountSectionState extends State<TopUpAmountSection> {
             width: kWidth(context) * 0.4,
             child: PrimaryTextFormField(
               controller: _amountController,
+              onSubmit: (value) {
+                setAmount(double.tryParse(_amountController.text) ?? 0);
+              },
               title: 'Enter amount',
               keyboardType: TextInputType.number,
               style: kBigHeaderTextStyle,

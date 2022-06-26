@@ -51,16 +51,16 @@ showTicketDetailDialog(context,
                     TicketDetailText(title: 'From:', value: '${displayFrom}'),
                     TicketDetailText(title: 'To:', value: '${displayTo}'),
                     TicketDetailText(
-                        title: 'Price:', value: '฿ ${ticket.price}'),
-                    TicketDetailText(
                         title: 'Station Length:',
                         value: '${ticket.stationDistance}'),
                     TicketDetailText(
+                        title: 'Price:', value: '฿ ${ticket.price}'),
+                    TicketDetailText(
                         title: 'Purchase Date:',
-                        value: '${getFormatDate(ticket.purchaseDate)}'),
+                        value: '${getFormatDateWithTime(ticket.purchaseDate)}'),
                     TicketDetailText(
                         title: 'Expire Date:',
-                        value: '${getFormatDate(ticket.expireDate)}'),
+                        value: '${getFormatDateWithTime(ticket.expireDate)}'),
                   ],
                 ),
               ),

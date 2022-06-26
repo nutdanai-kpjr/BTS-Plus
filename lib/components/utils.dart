@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 String? Function(String?)? basicValidator() {
   return (value) {
     if (value == null || value.isEmpty) {
@@ -42,5 +44,6 @@ String getFormatDate(DateTime date) {
 }
 
 String getFormatDateWithTime(DateTime date) {
-  return "${date.day}/${date.month}/${date.year} | ${date.hour}:${date.minute}";
+  log(date.toIso8601String());
+  return "${date.day}/${date.month}/${date.year} | ${date.hour}:${date.minute < 10 ? '0${date.minute}' : date.minute}";
 }
