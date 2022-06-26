@@ -1,3 +1,5 @@
+import '../services/bts_controller.dart';
+
 class Ticket {
   final String id;
   final String ticketNumber;
@@ -37,6 +39,10 @@ class Ticket {
   //buydate
   //status
   //
+  String getQRUrl() {
+    return '$kBTSControllerUrl/checkInTricket?tricketNumber=$ticketNumber&startStation=$fromStationId&endStation=$toStationId';
+  }
+
   Ticket.fromJson(Map<String, dynamic> json)
       : id = json['ticketID'],
         ticketNumber = json['ticketNumber'],

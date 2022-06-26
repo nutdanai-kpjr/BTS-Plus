@@ -68,7 +68,7 @@ showTicketDetailDialog(context,
               Screenshot(
                 controller: screenshotController,
                 child: QrImage(
-                    data: '${ticket.id}',
+                    data: '${ticket.getQRUrl()}',
                     version: QrVersions.auto,
                     embeddedImage: const AssetImage('assets/images/bts_qr.png'),
                     embeddedImageStyle:
