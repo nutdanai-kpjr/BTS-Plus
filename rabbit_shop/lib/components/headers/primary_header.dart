@@ -1,0 +1,73 @@
+import 'package:rabbit_shop/components/buttons/layout/secondary_button.dart';
+import 'package:rabbit_shop/constants.dart';
+import 'package:rabbit_shop/screens/login_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../providers/auth_provider.dart';
+
+class PrimaryHeader extends ConsumerWidget {
+  const PrimaryHeader(
+      {Key? key,
+      required this.title,
+      required this.height,
+      required this.card,
+      this.color = kThemeColor})
+      : super(key: key);
+  final String title;
+  final double height;
+  final Widget card;
+  final Color color;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      decoration: BoxDecoration(
+        color: color,
+        // border: Border.all(color: kBorderColor, width: 2.0),
+        borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(12.5),
+            bottomRight: Radius.circular(12.5)),
+      ),
+      height: height,
+      child: Column(
+        children: <Widget>[
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Text(
+                title,
+                style: kHeader2TextStyle.copyWith(
+                    color: kThemeFontColor, fontWeight: FontWeight.normal),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.logout_rounded,
+                    color: kThemeFontColor,
+                  ),
+                  onPressed: () {
+                    ref.read(authProvider.notifier).clearUser();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ));
+                  },
+                ),
+              )
+            ],
+          ),
+          Expanded(
+              flex: 3,
+              child: Container(
+                  margin: EdgeInsets.symmetric(
+                      vertical: kWidth(context) * 0.02,
+                      horizontal: kWidth(context) * 0.04),
+                  child: card)),
+          SizedBox(height: kHeight(context) * 0.02)
+        ],
+      ),
+    );
+  }
+}
