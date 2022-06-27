@@ -1,13 +1,7 @@
 import 'package:bts_plus/constants.dart';
-import 'package:bts_plus/domains/user.dart';
-import 'package:bts_plus/screens/login_page.dart';
 import 'package:bts_plus/screens/main_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:bts_plus/screens/register_page.dart';
 import 'package:flutter/material.dart';
-import 'package:riverpod/riverpod.dart';
-
-import 'providers/auth_provider.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
