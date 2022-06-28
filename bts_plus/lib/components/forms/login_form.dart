@@ -14,7 +14,7 @@ class LoginForm extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController(text: 'tester');
+  final _usernameController = TextEditingController(text: 'tester1');
   final _passwordController = TextEditingController(text: '123456');
 
   @override
@@ -24,7 +24,7 @@ class LoginForm extends ConsumerWidget {
       child: Column(
         children: <Widget>[
           PrimaryTextFormField(
-              title: 'ID',
+              title: 'Username',
               controller: _usernameController,
               validator: basicValidator()),
           PrimaryTextFormField(

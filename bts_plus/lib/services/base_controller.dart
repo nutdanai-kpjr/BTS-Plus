@@ -8,10 +8,10 @@ const String kRabbitBasedURL = "http://192.168.86.71:50001/rabbit";
 // const String kRabbitBasedURL = "http://192.168.1.42:8082/rabbit-ws";
 // const String kRabbitBasedURL = "http://localhost:8082/rabbit";
 // const String kRabbitBasedURL = "http://10.0.2.2:8082/rabbit-ws";
-const kBTSshopNumber = '1664788182';
+const kBTSshopNumber = '8278640311';
 const String kRabbitMockupURL = "assets/json";
 const bool kIsMockup = false;
-Future<void> showErrorDialog(context, body) async {
+Future<void> showErrorDialog(context, body, {bool isPop = true}) async {
   await showDialog(
       context: context,
       builder: (BuildContext context) {

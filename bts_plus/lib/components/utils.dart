@@ -93,6 +93,20 @@ String? Function(String?)? pinValidatior() {
   };
 }
 
+String? Function(String?)? atmCardValidator() {
+  return (txt) {
+    if (txt == null || txt.isEmpty) {
+      return "Please enter a ATM number";
+    }
+
+    if (!txt.contains(RegExp(r'^([0-9]{16}$)'))) {
+      return "ATM number must has 16 digits";
+    }
+
+    return null;
+  };
+}
+
 String? Function(String?)? confirmPinValidatior(
     TextEditingController orginalPinController) {
   return (txt) {

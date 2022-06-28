@@ -24,7 +24,7 @@ Future<User?> addUser(User user, {required context}) async {
     return await loginUser(user.userName, user.password, context: context);
   } else {
     var body = json.decode(response.body);
-    await showErrorDialog(context, body);
+    await showErrorDialog(context, body, isPop: false);
     return null;
   }
 }

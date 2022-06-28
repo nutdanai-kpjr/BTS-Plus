@@ -28,15 +28,15 @@ class StationSelector extends ConsumerStatefulWidget {
 }
 
 class StationSelectorState extends ConsumerState<StationSelector> {
-  late Future<List<Station>> _getStations;
+  // late Future<List<Station>> _getStations;
   late Function(String) onFromChanged = widget.onFromChanged;
   late Function(String) onToChanged = widget.onToChanged;
   @override
   void initState() {
     // TODO: implement initState
-    _getStations = getStations(
-      context: context,
-    );
+    // _getStations = getStations(
+    //   context: context,
+    // );
     // ref.read(stationProvider.notifier).getStations(context);
     super.initState();
   }
@@ -57,62 +57,61 @@ class StationSelectorState extends ConsumerState<StationSelector> {
           .displayNameToStationId(stationId);
     }
 
-    var fromStationId = widget.fromStationId ?? stations[0].id;
-    var toStationId = widget.toStationId ??
-        (stations.length > 1 ? stations[1].id : stations[0].id);
     if (stationNames.isEmpty) {
       return const PrimaryCircularProgressIndicator();
-    }
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              const Expanded(
-                child: Text(
-                  'From',
-                  style: kHeader3TextStyle,
+    } else {
+      var fromStationId = widget.fromStationId ?? stations[0].id;
+      var toStationId = widget.toStationId ??
+          (stations.length > 1 ? stations[1].id : stations[0].id);
+      return Container(
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                const Expanded(
+                  child: Text(
+                    'From',
+                    style: kHeader3TextStyle,
+                  ),
                 ),
-              ),
-              Expanded(
-                flex: 5,
-                child: PrimaryDropDown(
-                  title: 'From',
-                  defaultValue: stationIdToDisplayName(fromStationId),
-                  onChanged: (String value) {
-                    onFromChanged(displayNameToStationId(value));
-                  },
-                  items: stationNames,
+                Expanded(
+                  flex: 5,
+                  child: PrimaryDropDown(
+                    title: 'From',
+                    defaultValue: stationIdToDisplayName(fromStationId),
+                    onChanged: (String value) {
+                      onFromChanged(displayNameToStationId(value));
+                    },
+                    items: stationNames,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: kHeight(context) * 0.025),
-          Row(
-            children: <Widget>[
-              const Expanded(
-                child: Text(
-                  'To',
-                  style: kHeader3TextStyle,
+              ],
+            ),
+            SizedBox(height: kHeight(context) * 0.025),
+            Row(
+              children: <Widget>[
+                const Expanded(
+                  child: Text(
+                    'To',
+                    style: kHeader3TextStyle,
+                  ),
                 ),
-              ),
-              Expanded(
-                flex: 5,
-                child: PrimaryDropDown(
-                  title: 'To',
-                  defaultValue: stationIdToDisplayName(toStationId),
-                  onChanged: (String value) {
-                    onToChanged(displayNameToStationId(value));
-                  },
-                  items: stationNames,
+                Expanded(
+                  flex: 5,
+                  child: PrimaryDropDown(
+                    title: 'To',
+                    defaultValue: stationIdToDisplayName(toStationId),
+                    onChanged: (String value) {
+                      onToChanged(displayNameToStationId(value));
+                    },
+                    items: stationNames,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-
-    //
+              ],
+            ),
+          ],
+        ),
+      );
+    } //
   }
 }

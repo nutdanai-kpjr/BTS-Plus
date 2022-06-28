@@ -5,6 +5,7 @@ import 'package:bts_plus/components/forms/layout/primary_dropdown.dart';
 import 'package:bts_plus/components/forms/layout/primary_textformfield.dart';
 import 'package:bts_plus/components/headers/secondary_header.dart';
 import 'package:bts_plus/components/primary_scaffold.dart';
+import 'package:bts_plus/components/utils.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/providers/auth_provider.dart';
 import 'package:bts_plus/screens/main_page.dart';
@@ -25,11 +26,14 @@ class RabbitTopUpPage extends ConsumerStatefulWidget {
 }
 
 class RabbitTopUpPageState extends ConsumerState<RabbitTopUpPage> {
+  bool isProcessing = false;
   String paymentMethod = 'Cash';
-  double amount = 0;
-  TextEditingController atmCardController = TextEditingController();
-  TextEditingController atmPinController = TextEditingController();
-
+  double amount = 100;
+  TextEditingController atmCardController =
+      TextEditingController(text: '4791439223141502');
+  TextEditingController atmPinController =
+      TextEditingController(text: '112233');
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -47,13 +51,39 @@ class RabbitTopUpPageState extends ConsumerState<RabbitTopUpPage> {
   }
 
   onConfirm() async {
-    final navigator = Navigator.of(context);
-    final user = ref.watch(authProvider);
-    final String rabbitUserName = user?.userName ?? '';
-    await topUpRabbitCard(rabbitUserName, amount, context: context);
-    if (!mounted) return;
-    await ref.read(authProvider.notifier).refreshUserRabbitCard(context);
-    navigator.maybePop();
+    if (!isProcessing) {
+      isProcessing = true;
+      final navigator = Navigator.of(context);
+      final user = ref.watch(authProvider);
+      final String rabbitUserName = user?.userName ?? '';
+      if (paymentMethod == 'Cash') {
+        await topUpRabbitCard(rabbitUserName, amount, context: context);
+        if (!mounted) return;
+        await ref.read(authProvider.notifier).refreshUserRabbitCard(context);
+        navigator.pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const MainPage(
+              pageIndex: 1,
+            ),
+          ),
+        );
+        // navigator.maybePop();
+      } else if (paymentMethod == 'ATM' && _formKey.currentState!.validate()) {
+        await topUpRabbitCardByAtm(rabbitUserName, amount,
+            atmCardController.text, atmPinController.text,
+            context: context);
+        if (!mounted) return;
+        await ref.read(authProvider.notifier).refreshUserRabbitCard(context);
+        navigator.pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const MainPage(
+              pageIndex: 1,
+            ),
+          ),
+        );
+      }
+      isProcessing = false;
+    }
   }
 
   @override
@@ -75,6 +105,7 @@ class RabbitTopUpPageState extends ConsumerState<RabbitTopUpPage> {
             onAmountChanged: onAmountChanged,
           ),
           RabbitPaymentSection(
+            formKey: _formKey,
             onPaymentChanged: onPaymentChanged,
             paymentMethod: paymentMethod,
             atmCardController: atmCardController,
@@ -104,7 +135,7 @@ class _TopUpAmountSectionState extends State<TopUpAmountSection> {
       amount = newAmount;
     });
 
-    _amountController.text = amount.toStringAsFixed(0);
+    _amountController.text = amount.toStringAsFixed(2);
 
     onAmountChanged(newAmount);
   }
@@ -123,7 +154,10 @@ class _TopUpAmountSectionState extends State<TopUpAmountSection> {
             child: PrimaryTextFormField(
               controller: _amountController,
               onSubmit: (value) {
-                setAmount(double.tryParse(_amountController.text) ?? 0);
+                double newAmount = double.tryParse(value) ?? 1.0;
+                if (newAmount < 1) newAmount = 1.0;
+                setAmount(newAmount);
+                _amountController.text = amount.toStringAsFixed(2);
               },
               title: 'Enter amount',
               keyboardType: TextInputType.number,
@@ -167,13 +201,15 @@ class RabbitPaymentSection extends StatelessWidget {
       required this.paymentMethod,
       required this.onPaymentChanged,
       required this.atmCardController,
-      required this.atmPinController})
+      required this.atmPinController,
+      required this.formKey})
       : super(key: key);
   final List<String> paymentMethods = ['Cash', 'ATM'];
   final String paymentMethod;
   final Function(String) onPaymentChanged;
   final TextEditingController atmCardController;
   final TextEditingController atmPinController;
+  final GlobalKey<FormState> formKey;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -193,33 +229,39 @@ class RabbitPaymentSection extends StatelessWidget {
             onChanged: onPaymentChanged,
           ),
           if (paymentMethod == 'ATM')
-            Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: kHeight(context) * 0.02),
-                  child: PrimaryTextFormField(
+            Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: kHeight(context) * 0.02),
+                    child: PrimaryTextFormField(
+                      focusBorderColor: kRabbitThemeColor,
+                      title: 'Enter ATM Number',
+                      maxLength: 16,
+                      controller: atmCardController,
+                      validator: atmCardValidator(),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                        LengthLimitingTextInputFormatter(16)
+                      ],
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                  PrimaryTextFormField(
                     focusBorderColor: kRabbitThemeColor,
-                    title: 'Enter ATM Number',
-                    controller: atmCardController,
+                    title: 'Enter ATM Pin',
+                    controller: atmPinController,
+                    validator: pinValidatior(),
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                      LengthLimitingTextInputFormatter(16)
+                      LengthLimitingTextInputFormatter(6)
                     ],
                     keyboardType: TextInputType.number,
+                    obscureText: true,
                   ),
-                ),
-                PrimaryTextFormField(
-                  focusBorderColor: kRabbitThemeColor,
-                  title: 'Enter ATM Pin',
-                  controller: atmPinController,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                    LengthLimitingTextInputFormatter(6)
-                  ],
-                  keyboardType: TextInputType.number,
-                  obscureText: true,
-                ),
-              ],
+                ],
+              ),
             )
         ]));
   }

@@ -51,6 +51,9 @@ class _PrimaryDropDownState extends State<PrimaryDropDown> {
 
   @override
   Widget build(BuildContext context) {
+    if (items.isEmpty) {
+      return Container();
+    }
     return DropdownButtonFormField(
       decoration: decoration ??
           kTextFieldDecorationWithLabelText(title, color: focusBorderColor),

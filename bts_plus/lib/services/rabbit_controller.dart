@@ -116,3 +116,26 @@ Future<bool> topUpRabbitCard(
     return false;
   }
 }
+
+Future<bool> topUpRabbitCardByAtm(
+  String rabbitUserName,
+  double amount,
+  String atmNumber,
+  String atmPin, {
+  required context,
+}) async {
+  final response = await http.post(
+      Uri.parse(
+        '$kRabbitControllerUrl/getBankApi',
+      ),
+      headers: {"Content-Type": "application/json"},
+      body: json.encode(
+          {'amount': amount, 'accountAtmNumber': atmNumber, 'pin': atmPin}));
+  if (response.statusCode == 200) {
+    return await topUpRabbitCard(rabbitUserName, amount, context: context);
+  } else {
+    var body = json.decode(response.body);
+    await showErrorDialog(context, body, isPop: false);
+    return false;
+  }
+}

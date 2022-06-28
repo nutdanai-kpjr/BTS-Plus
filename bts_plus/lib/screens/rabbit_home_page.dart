@@ -102,6 +102,13 @@ class _RabbitTransactionListState extends State<RabbitTransactionList> {
     super.initState();
   }
 
+  void refresh() {
+    setState(() {
+      _getTransactions =
+          getRabbitTransactions(widget.rabbitId, context: context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

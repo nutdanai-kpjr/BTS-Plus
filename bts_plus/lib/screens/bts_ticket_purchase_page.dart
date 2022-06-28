@@ -41,6 +41,7 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
   late String userId = widget.userId;
   late Future<TicketTransaction> _getTicketTransactionWithPrice;
   String errorMessage = '';
+  bool isProcessing = false;
   @override
   void initState() {
     super.initState();
@@ -88,16 +89,21 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
   }
 
   onConfirm() async {
-    final TicketTransaction finalTicketTransaction = await getTicketTransaction(
-      ticketTransaction,
-      context: context,
-    );
-    await processTicketPayment(finalTicketTransaction, context: context);
-    if (!mounted) return;
-    await ref.read(authProvider.notifier).refreshUserRabbitCard(context);
-    if (!mounted) return;
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const MainPage()));
+    if (!isProcessing) {
+      isProcessing = true;
+      final TicketTransaction finalTicketTransaction =
+          await getTicketTransaction(
+        ticketTransaction,
+        context: context,
+      );
+      await processTicketPayment(finalTicketTransaction, context: context);
+      if (!mounted) return;
+      await ref.read(authProvider.notifier).refreshUserRabbitCard(context);
+      if (!mounted) return;
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const MainPage()));
+      isProcessing = false;
+    }
   }
 
   _buildBTSPaymentSection() {

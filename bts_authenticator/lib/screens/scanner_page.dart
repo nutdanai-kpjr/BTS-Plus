@@ -54,7 +54,7 @@ class _ScannerPageState extends State<ScannerPage> {
   }
 
   resetMessage() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 3));
     setState(() {
       message = 'Wating for QR code';
       messageColor = kYellow;
@@ -169,9 +169,9 @@ class _ScannerPageState extends State<ScannerPage> {
                                     ? 'Exit authorized'
                                     : 'Exit not authorized',
                                 status);
-                          } else {
-                            await setMessage('Invalid QR Code', false);
                           }
+                        } else {
+                          await setMessage('Invalid QR Code', false);
                         }
                         disableCooldown();
                       }
