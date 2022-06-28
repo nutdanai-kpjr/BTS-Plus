@@ -156,7 +156,9 @@ class _TopUpAmountSectionState extends State<TopUpAmountSection> {
               onSubmit: (value) {
                 double newAmount = double.tryParse(value) ?? 1.0;
                 if (newAmount < 1) newAmount = 1.0;
-                setAmount(newAmount);
+
+                setAmount(double.parse(newAmount.toStringAsFixed(2)));
+
                 _amountController.text = amount.toStringAsFixed(2);
               },
               title: 'Enter amount',

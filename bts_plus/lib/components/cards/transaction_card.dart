@@ -43,10 +43,10 @@ class TransactionCard extends StatelessWidget {
               ),
             ),
             if (!rabbitTransaction.isIncome())
-              Text('-฿ ${rabbitTransaction.amount}',
+              Text('-฿ ${rabbitTransaction.amount.toStringAsFixed(2)}',
                   style: kHeader3TextStyle.copyWith(color: kRed))
             else
-              Text('+฿ ${rabbitTransaction.amount}',
+              Text('+฿ ${rabbitTransaction.amount.toStringAsFixed(2)}',
                   style: kHeader3TextStyle.copyWith(color: kGreen)),
           ],
         ));
