@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bts_plus/components/buttons/layout/primary_button.dart';
 import 'package:bts_plus/components/forms/layout/primary_textformfield.dart';
 import 'package:bts_plus/components/utils.dart';
@@ -16,7 +14,7 @@ class LoginForm extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController(text: 'test');
+  final _usernameController = TextEditingController(text: 'tester');
   final _passwordController = TextEditingController(text: '123456');
 
   @override
@@ -48,7 +46,7 @@ class LoginForm extends ConsumerWidget {
                 ref.read(authProvider.notifier).setCurrentUser(user);
                 navigator.pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => MainPage(),
+                    builder: (context) => const MainPage(),
                   ),
                 );
               }

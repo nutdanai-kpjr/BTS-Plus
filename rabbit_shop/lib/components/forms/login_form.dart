@@ -14,7 +14,7 @@ class LoginForm extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController(text: 'btsuser');
+  final _usernameController = TextEditingController(text: 'BTS');
   final _passwordController = TextEditingController(text: '123456');
 
   @override

@@ -1,11 +1,9 @@
-import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
 import 'package:bts_plus/components/cards/layout/primary_card.dart';
 import 'package:bts_plus/components/utils.dart';
 import 'package:bts_plus/domains/rabbit_transaction.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import '../buttons/layout/primary_button.dart';
 
 class TransactionCard extends StatelessWidget {
   const TransactionCard({
@@ -21,7 +19,7 @@ class TransactionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PrimaryCard(
-        height: kHeight(context) * 0.08,
+        height: kHeight(context) * 0.0975,
         child: Row(
           children: [
             Expanded(

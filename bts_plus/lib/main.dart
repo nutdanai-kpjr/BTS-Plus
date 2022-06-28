@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       //   '/register': (context) => const RegisterPage(),
       //   // 'purchase_ticket': (context) => const BTSTicketPurchasePage(),
       // },
-      home: MainPage(),
+      home: const MainPage(),
       title: 'BTS Plus',
     );
   }

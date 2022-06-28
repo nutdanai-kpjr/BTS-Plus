@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bts_plus/components/buttons/layout/primary_button.dart';
 import 'package:bts_plus/components/primary_divider.dart';
 import 'package:bts_plus/constants.dart';

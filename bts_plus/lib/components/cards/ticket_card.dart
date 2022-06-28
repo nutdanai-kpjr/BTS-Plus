@@ -1,4 +1,3 @@
-import 'package:bts_plus/components/buttons/layout/primary_button.dart';
 import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
 import 'package:bts_plus/components/cards/layout/primary_card.dart';
 import 'package:bts_plus/components/diaglogs/ticket_detail_dialog.dart';
@@ -40,7 +39,7 @@ class TicketCard extends ConsumerWidget {
         );
       },
       child: PrimaryCard(
-          height: kHeight(context) * 0.22,
+          height: kHeight(context) * 0.24,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

@@ -87,9 +87,10 @@ Future<List<RabbitTransaction>> getRabbitTransactions(rabbitId,
         .map<RabbitTransaction>((json) => RabbitTransaction.fromJson(json))
         .toList();
 
-    List<RabbitTransaction> orderedRabbitTransactions =
-        rabbitTransactions.reversed.toList();
-    return orderedRabbitTransactions;
+    rabbitTransactions.sort((a, b) {
+      return b.timeStamp.compareTo(a.timeStamp);
+    });
+    return rabbitTransactions;
   } else {
     var body = json.decode(response.body);
     await showErrorDialog(context, body);

@@ -59,6 +59,10 @@ Future<List<RabbitTransaction>> getRabbitTransactions(rabbitShopId,
     List<RabbitTransaction> rabbitTransactions = parsedJson
         .map<RabbitTransaction>((json) => RabbitTransaction.fromJson(json))
         .toList();
+
+    rabbitTransactions.sort((a, b) {
+      return b.timeStamp.compareTo(a.timeStamp);
+    });
     return rabbitTransactions;
   }
   final response = await http.get(Uri.parse(
@@ -70,6 +74,10 @@ Future<List<RabbitTransaction>> getRabbitTransactions(rabbitShopId,
     List<RabbitTransaction> rabbitTransactions = parsedJson
         .map<RabbitTransaction>((json) => RabbitTransaction.fromJson(json))
         .toList();
+
+    rabbitTransactions.sort((a, b) {
+      return b.timeStamp.compareTo(a.timeStamp);
+    });
     return [...rabbitTransactions];
   } else {
     var body = json.decode(response.body);

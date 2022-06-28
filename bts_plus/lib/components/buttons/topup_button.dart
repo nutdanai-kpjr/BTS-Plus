@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/screens/rabbit_topup_page.dart';

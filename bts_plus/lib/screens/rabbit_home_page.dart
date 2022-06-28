@@ -44,7 +44,7 @@ class RabbitHomeHeader extends StatelessWidget {
     return PrimaryHeader(
         color: kRabbitThemeColor,
         title: 'My Rabbit Card',
-        height: kHeight(context) * (haveRabbitCard ? 0.3 : 0.2),
+        height: kHeight(context) * (haveRabbitCard ? 0.35 : 0.2),
         card: haveRabbitCard
             ? const CustomerCard()
             : const NoRabbitCard(

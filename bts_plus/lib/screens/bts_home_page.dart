@@ -121,7 +121,7 @@ class BTSHomeHeader extends ConsumerWidget {
     final rabbitCard = ref.watch(authProvider)?.rabbitCard;
     return PrimaryHeader(
         title: 'My Ticket',
-        height: kHeight(context) * (rabbitCard != null ? 0.225 : 0.2),
+        height: kHeight(context) * (rabbitCard != null ? 0.25 : 0.2),
         card: rabbitCard == null
             ? const NoRabbitCard()
             : const BalanceCard(balance: 0.0));
@@ -147,7 +147,9 @@ class _AvailiableTicketSectionState extends State<_AvailiableTicketSection> {
 
   refresh() {
     // log('refresh test');
-    _getTickets = getAvaliableTickets(widget.userId, context: context);
+    setState(() {
+      _getTickets = getAvaliableTickets(widget.userId, context: context);
+    });
   }
 
   @override

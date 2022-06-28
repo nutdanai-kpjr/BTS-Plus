@@ -11,7 +11,7 @@ import '../domains/rabbit_card.dart';
 import 'base_controller.dart';
 
 const String kRabbitControllerUrl = "$kRabbitBasedURL/api/v1/rabbitCard";
-const String kRabbitBTSshopnumber = '6243311020';
+const kBTSshopNumber = '1664788182';
 Future<bool> authorizeRabbitCardEntranceGate(
   RabbitCard rabbitCard, {
   required context,
@@ -41,7 +41,7 @@ Future<bool> authorizeRabbitCardExitGate(
 
   final response = await http.post(
     Uri.parse(
-      '$kRabbitControllerUrl/exitBts?rabbitUser=${rabbitCard.userName}&endStationID=$stationId&rabbitShopNumber=$kRabbitBTSshopnumber',
+      '$kRabbitControllerUrl/exitBts?rabbitUser=${rabbitCard.userName}&endStationID=$stationId&rabbitShopNumber=$kBTSshopNumber',
     ),
   );
 

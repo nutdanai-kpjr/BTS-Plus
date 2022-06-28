@@ -140,8 +140,8 @@ String? Function(String?)? userNameValidator() {
     if (txt.length < 6) {
       return "Username must has at least 6 characters";
     }
-    if (txt.length >= 50) {
-      return "Please enter a value less than 50 characters";
+    if (txt.length >= 30) {
+      return "Please enter a value less than 30 characters";
     }
     if (txt.contains(RegExp(r'[#?!@$%^&*-]'))) {
       return "Username must not has any special characters";

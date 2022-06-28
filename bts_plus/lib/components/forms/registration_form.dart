@@ -22,7 +22,7 @@ class RegistrationForm extends ConsumerWidget {
   RegistrationForm({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController(text: 'test');
+  final _usernameController = TextEditingController(text: 'tester');
   final _passwordController = TextEditingController(text: '123456');
   final _confirmPasswordController = TextEditingController(text: '123456');
   final _firstNameController = TextEditingController(text: 'John');

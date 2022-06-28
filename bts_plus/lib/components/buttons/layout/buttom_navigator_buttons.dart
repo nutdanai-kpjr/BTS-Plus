@@ -1,4 +1,3 @@
-import 'package:bts_plus/screens/bts_ticket_purchase_page.dart';
 import 'package:bts_plus/screens/rabbit_home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -14,16 +13,20 @@ class ButtomNavigatorButtons extends StatelessWidget {
       children: [
         IconButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BTSHomeNavPage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const BTSHomeNavPage()));
             },
-            icon: Icon(Icons.home)),
+            icon: const Icon(Icons.home)),
         IconButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => RabbitHomeNavPage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const RabbitHomeNavPage()));
             },
-            icon: Icon(Icons.credit_card)),
+            icon: const Icon(Icons.credit_card)),
       ],
     );
   }

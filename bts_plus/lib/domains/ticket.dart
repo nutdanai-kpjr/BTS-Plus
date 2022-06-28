@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import '../services/bts_controller.dart';
-
 class Ticket {
   final String id;
   final String ticketNumber;

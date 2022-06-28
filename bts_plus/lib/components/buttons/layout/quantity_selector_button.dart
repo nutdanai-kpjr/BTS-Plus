@@ -1,8 +1,6 @@
 import 'package:bts_plus/constants.dart';
 import 'package:flutter/material.dart';
 
-import '../../forms/layout/primary_dropdown.dart';
-
 class QuantitySelector extends StatefulWidget {
   const QuantitySelector({Key? key, required this.onChanged, this.quantity = 1})
       : super(key: key);
@@ -29,7 +27,7 @@ class _QuantitySelectorState extends State<QuantitySelector> {
                   onChanged(_quantity);
                 }
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.remove,
                 color: kPrimaryFontColor,
               )),
@@ -44,7 +42,7 @@ class _QuantitySelectorState extends State<QuantitySelector> {
                 });
                 onChanged(_quantity);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.add,
                 color: kPrimaryFontColor,
               )),

@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:bts_plus/components/forms/layout/primary_dropdown.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/domains/rabbit_card.dart';
 import 'package:bts_plus/providers/auth_provider.dart';
@@ -43,7 +40,7 @@ class RabbitRegistrationForm extends ConsumerWidget {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(bottom: kHeight(context) * 0.025),
-            child: Text(
+            child: const Text(
               'Register your rabbit card',
               style: kHeader2TextStyle,
             ),
