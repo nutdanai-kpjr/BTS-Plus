@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bts_plus/domains/rabbit_card.dart';
 import 'package:bts_plus/domains/rabbit_transaction.dart';
@@ -14,6 +15,9 @@ Future<bool> addRabbitCard(
   RabbitCard newRabbitCard, {
   required context,
 }) async {
+  if (kIsMockup) {
+    return true;
+  }
   final response = await http.post(
       Uri.parse(
         '$kRabbitControllerUrl/registerRabbitCardByBts',
@@ -34,9 +38,8 @@ Future<RabbitCard?> getRabbitCard(
   required context,
 }) async {
   if (kIsMockup) {
-    final mockUpRespond =
-        await rootBundle.loadString('$kRabbitMockupURL/get_rabbit_card.json');
-    var parsedJson = jsonDecode(mockUpRespond);
+    var parsedJson =
+        await jsonFromMockUpApi(context: context, 'get_rabbit_card.json');
     RabbitCard rabbitCard =
         RabbitCard.fromJson(parsedJson, cardNumber: rabbitNumber);
     return rabbitCard;
@@ -59,22 +62,19 @@ Future<RabbitCard?> getRabbitCard(
   }
 }
 
-Future<bool> payByRabbitCard(
-  RabbitCard rabbitCard, {
-  required context,
-}) async {
-  return true;
-}
-
 Future<List<RabbitTransaction>> getRabbitTransactions(rabbitId,
     {required context}) async {
   if (kIsMockup) {
-    final mockUpRespond = await rootBundle
-        .loadString('$kRabbitMockupURL/get_rabbit_transactions.json');
-    var parsedJson = jsonDecode(mockUpRespond);
+    var parsedJson = await jsonFromMockUpApi(
+        context: context, 'get_rabbit_transaction.json');
+
     List<RabbitTransaction> rabbitTransactions = parsedJson
         .map<RabbitTransaction>((json) => RabbitTransaction.fromJson(json))
         .toList();
+
+    rabbitTransactions.sort((a, b) {
+      return b.timeStamp.compareTo(a.timeStamp);
+    });
     return rabbitTransactions;
   }
   final response = await http.get(Uri.parse(
@@ -105,6 +105,9 @@ Future<bool> topUpRabbitCard(
   double amount, {
   required context,
 }) async {
+  if (kIsMockup) {
+    return true;
+  }
   final response = await http.post(Uri.parse(
     '$kInternalBTSControllerUrl/topRabbitCard?rabbitUser=$rabbitUserName&amount=${amount.toStringAsFixed(1)}',
   ));
@@ -124,6 +127,9 @@ Future<bool> topUpRabbitCardByAtm(
   String atmPin, {
   required context,
 }) async {
+  if (kIsMockup) {
+    return true;
+  }
   final response = await http.post(
       Uri.parse(
         '$kRabbitControllerUrl/getBankApi',

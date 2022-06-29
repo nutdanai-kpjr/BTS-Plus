@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bts_authenticator/services/authenticator_configuration.dart';
-import 'package:bts_authenticator/services/bts_controller.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 import '../domains/rabbit_card.dart';
@@ -16,6 +13,9 @@ Future<bool> authorizeRabbitCardEntranceGate(
   RabbitCard rabbitCard, {
   required context,
 }) async {
+  if (kIsMockup) {
+    return true;
+  }
   final String stationId = AuthenticatorConfiguration().gateStationId;
 
   final response = await http.post(
@@ -37,6 +37,9 @@ Future<bool> authorizeRabbitCardExitGate(
   RabbitCard rabbitCard, {
   required context,
 }) async {
+  if (kIsMockup) {
+    return true;
+  }
   final String stationId = AuthenticatorConfiguration().gateStationId;
 
   final response = await http.post(

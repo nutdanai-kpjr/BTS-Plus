@@ -16,7 +16,7 @@ class RabbitTransaction {
       required this.timeStamp});
   RabbitTransaction.fromJson(Map<String, dynamic> json)
       : id = json['transactionRabbitCardID'],
-        amount = json['amount'],
+        amount = json['amount'] * 1.0,
         shopName = json['rabbitShopName'],
         shopType = json['shopType'],
         transactiontype = json['transactionType'],

@@ -173,6 +173,7 @@ class _AvailiableTicketSectionState extends State<_AvailiableTicketSection> {
           FutureBuilder(
               future: _getTickets,
               builder: (context, AsyncSnapshot<List<Ticket>> snapshot) {
+                log(snapshot.toString());
                 if (snapshot.hasData) {
                   var tickets = snapshot.data ?? [];
                   tickets = tickets.reversed.toList();

@@ -1,0 +1,35 @@
+[
+  {
+    "rabbitID": "1OXipYEBukIohEcRJd2v",
+    "rabbitNumber": "8233420949538",
+    "rabbitShopName": null,
+    "rabbitShopNumber": null,
+    "timeStamp": "2022-06-27T23:00:25",
+    "amount": 1000.0,
+    "transactionType": "TOPUP",
+    "shopType": null,
+    "transactionRabbitCardID": "4eXkpYEBukIohEcRiN2C"
+  },
+  {
+    "rabbitID": "1OXipYEBukIohEcRJd2v",
+    "rabbitNumber": "8233420949538",
+    "rabbitShopName": "Skytrain",
+    "rabbitShopNumber": "1783577543",
+    "timeStamp": "2022-06-27T23:03:43",
+    "amount": 23.1,
+    "transactionType": "BUY",
+    "shopType": "BTS",
+    "transactionRabbitCardID": "H-XnpYEBukIohEcRjd6T"
+  },
+  {
+    "rabbitID": "1OXipYEBukIohEcRJd2v",
+    "rabbitNumber": "8233420949538",
+    "rabbitShopName": "Skytrain",
+    "rabbitShopNumber": "1783577543",
+    "timeStamp": "2022-06-27T23:06:50",
+    "amount": 18.2,
+    "transactionType": "BUY",
+    "shopType": "BTS",
+    "transactionRabbitCardID": "Q-XqpYEBukIohEcRad7g"
+  }
+]

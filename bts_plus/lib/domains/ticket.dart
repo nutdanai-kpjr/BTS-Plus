@@ -52,7 +52,7 @@ class Ticket {
         buyerLastName = json['customerLastName'],
         fromStationId = json['startStation'],
         toStationId = json['endStation'],
-        price = json['amount'],
+        price = json['amount'] * 1.0,
         priceWithDiscount = json['finalAmount'],
         purchaseDate = DateTime.parse(json['dateAndTimeOut']),
         expireDate = DateTime.parse(json['dateAndTimeUp']),

@@ -1,0 +1,36 @@
+[
+  {
+    "ticketID": "IOXnpYEBukIohEcRjt4M",
+    "ticketNumber": "810158799677",
+    "customerID": "z-XhpYEBukIohEcRTd1m",
+    "customerFirstName": "John",
+    "customerLastName": "Doe",
+    "startStation": "S001",
+    "endStation": "S006",
+    "startStationName": "Victory Monument",
+    "endStationName": "Nana",
+    "dateAndTimeOut": "2022-06-27T23:03:43",
+    "dateAndTimeUp": "2025-06-27T23:06:43",
+    "amount": 33,
+    "finalAmount": 23.1,
+    "statusTrciket": "ACTIVE",
+    "startToEnd": 5
+  },
+  {
+    "ticketID": "ROXqpYEBukIohEcRat42",
+    "ticketNumber": "205726321591",
+    "customerID": "z-XhpYEBukIohEcRTd1m",
+    "customerFirstName": "John",
+    "customerLastName": "Doe",
+    "startStation": "S001",
+    "endStation": "S004",
+    "startStationName": "Victory Monument",
+    "endStationName": "Siam",
+    "dateAndTimeOut": "2022-06-27T23:06:50",
+    "dateAndTimeUp": "2025-06-27T23:09:50",
+    "amount": 26,
+    "finalAmount": 18.2,
+    "statusTrciket": "ACTIVE",
+    "startToEnd": 3
+  }
+]

@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:bts_authenticator/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../components/buttons/layout/primary_button.dart';
 
@@ -39,4 +41,11 @@ Future<void> showErrorDialog(context, body) async {
           ],
         );
       });
+}
+
+jsonFromMockUpApi(String apiPath) async {
+  final mockUpRespond =
+      await rootBundle.loadString('$kRabbitMockupURL/$apiPath');
+
+  return jsonDecode(mockUpRespond);
 }

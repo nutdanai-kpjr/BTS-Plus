@@ -29,9 +29,9 @@ class TicketTransaction {
         to = json['to'],
         quantity = json['numberTicket'],
         totalPrice = json['amount'],
-        discount = json['discount'],
-        finalPrice = json['total'],
-        pricePerTicket = json['pricePerTicket'];
+        discount = json['discount'] * 1.0,
+        finalPrice = json['total'] * 1.0,
+        pricePerTicket = json['pricePerTicket'] * 1.0;
 
   TicketTransaction.fromJsonByUpdatePrice(
     Map<String, dynamic> json, {
@@ -39,10 +39,10 @@ class TicketTransaction {
     required this.from,
     required this.to,
   })  : quantity = json['numberOfTicket'],
-        totalPrice = json['totalPrice'],
-        discount = json['discount'],
-        finalPrice = json['finalPrice'],
-        pricePerTicket = json['pricePerTicket'];
+        totalPrice = json['totalPrice'] * 1.0,
+        discount = json['discount'] * 1.0,
+        finalPrice = json['finalPrice'] * 1.0,
+        pricePerTicket = json['pricePerTicket'] * 1.0;
 
   Map<String, dynamic> toJson() => {
         'customerID': userId,

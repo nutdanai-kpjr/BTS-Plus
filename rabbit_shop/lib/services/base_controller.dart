@@ -6,7 +6,7 @@ const String kRabbitBasedURL = "http://192.168.86.71:50001/rabbit";
 // const String kRabbitBasedURL = "http://localhost:8082/rabbit";
 // const String kRabbitBasedURL = "http://10.0.2.2:8082/rabbit-ws";
 const String kRabbitMockupURL = "assets/json";
-const bool kIsMockup = true;
+const bool kIsMockup = false;
 Future<void> showErrorDialog(context, body) async {
   await showDialog(
       context: context,

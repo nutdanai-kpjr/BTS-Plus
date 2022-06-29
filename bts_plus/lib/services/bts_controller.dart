@@ -14,6 +14,9 @@ import 'base_controller.dart';
 const String kBTSControllerUrl = "$kRabbitBasedURL/api/v1/btsCustomer";
 const String kInternalBTSControllerUrl = "$kRabbitBasedURL/api/v1/internal";
 Future<User?> addUser(User user, {required context}) async {
+  if (kIsMockup) {
+    return await loginUser(user.userName, user.password, context: context);
+  }
   final response = await http.post(
       Uri.parse(
         '$kBTSControllerUrl/registerBtsCustomer',
@@ -32,9 +35,7 @@ Future<User?> addUser(User user, {required context}) async {
 Future<User?> loginUser(String userName, String password,
     {required context}) async {
   if (kIsMockup) {
-    final mockUpRespond =
-        await rootBundle.loadString('$kRabbitMockupURL/get_user.json');
-    var parsedJson = jsonDecode(mockUpRespond);
+    var parsedJson = await jsonFromMockUpApi(context: context, "get_user.json");
     User user =
         User.fromJson(parsedJson, userName: userName, password: password);
     String? rabbitNumber = parsedJson['rabbitNumber'];
@@ -70,9 +71,8 @@ Future<User?> loginUser(String userName, String password,
 
 Future<List<Station>> getStations({required context}) async {
   if (kIsMockup) {
-    final mockUpRespond =
-        await rootBundle.loadString('$kRabbitMockupURL/get_bts_station.json');
-    var parsedJson = jsonDecode(mockUpRespond);
+    var parsedJson =
+        await jsonFromMockUpApi(context: context, 'get_bts_station.json');
     List<Station> stations =
         parsedJson.map<Station>((json) => Station.fromJson(json)).toList();
     return stations;
@@ -99,13 +99,13 @@ Future<List<Station>> getStations({required context}) async {
 Future<List<Ticket>> getAvaliableTickets(String userId,
     {required context}) async {
   if (kIsMockup) {
-    final mockUpRespond =
-        await rootBundle.loadString('$kRabbitMockupURL/get_bts_station.json');
-    var parsedJson = jsonDecode(mockUpRespond);
+    var parsedJson =
+        await jsonFromMockUpApi(context: context, 'get_avaliable_tickets.json');
     List<Ticket> tickets =
         parsedJson.map<Ticket>((json) => Ticket.fromJson(json)).toList();
     return tickets;
   }
+
   final response = await http.get(Uri.parse(
     '$kBTSControllerUrl/getTickets?customerID=$userId',
   ));
@@ -162,18 +162,17 @@ Future<TicketTransaction> getTicketTransaction(
   TicketTransaction ticketTransaction, {
   required context,
 }) async {
-  // if (kIsMockup) {
-  //   final mockUpRespond =
-  //       await rootBundle.loadString('$kRabbitMockupURL/get_bts_price.json');
-  //   var parsedJson = jsonDecode(mockUpRespond);
-  //   TicketTransaction ticketTransactionWithPrice =
-  //       TicketTransaction.fromJsonByUpdatePrice(parsedJson,
-  //           userId: ticketTransaction.userId,
-  //           from: ticketTransaction.from,
-  //           to: ticketTransaction.to);
+  if (kIsMockup) {
+    var parsedJson =
+        await jsonFromMockUpApi(context: context, 'get_bts_price.json');
+    TicketTransaction ticketTransactionWithPrice =
+        TicketTransaction.fromJsonByUpdatePrice(parsedJson,
+            userId: ticketTransaction.userId,
+            from: ticketTransaction.from,
+            to: ticketTransaction.to);
 
-  //   return ticketTransactionWithPrice;
-  // }
+    return ticketTransactionWithPrice;
+  }
 
   final response = await http.post(
       Uri.parse(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bts_plus/components/cards/customer_card.dart';
 import 'package:bts_plus/components/cards/layout/primary_card.dart';
 import 'package:bts_plus/components/cards/no_rabbit_card.dart';
@@ -114,6 +116,7 @@ class _RabbitTransactionListState extends State<RabbitTransactionList> {
     return FutureBuilder(
         future: _getTransactions,
         builder: (context, AsyncSnapshot<List<RabbitTransaction>> snapshot) {
+          log(snapshot.toString());
           if (snapshot.hasData) {
             var transactions = snapshot.data ?? [];
             return Column(
