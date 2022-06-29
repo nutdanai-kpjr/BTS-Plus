@@ -1,0 +1,35 @@
+[
+  {
+    "rabbitShopID": "r-XOpYEBukIohEcRRtxn",
+    "rabbitShopNumber": "1783577543",
+    "rabbitNumber": "8233420949538",
+    "rabbitFirstName": "John",
+    "rabbitLastName": "Doe",
+    "rabbitStatus": "STUDENT",
+    "amount": 23.1,
+    "timeStamp": "2022-06-27T23:03:43",
+    "transactionRabbitShopID": "HuXnpYEBukIohEcRjd4i"
+  },
+  {
+    "rabbitShopID": "r-XOpYEBukIohEcRRtxn",
+    "rabbitShopNumber": "1783577543",
+    "rabbitNumber": "8233420949538",
+    "rabbitFirstName": "John",
+    "rabbitLastName": "Doe",
+    "rabbitStatus": "STUDENT",
+    "amount": 18.2,
+    "timeStamp": "2022-06-27T23:06:50",
+    "transactionRabbitShopID": "QuXqpYEBukIohEcRad6K"
+  },
+  {
+    "rabbitShopID": "r-XOpYEBukIohEcRRtxn",
+    "rabbitShopNumber": "1783577543",
+    "rabbitNumber": "8233420949538",
+    "rabbitFirstName": "John",
+    "rabbitLastName": "Doe",
+    "rabbitStatus": "STUDENT",
+    "amount": 18.2,
+    "timeStamp": "2022-06-27T23:13:56",
+    "transactionRabbitShopID": "Z-XwpYEBukIohEcR6d6M"
+  }
+]

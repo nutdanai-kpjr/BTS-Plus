@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:rabbit_shop/components/buttons/layout/primary_button.dart';
 import 'package:rabbit_shop/components/forms/layout/primary_textformfield.dart';
 import 'package:rabbit_shop/components/utils.dart';
@@ -42,6 +44,7 @@ class LoginForm extends ConsumerWidget {
                   _passwordController.text,
                   context: context,
                 );
+                log(user?.toJson().toString() ?? 'user is null');
                 ref.read(authProvider.notifier).setCurrentUser(user);
                 navigator.pushReplacement(
                   MaterialPageRoute(
