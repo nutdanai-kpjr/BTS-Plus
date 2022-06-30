@@ -24,7 +24,7 @@ String? Function(String?)? nameValidator() {
       return "Please enter a value less than 50 characters";
     }
     if (!value.contains(RegExp(r'^[a-zA-Z]*$'))) {
-      return "Please enter only alphabets";
+      return "Please enter only characters";
     }
     return null;
   };
