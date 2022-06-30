@@ -34,16 +34,16 @@ class User {
         'customerID': id,
         'customerUser': userName,
         'customerPassword': password,
-        'customerFirstName': firstName,
-        'customerLastName': lastName,
+        'customerFirstName': firstName.toLowerCase(),
+        'customerLastName': lastName.toLowerCase(),
         'birthOfDate': birthDate.toIso8601String(),
         'rabbitCard': rabbitCard,
       };
   Map<String, dynamic> toJsonNoPassword() => {
         'customerID': id,
         'customerUser': userName,
-        'customerFirstName': firstName,
-        'customerLastName': lastName,
+        'customerFirstName': firstName.toLowerCase(),
+        'customerLastName': lastName.toLowerCase(),
         'birthOfDate': birthDate.toIso8601String(),
         'rabbitCard': rabbitCard,
       };
