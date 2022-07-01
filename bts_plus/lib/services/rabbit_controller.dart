@@ -109,7 +109,7 @@ Future<bool> topUpRabbitCard(
     return true;
   }
   final response = await http.post(Uri.parse(
-    '$kInternalBTSControllerUrl/topRabbitCard?rabbitUser=$rabbitUserName&amount=${amount.toStringAsFixed(1)}',
+    '$kInternalBTSControllerUrl/topRabbitCard?rabbitUser=$rabbitUserName&amount=${amount.toStringAsFixed(2)}',
   ));
   if (response.statusCode == 200) {
     return true;

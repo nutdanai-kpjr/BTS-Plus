@@ -44,6 +44,28 @@ class Ticket {
     // return '$kBTSControllerUrl/checkInTricket?tricketNumber=$ticketNumber&startStation=$fromStationId&endStation=$toStationId';
   }
 
+  int get remainingDurationInSeconds {
+    return (expireDate.toUtc().millisecondsSinceEpoch -
+            DateTime.now().toUtc().millisecondsSinceEpoch) ~/
+        1000;
+  }
+
+  bool get isExpired {
+    return remainingDurationInSeconds <= 0;
+  }
+
+  bool get isTimeout {
+    return remainingDurationInSeconds <= 0;
+  }
+
+  bool get isActive {
+    return !isExpired;
+  }
+
+  bool get isValid {
+    return !isTimeout;
+  }
+
   Ticket.fromJson(Map<String, dynamic> json)
       : id = json['ticketID'],
         ticketNumber = json['ticketNumber'],

@@ -7,15 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../constants.dart';
+import '../../utils.dart';
+import '../countdowntimer.dart';
 
 class TicketCard extends ConsumerWidget {
   const TicketCard({
     Key? key,
+    this.onExpired,
     this.onPop,
     required this.ticket,
   }) : super(key: key);
   final Ticket ticket;
   final Function()? onPop;
+  final Function()? onExpired;
   // final Datetime date;
   // final String buyer;
   // final int stationDistance;
@@ -46,9 +50,18 @@ class TicketCard extends ConsumerWidget {
               Container(
                   margin: EdgeInsets.only(bottom: kHeight(context) * 0.01),
                   width: double.infinity,
-                  child: Text(
-                    'Ticket No. ${ticket.ticketNumber}',
-                    style: kBody3TextStyle,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Ticket No. ${ticket.ticketNumber}',
+                        style: kBody3TextStyle,
+                      ),
+                      Text(
+                        'Expired In ${getFormatDateWithTime(ticket.expireDate)}',
+                        style: kBody3TextStyle,
+                      ),
+                    ],
                   )),
 
               Padding(
@@ -61,7 +74,7 @@ class TicketCard extends ConsumerWidget {
                     ),
                   ),
                   Expanded(
-                    flex: 5,
+                    flex: 3,
                     child: Text(stationIdToDisplayName(ticket.fromStationId),
                         style: kBodyTextStyle),
                   ),
@@ -78,12 +91,38 @@ class TicketCard extends ConsumerWidget {
                     ),
                   ),
                   Expanded(
-                    flex: 5,
+                    flex: 3,
                     child: Text(stationIdToDisplayName(ticket.toStationId),
                         style: kBodyTextStyle),
                   ),
                 ]),
               ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Row(children: [
+              //     const Expanded(
+              //       child: Text(
+              //         'Expired in',
+              //         style: kHeader4TextStyle,
+              //       ),
+              //     ),
+              //     Expanded(
+              //       flex: 3,
+              //       child: CountDownTimer(
+              //         secondsRemaining: ticket.remainingDurationInSeconds,
+              //         whenTimeExpires: () {
+              //           onExpired?.call();
+              //           // setState(() {
+              //           //   hasTimerStopped = true;
+              //           // });
+              //         },
+              //         countDownTimerStyle:
+              //             kBodyTextStyle.copyWith(color: kOrange),
+              //       ),
+              //     ),
+              //   ]),
+              // ),
+
               SizedBox(
                 width: double.infinity,
                 child: Container(

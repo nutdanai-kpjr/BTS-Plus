@@ -158,6 +158,29 @@ Future<bool> processTicketPayment(TicketTransaction ticketTransaction,
   }
 }
 
+Future<bool> sendTicketToUser(String userName, String ticketNumber,
+    {required context}) async {
+  if (kIsMockup) {
+    return true;
+  }
+
+  final response = await http.post(
+    Uri.parse(
+      '$kBTSControllerUrl/shareTicket?customerUser=$userName&ticketNumber=$ticketNumber',
+    ),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // var parsedJson = jsonDecode(response.body);
+    return true;
+  } else {
+    var body = json.decode(response.body);
+    await showErrorDialog(context, body);
+    return false;
+  }
+}
+
 Future<TicketTransaction> getTicketTransaction(
   TicketTransaction ticketTransaction, {
   required context,

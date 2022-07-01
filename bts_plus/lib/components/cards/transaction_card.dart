@@ -1,5 +1,5 @@
 import 'package:bts_plus/components/cards/layout/primary_card.dart';
-import 'package:bts_plus/components/utils.dart';
+import 'package:bts_plus/utils.dart';
 import 'package:bts_plus/domains/rabbit_transaction.dart';
 import 'package:flutter/material.dart';
 

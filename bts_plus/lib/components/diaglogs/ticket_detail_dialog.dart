@@ -1,6 +1,9 @@
 import 'package:bts_plus/components/buttons/layout/primary_button.dart';
+import 'package:bts_plus/components/forms/layout/primary_textformfield.dart';
 import 'package:bts_plus/components/primary_divider.dart';
 import 'package:bts_plus/constants.dart';
+import 'package:bts_plus/services/bts_controller.dart';
+import 'package:bts_plus/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -8,7 +11,6 @@ import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../domains/ticket.dart';
-import '../utils.dart';
 
 showTicketDetailDialog(context,
     {required Ticket ticket,
@@ -19,7 +21,6 @@ showTicketDetailDialog(context,
       context: context,
       builder: (BuildContext context) {
         ScreenshotController screenshotController = ScreenshotController();
-
         return StatefulBuilder(builder: (context, StateSetter setStateDialog) {
           return Dialog(
             shape: RoundedRectangleBorder(
@@ -38,7 +39,7 @@ showTicketDetailDialog(context,
                   ),
                   width: double.infinity,
                   child: Center(
-                    child: Text('Ticket: ${ticket.id}',
+                    child: Text('Ticket: ${ticket.ticketNumber}',
                         style:
                             kHeader3TextStyle.copyWith(color: kThemeFontColor)),
                   ),
@@ -83,7 +84,7 @@ showTicketDetailDialog(context,
               Container(
                 margin: EdgeInsets.only(bottom: kHeight(context) * 0.02),
                 child: PrimaryButton(
-                    text: 'Share',
+                    text: 'Share via QR code',
                     onPressed: () async {
                       final directory = (await getTemporaryDirectory())
                           .path; //from path_provide package
@@ -96,7 +97,19 @@ showTicketDetailDialog(context,
                         Share.shareFiles([result], text: 'Great picture');
                       }
                     }),
-              )
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: kHeight(context) * 0.02),
+                child: PrimaryButton(
+                  text: 'Share via username',
+                  onPressed: () async {
+                    await showSendTicketToDialog(
+                      context,
+                      ticketNumber: ticket.ticketNumber,
+                    );
+                  },
+                ),
+              ),
               // TicketDetailText(title:'Quanti', value:': ${ticket.}'),
               // TicketDetailText(title:'Total:', value:' ${ticket.total}'),
             ]),
@@ -144,4 +157,54 @@ SingleChildScrollView _buildDialogScrollable({required children}) {
       children: children,
     ),
   );
+}
+
+showSendTicketToDialog(context,
+    {required String ticketNumber, Function()? onPop}) async {
+  await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController usernameController = TextEditingController();
+        var isShared = false;
+        return StatefulBuilder(builder: (context, StateSetter setStateDialog) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0)), //this right here
+            child: _buildDialogScrollable(children: [
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text('Send to', style: kHeader2TextStyle),
+              ),
+
+              PrimaryTextFormField(
+                title: 'Receiver Username',
+                controller: usernameController,
+              ),
+
+              Container(
+                  margin: EdgeInsets.only(bottom: kHeight(context) * 0.02),
+                  child: !isShared
+                      ? PrimaryButton(
+                          text: 'Send',
+                          onPressed: () async {
+                            bool isSucess = await sendTicketToUser(
+                                usernameController.text, ticketNumber,
+                                context: context);
+
+                            setStateDialog(() {
+                              isShared = isSucess;
+                            });
+                          })
+                      : Text(
+                          'Share Success!',
+                          style: kHeader3TextStyle.copyWith(color: kGreen),
+                        ))
+
+              // TicketDetailText(title:'Quanti', value:': ${ticket.}'),
+              // TicketDetailText(title:'Total:', value:' ${ticket.total}'),
+            ]),
+          );
+        });
+      });
+  onPop?.call();
 }

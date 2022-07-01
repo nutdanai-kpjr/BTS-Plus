@@ -7,10 +7,10 @@ import '../../constants.dart';
 import '../../providers/auth_provider.dart';
 
 class BalanceCard extends ConsumerWidget {
-  const BalanceCard({Key? key, required this.balance, this.height})
+  const BalanceCard({Key? key, this.height, this.buttonWidth})
       : super(key: key);
-  final double balance;
   final double? height;
+  final double? buttonWidth;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var user = ref.watch(authProvider);
@@ -25,13 +25,18 @@ class BalanceCard extends ConsumerWidget {
                 children: [
                   const Text('Card Balance', style: kBody2TextStyle),
                   Text(
-                    '฿ ${user?.rabbitCard?.balance.toStringAsFixed(2) ?? '0.00'}',
-                    style: kHeader2TextStyle,
+                    '฿ ${user?.rabbitCard?.balanceWithCommas ?? '0.00'}',
+                    style: (user?.rabbitCard?.balance
+                                .toStringAsFixed(2)
+                                .length)! >=
+                            8
+                        ? kHeader3TextStyle
+                        : kHeader4TextStyle,
                   ),
                 ]),
             SizedBox(
                 height: kHeight(context) * 0.05,
-                width: kWidth(context) * 0.4,
+                width: buttonWidth ?? kWidth(context) * 0.35,
                 child: const TopUpButton())
           ],
         ));

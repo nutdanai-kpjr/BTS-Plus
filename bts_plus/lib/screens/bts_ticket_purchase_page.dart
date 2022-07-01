@@ -90,7 +90,10 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
 
   onConfirm() async {
     if (!isProcessing) {
-      isProcessing = true;
+      setState(() {
+        isProcessing = true;
+      });
+
       final TicketTransaction finalTicketTransaction =
           await getTicketTransaction(
         ticketTransaction,
@@ -102,7 +105,9 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
       if (!mounted) return;
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const MainPage()));
-      isProcessing = false;
+      setState(() {
+        isProcessing = false;
+      });
     }
   }
 
@@ -166,8 +171,8 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
                   height: kHeight(context) * 0.02,
                 ),
                 BalanceCard(
-                  balance: 0.0,
                   height: kHeight(context) * 0.125,
+                  buttonWidth: kWidth(context) * 0.25,
                 )
               ],
             );
@@ -187,29 +192,36 @@ class BTSTicketPurchasePageState extends ConsumerState<BTSTicketPurchasePage> {
                     text: 'Confirm',
                     onPressed: onConfirm,
                   )
-                : SecondaryButton(text: 'Invalid Station', color: Colors.red)),
+                : const SecondaryButton(
+                    text: 'Invalid Station', color: Colors.red)),
         body: SingleChildScrollView(
             child: Column(children: <Widget>[
           const SecondaryHeader(
             title: 'Purchasing Ticket',
           ),
-          Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: kWidth(context) * 0.09,
-                  vertical: kHeight(context) * 0.025),
-              child: Column(
-                children: [
-                  TicketOptionSection(
-                    onFromChanged: onFromChanged,
-                    onToChanged: onToChanged,
-                    onQuantityChanged: onQuantityChange,
-                    quantity: quantity,
-                    from: ticketTransaction.from,
-                    to: ticketTransaction.to,
-                  ),
-                  _buildBTSPaymentSection()
-                ],
-              ))
+          isProcessing
+              ? SizedBox(
+                  width: kWidth(context) * 0.75,
+                  height: kHeight(context) * 0.75,
+                  child:
+                      const Center(child: PrimaryCircularProgressIndicator()))
+              : Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: kWidth(context) * 0.09,
+                      vertical: kHeight(context) * 0.025),
+                  child: Column(
+                    children: [
+                      TicketOptionSection(
+                        onFromChanged: onFromChanged,
+                        onToChanged: onToChanged,
+                        onQuantityChanged: onQuantityChange,
+                        quantity: quantity,
+                        from: ticketTransaction.from,
+                        to: ticketTransaction.to,
+                      ),
+                      _buildBTSPaymentSection()
+                    ],
+                  ))
         ])));
   }
 }
@@ -244,32 +256,30 @@ class _TicketOptionSectionState extends State<TicketOptionSection> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          StationSelector(
-            onFromChanged: onFromchanged,
-            onToChanged: onToChanged,
-            fromStationId: from,
-            toStationId: to,
-          ),
-          SizedBox(height: kHeight(context) * 0.02),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Number of Ticket',
-                style: kHeader3TextStyle,
-              ),
-              QuantitySelector(
-                quantity: quantity,
-                onChanged: onquantityChanged,
-              ),
-            ],
-          ),
-          const PrimaryDivider()
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        StationSelector(
+          onFromChanged: onFromchanged,
+          onToChanged: onToChanged,
+          fromStationId: from,
+          toStationId: to,
+        ),
+        SizedBox(height: kHeight(context) * 0.02),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Number of Ticket',
+              style: kHeader3TextStyle,
+            ),
+            QuantitySelector(
+              quantity: quantity,
+              onChanged: onquantityChanged,
+            ),
+          ],
+        ),
+        const PrimaryDivider()
+      ],
     );
   }
 }
