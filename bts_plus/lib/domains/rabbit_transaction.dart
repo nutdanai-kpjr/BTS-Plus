@@ -1,4 +1,4 @@
-import '../components/utils.dart';
+import '../utils.dart';
 
 class RabbitTransaction {
   final String id;

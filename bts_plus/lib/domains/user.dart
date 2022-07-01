@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bts_plus/domains/rabbit_card.dart';
 import 'package:bts_plus/main.dart';
+import 'package:bts_plus/utils.dart';
 
 class User {
   final String? id;
@@ -52,6 +53,8 @@ class User {
     return json.encode(toJsonNoPassword());
   }
 
+  String get displayFirstname => getCapitalized(firstName);
+  String get displayLastname => getCapitalized(lastName);
   User.mockUp()
       : userName = 'userName',
         password = 'password',
@@ -80,5 +83,5 @@ class User {
         rabbitCard: rabbitCard ?? this.rabbitCard,
       );
 
-  String get fullName => '$firstName $lastName';
+  String get fullName => '$displayFirstname $displayLastname';
 }

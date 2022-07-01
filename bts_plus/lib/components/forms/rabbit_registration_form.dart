@@ -8,8 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../services/rabbit_controller.dart';
 import '../buttons/layout/primary_button.dart';
-import '../utils.dart';
 import 'layout/primary_textformfield.dart';
+import 'package:bts_plus/utils.dart';
 
 class RabbitRegistrationForm extends ConsumerWidget {
   RabbitRegistrationForm({Key? key}) : super(key: key);

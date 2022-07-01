@@ -1,12 +1,11 @@
 import 'dart:developer';
 
-import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
-import 'package:bts_plus/components/forms/layout/primary_dropdown.dart';
 import 'package:bts_plus/components/primary_divider.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/screens/main_page.dart';
 import 'package:bts_plus/services/bts_controller.dart';
 import 'package:bts_plus/services/rabbit_controller.dart';
+import 'package:bts_plus/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +14,7 @@ import '../../domains/rabbit_card.dart';
 import '../../domains/user.dart';
 import '../../providers/auth_provider.dart';
 import '../buttons/layout/primary_button.dart';
-import '../utils.dart';
+
 import 'layout/primary_textformfield.dart';
 
 class RegistrationForm extends ConsumerWidget {

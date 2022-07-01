@@ -1,4 +1,4 @@
-import 'package:bts_plus/components/utils.dart';
+import 'package:bts_plus/utils.dart';
 
 class RabbitCard {
   final String? id;
