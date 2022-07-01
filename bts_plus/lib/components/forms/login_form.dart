@@ -1,7 +1,6 @@
 import 'package:bts_plus/components/buttons/layout/primary_button.dart';
 import 'package:bts_plus/components/forms/layout/primary_textformfield.dart';
-import 'package:bts_plus/components/utils.dart';
-
+import 'package:bts_plus/utils.dart';
 import 'package:bts_plus/providers/auth_provider.dart';
 import 'package:bts_plus/screens/main_page.dart';
 import 'package:flutter/material.dart';

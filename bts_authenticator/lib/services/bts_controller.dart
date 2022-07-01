@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:bts_authenticator/services/authenticator_configuration.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
@@ -41,14 +42,19 @@ Future<List<Station>> getStations({required context}) async {
 
 Future<bool> authorizeTicket(
   Ticket ticket, {
+  required desitnationStationId,
   required context,
 }) async {
   if (kIsMockup) {
     return true;
   }
+  if (AuthenticatorConfiguration().isGateExit ||
+      ticket.fromStationId != AuthenticatorConfiguration().gateStationId) {
+    return false;
+  }
   final response = await http.post(
     Uri.parse(
-      '$kBTSControllerUrl/checkInTricket?tricketNumber=${ticket.ticketNumber}&startStation=${ticket.fromStationId}&endStation=${ticket.toStationId}',
+      '$kBTSControllerUrl/checkInTricket?tricketNumber=${ticket.ticketNumber}&startStation=${AuthenticatorConfiguration().gateStationId}&endStation=${desitnationStationId}',
     ),
   );
 

@@ -22,7 +22,7 @@ class LoginForm extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Form(
-      key: _formKey,
+    key: _formKey,
       child: Column(
         children: <Widget>[
           PrimaryTextFormField(

@@ -2,10 +2,9 @@ import 'package:bts_plus/components/buttons/topup_button.dart';
 import 'package:bts_plus/components/cards/layout/primary_card.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/providers/auth_provider.dart';
+import 'package:bts_plus/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../utils.dart';
 
 class CustomerCard extends ConsumerWidget {
   const CustomerCard({
@@ -66,8 +65,13 @@ class CustomerCard extends ConsumerWidget {
                   children: [
                     const Text('Card Balance', style: kBody2TextStyle),
                     Text(
-                      '฿ ${user.rabbitCard?.balance.toStringAsFixed(2) ?? '0.00'}',
-                      style: kHeader2TextStyle,
+                      '฿ ${user.rabbitCard?.balanceWithCommas ?? '0.00'}',
+                      style: (user.rabbitCard?.balance
+                                  .toStringAsFixed(2)
+                                  .length)! >=
+                              8
+                          ? kHeader3TextStyle
+                          : kHeader4TextStyle,
                     ),
                   ]),
             ),

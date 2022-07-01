@@ -12,6 +12,11 @@ class RabbitCard {
   final double balance;
   final String? type;
 
+  String get balanceWithCommas {
+    return balance.toStringAsFixed(2).replaceAllMapped(
+        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+  }
+
   RabbitCard(
       {this.cardNumber,
       this.id,

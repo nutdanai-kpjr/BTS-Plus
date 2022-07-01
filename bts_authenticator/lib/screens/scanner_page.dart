@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:bts_authenticator/components/buttons/layout/secondary_button.dart';
+import 'package:bts_authenticator/components/diaglogs/consume_ticket_dialog.dart';
 import 'package:bts_authenticator/components/headers/secondary_header.dart';
 import 'package:bts_authenticator/components/primary_circular_progress_indicator.dart';
 import 'package:bts_authenticator/components/primary_divider.dart';
@@ -29,6 +30,7 @@ class _ScannerPageState extends State<ScannerPage> {
   late String gateStationId;
   late final AudioPlayer _audioPlayer;
 
+  String? ticketDesitnationStationId;
   bool enableScanner = true;
   bool coolDownScanner = false;
   String message = 'Wating for QR code';
@@ -41,6 +43,12 @@ class _ScannerPageState extends State<ScannerPage> {
     gateStationId = AuthenticatorConfiguration().gateStationId;
 
     super.initState();
+  }
+
+  setDestinationStationId(stationId) {
+    setState(() {
+      ticketDesitnationStationId = stationId;
+    });
   }
 
   onRefresh() {
@@ -135,11 +143,18 @@ class _ScannerPageState extends State<ScannerPage> {
                         await setMessage('Failed to scan QR Code', false);
                       } else {
                         final String value = qrCode.rawValue!;
-                        if (value.contains('ticketID')) {
+                        if (value.contains('ticketID') &&
+                            AuthenticatorConfiguration().isGateEntrance) {
                           Ticket ticket = Ticket.fromJson(json.decode(value));
-
-                          bool status =
-                              await authorizeTicket(ticket, context: context);
+                          ticketDesitnationStationId = ticket.toStationId;
+                          await showConfrimTicketDestination(context,
+                              orginalStation: ticketDesitnationStationId,
+                              onChanged: setDestinationStationId);
+                          bool status = await authorizeTicket(
+                            ticket,
+                            desitnationStationId: ticketDesitnationStationId,
+                            context: context,
+                          );
                           await setMessage(
                               status
                                   ? 'Ticket authorized'

@@ -10,6 +10,7 @@ const Color kSecondaryFontColor = Color(0XFFA8A8A8);
 const Color kBorderColor = Color(0XFFECECEC);
 const Color kGreen = Color(0XFF009245);
 const Color kRed = Color(0XFFFF4D4D);
+const Color kOrange = Color(0XFFf5a623);
 const double kBigHeaderFontSize = 36.0;
 const double kHeader1FontSize = 24.0;
 const double kHeader2FontSize = 20.0;

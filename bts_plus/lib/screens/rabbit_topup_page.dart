@@ -2,6 +2,7 @@ import 'package:bts_plus/components/buttons/layout/secondary_button.dart';
 import 'package:bts_plus/components/forms/layout/primary_dropdown.dart';
 import 'package:bts_plus/components/forms/layout/primary_textformfield.dart';
 import 'package:bts_plus/components/headers/secondary_header.dart';
+import 'package:bts_plus/components/primary_circular_progress_indicator.dart';
 import 'package:bts_plus/components/primary_scaffold.dart';
 import 'package:bts_plus/constants.dart';
 import 'package:bts_plus/providers/auth_provider.dart';
@@ -27,9 +28,9 @@ class RabbitTopUpPageState extends ConsumerState<RabbitTopUpPage> {
   String paymentMethod = 'Cash';
   double amount = 100;
   TextEditingController atmCardController =
-      TextEditingController(text: '4791439223141502');
+      TextEditingController(text: '1162535802716840');
   TextEditingController atmPinController =
-      TextEditingController(text: '112233');
+      TextEditingController(text: '123456');
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
@@ -49,7 +50,9 @@ class RabbitTopUpPageState extends ConsumerState<RabbitTopUpPage> {
 
   onConfirm() async {
     if (!isProcessing) {
-      isProcessing = true;
+      setState(() {
+        isProcessing = true;
+      });
       final navigator = Navigator.of(context);
       final user = ref.watch(authProvider);
       final String rabbitUserName = user?.userName ?? '';
@@ -79,7 +82,9 @@ class RabbitTopUpPageState extends ConsumerState<RabbitTopUpPage> {
           ),
         );
       }
-      isProcessing = false;
+      setState(() {
+        isProcessing = false;
+      });
     }
   }
 
@@ -98,16 +103,26 @@ class RabbitTopUpPageState extends ConsumerState<RabbitTopUpPage> {
             color: kRabbitThemeColor,
             title: 'Top Up',
           ),
-          TopUpAmountSection(
-            onAmountChanged: onAmountChanged,
-          ),
-          RabbitPaymentSection(
-            formKey: _formKey,
-            onPaymentChanged: onPaymentChanged,
-            paymentMethod: paymentMethod,
-            atmCardController: atmCardController,
-            atmPinController: atmPinController,
-          ),
+          isProcessing
+              ? SizedBox(
+                  width: kWidth(context) * 0.75,
+                  height: kHeight(context) * 0.75,
+                  child:
+                      const Center(child: PrimaryCircularProgressIndicator()))
+              : Column(
+                  children: [
+                    TopUpAmountSection(
+                      onAmountChanged: onAmountChanged,
+                    ),
+                    RabbitPaymentSection(
+                      formKey: _formKey,
+                      onPaymentChanged: onPaymentChanged,
+                      paymentMethod: paymentMethod,
+                      atmCardController: atmCardController,
+                      atmPinController: atmPinController,
+                    ),
+                  ],
+                ),
         ])));
   }
 }

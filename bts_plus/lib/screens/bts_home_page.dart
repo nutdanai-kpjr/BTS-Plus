@@ -122,9 +122,7 @@ class BTSHomeHeader extends ConsumerWidget {
     return PrimaryHeader(
         title: 'My Ticket',
         height: kHeight(context) * (rabbitCard != null ? 0.25 : 0.2),
-        card: rabbitCard == null
-            ? const NoRabbitCard()
-            : const BalanceCard(balance: 0.0));
+        card: rabbitCard == null ? const NoRabbitCard() : const BalanceCard());
   }
 }
 
@@ -161,15 +159,6 @@ class _AvailiableTicketSectionState extends State<_AvailiableTicketSection> {
       color: kThemeSecondaryBackgroundColor,
       child: Column(
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(kHeight(context) * .006),
-            width: double.infinity,
-            child: const Text(
-              'Available Tickets',
-              textAlign: TextAlign.start,
-              style: kHeader3TextStyle,
-            ),
-          ),
           FutureBuilder(
               future: _getTickets,
               builder: (context, AsyncSnapshot<List<Ticket>> snapshot) {
@@ -179,10 +168,20 @@ class _AvailiableTicketSectionState extends State<_AvailiableTicketSection> {
                   tickets = tickets.reversed.toList();
                   return Column(
                     children: [
+                      Container(
+                        margin: EdgeInsets.all(kHeight(context) * .006),
+                        width: double.infinity,
+                        child: Text(
+                          'Available Tickets (${tickets.length})',
+                          textAlign: TextAlign.start,
+                          style: kHeader3TextStyle,
+                        ),
+                      ),
                       for (var ticket in tickets)
                         TicketCard(
                           ticket: ticket,
                           onPop: refresh,
+                          onExpired: refresh,
                         )
                     ],
                   );
